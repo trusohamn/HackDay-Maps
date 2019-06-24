@@ -18,11 +18,6 @@ import { Vector as VectorSource } from 'ol/source';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 
-fetch('http://localhost:8000/api/points')
-.then(res => res.json())
-.then(data => console.log(data))
-.catch(error => console.log(error));
-
 const map = new Map({
     target: 'map',
     layers: [
@@ -33,24 +28,33 @@ const map = new Map({
 
     view: new View({
         center: fromLonLat([17.762083241832443, 59.401848231069636]),
-        zoom: 17
+        zoom: 11
     })
 });
 
-
-const source = new VectorSource();
-const features = [];
-const coords = fromLonLat([17.762083241832443, 59.401848231069636]);
-features.push(new Feature({
-    geometry: new Point(coords)
-}));
-source.addFeatures(features);
-
-const v = new VectorLayer({
-    source: source
+fetch('http://localhost:8000/api/points')
+.then(res => res.json())
+.then(data => {
+    const source = new VectorSource();
+    const features = [];
+    
+    data.points.forEach((e) => {
+        const coords = fromLonLat(e.localisation);
+        console.log(coords);
+        features.push(new Feature({
+            geometry: new Point(coords)
+        }));
+    })
+    
+    source.addFeatures(features);
+    
+    const v = new VectorLayer({
+        source: source
+    })
+    map.addLayer(v);
+    
 })
-map.addLayer(v);
-
+.catch(error => console.log(error));
 
 map.on('click', function (event) {
     console.log(toLonLat(event.coordinate));
