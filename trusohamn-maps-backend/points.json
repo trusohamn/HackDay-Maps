@@ -1,0 +1,13 @@
+{
+    "points": [
+        {
+            "localisation": [18, 60]
+        },
+        {
+            "localisation": [18.001, 60.0001]
+        },
+        {
+            "localisation": [18.001, 60.0004]
+        }
+    ]
+}
