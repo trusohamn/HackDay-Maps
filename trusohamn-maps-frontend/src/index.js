@@ -18,6 +18,10 @@ import { Vector as VectorSource } from 'ol/source';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 
+fetch('http://localhost:8000/api/points')
+.then(res => res.json())
+.then(data => console.log(data))
+.catch(error => console.log(error));
 
 const map = new Map({
     target: 'map',
