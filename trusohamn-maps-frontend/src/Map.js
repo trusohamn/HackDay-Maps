@@ -1,6 +1,5 @@
 //externals
 import React from 'react';
-import { fromLonLat, toLonLat } from 'ol/proj';
 
 //open layers and styles
 var ol = require('openlayers');
@@ -16,37 +15,30 @@ class Map extends React.Component {
     }
 
     componentDidMount() {
-
-        // create feature layer and vector source
-        var featuresLayer = new ol.layer.Vector({
+        var extraLayer = new ol.layer.Vector({
             source: new ol.source.Vector({
                 features: []
             })
         });
 
-        // create map object with feature layer
         var map = new ol.Map({
             target: this.refs.mapContainer,
             layers: [
-                //default OSM layer
                 new ol.layer.Tile({
                     source: new ol.source.OSM()
                 }),
-                featuresLayer
+                extraLayer
             ], view: new ol.View({
-                center: fromLonLat([17.762083241832443, 59.401848231069636]),
+                center: ol.proj.fromLonLat([17.762083241832443, 59.401848231069636]),
                 zoom: 13,
             })
         });
 
         map.on('click', this.handleMapClick.bind(this));
 
-        // save map and layer references to local state
         this.setState({
             map: map,
-            featuresLayer: featuresLayer,
-            lon: 18,
-            lat: 60 
+            extraLayer: extraLayer
         });
 
         fetch('http://localhost:8000/api/points')
@@ -56,7 +48,7 @@ class Map extends React.Component {
                 const features = [];
 
                 data.points.forEach((e) => {
-                    const coords = fromLonLat(e.localisation);
+                    const coords = ol.proj.fromLonLat(e.localisation);
                     console.log(e.localisation);
                     console.log(coords);
                     features.push(new ol.Feature({
@@ -66,66 +58,51 @@ class Map extends React.Component {
 
                 source.addFeatures(features);
 
-                const v = new ol.layer.Vector({
+                const featuresLayer = new ol.layer.Vector({
                     source: source
                 })
-                map.addLayer(v);
+                
+                map.addLayer(featuresLayer);
 
+                this.setState({
+                    map: map,
+                    featuresLayer: featuresLayer
+                });
+         
             })
             .catch(error => console.log(error));
 
     }
 
-    // pass new features from props into the OpenLayers layer object
     componentDidUpdate(prevProps, prevState) {
-        this.state.featuresLayer.setSource(
-            new ol.source.Vector({
-                features: this.props.routes
-            })
-        );
+        console.log('maps did update');
+       
     }
 
     handleMapClick(event) {
 
-        // // create WKT writer
-        // var wktWriter = new ol.format.WKT();
-
-        // // derive map coordinate (references map from Wrapper Component state)
-        // var clickedCoordinate = this.state.map.getCoordinateFromPixel(event.pixel);
-
-        // // create Point geometry from clicked coordinate
-        // var clickedPointGeom = new ol.geom.Point(clickedCoordinate);
-
-        // // write Point geometry to WKT with wktWriter
-        // var clickedPointWkt = wktWriter.writeGeometry(clickedPointGeom);
-
-        // // place Flux Action call to notify Store map coordinate was clicked
-        // // Actions.setRoutingCoord(clickedPointWkt);
-        const coord = toLonLat(event.coordinate);
+       
+        const coord = ol.proj.toLonLat(event.coordinate);
         console.log(coord);
-        // document.getElementById('lon').value = (coord[0]);
-        // document.getElementById('lat').value = (coord[1]);
+        this.setState({
+            lon: coord[0],
+            lat: coord[1] 
+        });
 
-        // const source = new VectorSource();
-        // const features = [];
+        const features = [];
 
+        const coords = event.coordinate;
+        const newFeature = new ol.Feature({
+            geometry: new ol.geom.Point(coords)
+        })
 
-        // const coords = event.coordinate;
-        // const newFeature = new Feature({
-        //     geometry: new Point(coords)
-        // })
+        features.push(newFeature);
 
-
-        // newFeature.set('style', createStyle(logo, undefined));
-        // features.push();
-
-        // source.addFeatures(features);
-        // v = new VectorLayer({
-        //     source: source
-        // })
-
-        // map.addLayer(v);
-
+        this.state.extraLayer.setSource(
+                new ol.source.Vector({
+                    features: features
+                })
+            );
 
     }
 

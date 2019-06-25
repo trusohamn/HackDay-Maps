@@ -97,3 +97,19 @@ map.on('click', function (event) {
     map.addLayer(v);
 
 });
+
+
+ // // create WKT writer
+        // var wktWriter = new ol.format.WKT();
+
+        // // derive map coordinate (references map from Wrapper Component state)
+        // var clickedCoordinate = this.state.map.getCoordinateFromPixel(event.pixel);
+
+        // // create Point geometry from clicked coordinate
+        // var clickedPointGeom = new ol.geom.Point(clickedCoordinate);
+
+        // // write Point geometry to WKT with wktWriter
+        // var clickedPointWkt = wktWriter.writeGeometry(clickedPointGeom);
+
+        // // place Flux Action call to notify Store map coordinate was clicked
+        // // Actions.setRoutingCoord(clickedPointWkt);
