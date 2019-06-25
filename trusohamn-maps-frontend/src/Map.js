@@ -1,7 +1,7 @@
 //externals
 import React from 'react';
 
-import logo from './icons/002-animal.svg';
+import logo from './icons/039-tent.svg';
 
 //open layers and styles
 var ol = require('openlayers');
@@ -65,19 +65,17 @@ class Map extends React.Component {
                     // anchor: [0.5, 0.5],
                     // size: [52, 52],
                     // offset: [52, 0],
-                    opacity: 0.5,
+                    opacity: 1,
                     scale: 0.03,
                     src: logo
                 });
 
                 const iconStyle = new ol.style.Style({
-                    image: circle
+                    image: icon
                 });
 
                 data.points.forEach((e) => {
                     const coords = ol.proj.fromLonLat(e.localisation);
-                    console.log(e.localisation);
-                    console.log(coords);
                     const iconFeature = new ol.Feature({
                         geometry: new ol.geom.Point(coords),
                         name: e.description
@@ -111,7 +109,11 @@ class Map extends React.Component {
 
     handleMapClick(event) {
 
-
+        var feature = this.state.map.forEachFeatureAtPixel(event.pixel,
+            function(feature) {
+              console.log(feature.get('name'));
+            });
+          ////////////////
         const coord = ol.proj.toLonLat(event.coordinate);
         console.log(coord);
         this.setState({
