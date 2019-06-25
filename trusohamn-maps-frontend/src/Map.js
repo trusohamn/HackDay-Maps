@@ -1,6 +1,8 @@
 //externals
 import React from 'react';
 
+import logo from './icons/002-animal.svg';
+
 //open layers and styles
 var ol = require('openlayers');
 require('openlayers/css/ol.css');
@@ -8,9 +10,9 @@ require('openlayers/css/ol.css');
 class Map extends React.Component {
     constructor(props) {
         super(props);
-        this.state=({
+        this.state = ({
             lon: 18,
-            lat: 60 
+            lat: 60
         });
     }
 
@@ -46,14 +48,42 @@ class Map extends React.Component {
             .then(data => {
                 const source = new ol.source.Vector();
                 const features = [];
+                const fill = new ol.style.Fill({
+                    color: 'rgba(255,0,0,0.4)'
+                });
+                const stroke = new ol.style.Stroke({
+                    color: '#3399CC',
+                    width: 1.25
+                });
+                const circle = new ol.style.Circle({
+                    fill: fill,
+                    stroke: stroke,
+                    radius: 5
+                });
+
+                const icon = new ol.style.Icon({
+                    // anchor: [0.5, 0.5],
+                    // size: [52, 52],
+                    // offset: [52, 0],
+                    opacity: 0.5,
+                    scale: 0.03,
+                    src: logo
+                });
+
+                const iconStyle = new ol.style.Style({
+                    image: circle
+                });
 
                 data.points.forEach((e) => {
                     const coords = ol.proj.fromLonLat(e.localisation);
                     console.log(e.localisation);
                     console.log(coords);
-                    features.push(new ol.Feature({
-                        geometry: new ol.geom.Point(coords)
-                    }));
+                    const iconFeature = new ol.Feature({
+                        geometry: new ol.geom.Point(coords),
+                        name: e.description
+                    })
+                    iconFeature.setStyle(iconStyle);
+                    features.push(iconFeature);
                 })
 
                 source.addFeatures(features);
@@ -61,14 +91,14 @@ class Map extends React.Component {
                 const featuresLayer = new ol.layer.Vector({
                     source: source
                 })
-                
+
                 map.addLayer(featuresLayer);
 
                 this.setState({
                     map: map,
                     featuresLayer: featuresLayer
                 });
-         
+
             })
             .catch(error => console.log(error));
 
@@ -76,17 +106,17 @@ class Map extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         console.log('maps did update');
-       
+
     }
 
     handleMapClick(event) {
 
-       
+
         const coord = ol.proj.toLonLat(event.coordinate);
         console.log(coord);
         this.setState({
             lon: coord[0],
-            lat: coord[1] 
+            lat: coord[1]
         });
 
         const features = [];
@@ -99,10 +129,10 @@ class Map extends React.Component {
         features.push(newFeature);
 
         this.state.extraLayer.setSource(
-                new ol.source.Vector({
-                    features: features
-                })
-            );
+            new ol.source.Vector({
+                features: features
+            })
+        );
 
     }
 
