@@ -57,8 +57,10 @@ fetch('http://localhost:8000/api/points')
 
     })
     .catch(error => console.log(error));
+    let v;
 
 map.on('click', function (event) {
+    if(v) map.removeLayer(v);
     const coord = toLonLat(event.coordinate);
     console.log(coord);
     document.getElementById('lon').value = (coord[0]);
@@ -74,9 +76,10 @@ map.on('click', function (event) {
     }));
 
     source.addFeatures(features);
-    const v = new VectorLayer({
+    v = new VectorLayer({
         source: source
     })
+
     map.addLayer(v);
 
 });
