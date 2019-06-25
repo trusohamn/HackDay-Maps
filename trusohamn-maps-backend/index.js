@@ -22,11 +22,14 @@ app.get('/', (req, res) => {
 
 app.post('/api/points', (req, res) => {
     const points = require('./points.json');
-    console.log(req.body);
-    console.log(req.headers['content-type']);
-    points.points.push(JSON.parse(req.body));
+    const point = {
+        localisation: [parseFloat(req.body.lon), parseFloat(req.body.lat)],
+        description: req.body.description
+    }
+    console.log(point);
+    points.points.push(point);
     fs.writeFile('./points.json', JSON.stringify(points), () => {
-        res.status(200).send(JSON.stringify({ answer: 'Success' }));
+        res.status(200).end();
     });
 });
 

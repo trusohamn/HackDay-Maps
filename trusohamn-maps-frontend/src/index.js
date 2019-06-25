@@ -29,7 +29,7 @@ const map = new Map({
 
     view: new View({
         center: fromLonLat([17.762083241832443, 59.401848231069636]),
-        zoom: 11
+        zoom: 10
     })
 });
 
@@ -41,6 +41,7 @@ fetch('http://localhost:8000/api/points')
 
         data.points.forEach((e) => {
             const coords = fromLonLat(e.localisation);
+            console.log(e.localisation);
             console.log(coords);
             features.push(new Feature({
                 geometry: new Point(coords)
@@ -58,22 +59,26 @@ fetch('http://localhost:8000/api/points')
     .catch(error => console.log(error));
 
 map.on('click', function (event) {
-    console.log(toLonLat(event.coordinate));
+    const coord = toLonLat(event.coordinate);
+    console.log(coord);
+    document.getElementById('lon').value = (coord[0]);
+    document.getElementById('lat').value = (coord[1]);
 
-    const newPoint = {
-        localisation: toLonLat(event.coordinate)
-    }
-    fetch('http://localhost:8000/api/points', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'text/plain'
-        },
-        body: JSON.stringify(newPoint)
-    }).then(res => res.json())
-    .then(response => console.log('Success:', JSON.stringify(response)))
-    .catch(error => console.error('Error:', error));
+    const source = new VectorSource();
+    const features = [];
+
+
+    const coords = event.coordinate;
+    features.push(new Feature({
+        geometry: new Point(coords)
+    }));
+
+    source.addFeatures(features);
+    const v = new VectorLayer({
+        source: source
+    })
+    map.addLayer(v);
+
 });
 
 serviceWorker.unregister();
