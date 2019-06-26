@@ -1,10 +1,9 @@
-//externals
 import React from 'react';
 import Form from './Form';
 import logo from '../icons/039-tent.svg';
 
-//open layers and styles
-var ol = require('openlayers');
+
+const ol = require('openlayers');
 require('openlayers/css/ol.css');
 
 class Map extends React.Component {
@@ -12,12 +11,18 @@ class Map extends React.Component {
         super(props);
         this.state = ({
             lon: 18,
-            lat: 60
+            lat: 60,
+            data: null
         });
     }
 
     componentDidMount() {
-        var extraLayer = new ol.layer.Vector({
+        const extraLayer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: []
+            })
+        });
+        const featuresLayer = new ol.layer.Vector({
             source: new ol.source.Vector({
                 features: []
             })
@@ -29,7 +34,8 @@ class Map extends React.Component {
                 new ol.layer.Tile({
                     source: new ol.source.OSM()
                 }),
-                extraLayer
+                extraLayer,
+                featuresLayer
             ], view: new ol.View({
                 center: ol.proj.fromLonLat([17.762083241832443, 59.401848231069636]),
                 zoom: 13,
@@ -40,76 +46,56 @@ class Map extends React.Component {
 
         this.setState({
             map: map,
-            extraLayer: extraLayer
+            extraLayer: extraLayer,
+            featuresLayer: featuresLayer
         });
-
-        fetch('http://localhost:8000/api/points')
-            .then(res => res.json())
-            .then(data => {
-                const source = new ol.source.Vector();
-                const features = [];
-                const fill = new ol.style.Fill({
-                    color: 'rgba(255,0,0,0.4)'
-                });
-                const stroke = new ol.style.Stroke({
-                    color: '#3399CC',
-                    width: 1.25
-                });
-                const circle = new ol.style.Circle({
-                    fill: fill,
-                    stroke: stroke,
-                    radius: 5
-                });
-
-                const icon = new ol.style.Icon({
-                    // anchor: [0.5, 0.5],
-                    // size: [52, 52],
-                    // offset: [52, 0],
-                    opacity: 1,
-                    scale: 0.03,
-                    src: logo
-                });
-
-                const iconStyle = new ol.style.Style({
-                    image: icon
-                });
-
-                data.points.forEach((e) => {
-                    const coords = ol.proj.fromLonLat(e.localisation);
-                    const iconFeature = new ol.Feature({
-                        geometry: new ol.geom.Point(coords),
-                        name: e.description
-                    })
-                    iconFeature.setStyle(iconStyle);
-                    features.push(iconFeature);
-                })
-
-                source.addFeatures(features);
-
-                const featuresLayer = new ol.layer.Vector({
-                    source: source
-                })
-
-                map.addLayer(featuresLayer);
-
-                this.setState({
-                    map: map,
-                    featuresLayer: featuresLayer
-                });
-
-            })
-            .catch(error => console.log(error));
-
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log('maps did update');
-
+        if(this.state.data === null){
+            console.log('updating data');
+            fetch('http://localhost:8000/api/points')
+                .then(res => res.json())
+                .then(data => {
+                    this.setState({
+                        data: data
+                    });
+    
+                    const features = [];
+    
+                    const icon = new ol.style.Icon({
+                        opacity: 1,
+                        scale: 0.03,
+                        src: logo
+                    });
+    
+                    const iconStyle = new ol.style.Style({
+                        image: icon
+                    });
+    
+                    data.points.forEach((e) => {
+                        const coords = ol.proj.fromLonLat(e.localisation);
+                        const iconFeature = new ol.Feature({
+                            geometry: new ol.geom.Point(coords),
+                            name: e.description
+                        });
+                        iconFeature.setStyle(iconStyle);
+                        features.push(iconFeature);
+                    })
+    
+                    this.state.featuresLayer.setSource(
+                        new ol.source.Vector({
+                            features: features
+                        })
+                    );
+                })
+                .catch(error => console.log(error));
+        }
     }
 
     handleMapClick(event) {
 
-        var feature = this.state.map.forEachFeatureAtPixel(event.pixel,
+        this.state.map.forEachFeatureAtPixel(event.pixel,
             feature => {
                 console.log(feature.get('name'));
             });
@@ -135,13 +121,12 @@ class Map extends React.Component {
                 features: features
             })
         );
-
     }
 
     render() {
         return (
             <div ref="mapContainer">
-                <Form lon={this.state.lon} lat={this.state.lat}></Form>
+                <Form lon={this.state.lon} lat={this.state.lat} removeData={() => this.setState({ data: null })}></Form>
             </div>
         );
     }
