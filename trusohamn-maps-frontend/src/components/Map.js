@@ -1,7 +1,7 @@
 //externals
 import React from 'react';
-
-import logo from './icons/039-tent.svg';
+import Form from './Form';
+import logo from '../icons/039-tent.svg';
 
 //open layers and styles
 var ol = require('openlayers');
@@ -110,10 +110,10 @@ class Map extends React.Component {
     handleMapClick(event) {
 
         var feature = this.state.map.forEachFeatureAtPixel(event.pixel,
-            function(feature) {
-              console.log(feature.get('name'));
+            feature => {
+                console.log(feature.get('name'));
             });
-          ////////////////
+        ////////////////
         const coord = ol.proj.toLonLat(event.coordinate);
         console.log(coord);
         this.setState({
@@ -141,12 +141,7 @@ class Map extends React.Component {
     render() {
         return (
             <div ref="mapContainer">
-                <form action="http://localhost:8000/api/points" method="post">
-                    <input type="number" step="any" name="lon" id="lon" value={this.state.lon}></input>
-                    <input type="number" step="any" name="lat" id="lat" value={this.state.lat}></input>
-                    <input type="text" name="description" id="description"></input>
-                    <button type="submit">Go</button>
-                </form>
+                <Form lon={this.state.lon} lat={this.state.lat}></Form>
             </div>
         );
     }
