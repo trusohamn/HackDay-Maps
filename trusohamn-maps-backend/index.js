@@ -4,6 +4,8 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 
+const {generateUniqueId} = require('./dataHandling');
+
 app.use(express.urlencoded());
 
 app.use(function (req, res, next) {
@@ -20,8 +22,10 @@ app.post('/api/points', (req, res) => {
     console.log('post request');
     const points = require('./points.json');
     const point = {
+        id: generateUniqueId(req.body.name),
         localisation: [parseFloat(req.body.lon), parseFloat(req.body.lat)],
-        name: req.body.name
+        name: req.body.name,
+        description: req.body.description
     }
     console.log(point);
     points.points.push(point);

@@ -65,7 +65,7 @@ class Map extends React.Component {
 
                     const icon = new ol.style.Icon({
                         opacity: 1,
-                        scale: 0.03,
+                        scale: 0.05,
                         src: logo
                     });
 
@@ -77,7 +77,8 @@ class Map extends React.Component {
                         const coords = ol.proj.fromLonLat(e.localisation);
                         const iconFeature = new ol.Feature({
                             geometry: new ol.geom.Point(coords),
-                            name: e.name
+                            name: e.name,
+                            description: e.description
                         });
                         iconFeature.setStyle(iconStyle);
                         features.push(iconFeature);
@@ -98,7 +99,10 @@ class Map extends React.Component {
         this.state.map.forEachFeatureAtPixel(event.pixel,
             feature => {
                 console.log(feature.get('name'));
-                this.props.setPointDescription({name: feature.get('name')});
+                this.props.setPointDescription({
+                    name: feature.get('name'),
+                    description: feature.get('description')
+                });
             });
 
 
@@ -129,7 +133,7 @@ class Map extends React.Component {
     render() {
         return (
             <div ref="mapContainer">
-                <Form lon={this.state.lon} lat={this.state.lat} removeData={() => this.setState({ data: null })}></Form> 
+                <Form lon={this.state.lon} lat={this.state.lat} removeData={() => this.setState({ data: null })}></Form>
             </div>
         );
     }
