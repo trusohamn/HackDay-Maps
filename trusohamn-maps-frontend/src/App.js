@@ -5,6 +5,7 @@ function App() {
   const [pointDescription, setPointDescription] = useState({});
   const [mode, setMode] = useState('explore');
   const [switchText, setSwitchText] = useState('Edit map');
+  const [data, setData] = useState(null);
 
   const switchMode = () => {
     const newMode = (mode === 'explore') ? 'edit' : 'explore';
@@ -15,9 +16,15 @@ function App() {
 
   return (
     <div className="App">
-      <button id="switch modes" onClick={switchMode}>{switchText}</button>
-      <Map setPointDescription={setPointDescription} mode={mode}></Map>
-      <Description pointDescription={pointDescription} mode={mode}></Description>
+      <nav class="navbar navbar-dark bg-dark">
+        <h1 class="text-light">
+          Your Map Space
+    </h1>
+        <button id="switch modes" onClick={switchMode}>{switchText}</button>
+      </nav>
+
+      <Map setPointDescription={setPointDescription} mode={mode} data={data} setData={setData}></Map>
+      <Description pointDescription={pointDescription} mode={mode} data={data} setData={setData}></Description>
     </div>
   );
 }

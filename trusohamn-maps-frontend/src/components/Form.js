@@ -28,13 +28,19 @@ function Form(props) {
 
     return (
         props.mode === 'explore' ? '' :
-            <form onSubmit={postPoint} action="http://localhost:8000/api/points" method="post" >
-                <input className="d-none" readOnly type="number" step="any" name="lon" id="lon" value={props.lon}></input>
-                <input className="d-none" readOnly type="number" step="any" name="lat" id="lat" value={props.lat}></input>
-                <input placeholder="place name" type="text" name="name" id="name"></input>
-                <input placeholder="place decription" type="text" name="description" id="description"></input>
-                <button type="submit" className="btn btn-dark btn-sm">Go</button>
-            </form>)
+            <div>
+                <form onSubmit={postPoint} class="flexcontainer" action="http://localhost:8000/api/points" method="post" >
+                <h3>Add new location  </h3>
+                    <input className="d-none" readOnly type="number" step="any" name="lon" id="lon" value={props.lon}></input>
+                    <input className="d-none" readOnly type="number" step="any" name="lat" id="lat" value={props.lat}></input>
+                    <input placeholder="place name" type="text" name="name" id="name"></input>
+                    <input placeholder="place decription" type="text" name="description" id="description"></input>
+                    <button type="submit" className="btn btn-dark btn-sm">Go</button>
+                </form>
+            </div>
+
+
+    )
 }
 // class="d-none"
 // action="http://localhost:8000/api/points" method="post"
