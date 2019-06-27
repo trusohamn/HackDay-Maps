@@ -25,7 +25,8 @@ app.post('/api/points', (req, res) => {
         id: generateUniqueId(req.body.name),
         localisation: [parseFloat(req.body.lon), parseFloat(req.body.lat)],
         name: req.body.name,
-        description: req.body.description
+        description: req.body.description,
+        type: req.body.type
     }
     console.log(point);
     points.points.push(point);

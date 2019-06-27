@@ -42,14 +42,14 @@ function Description(props) {
             body: dataForm
         })
             .then(() => {
-               props.setData(null);
+                props.setData(null);
             });
     }
 
     return (
         (!props.pointDescription.id || props.mode === 'edit') ?
             '' :
-            <div class="flexcontainercolumn">
+            <div className="flexcontainercolumn">
                 <h1>
                     {props.pointDescription.name}
                 </h1>
@@ -61,11 +61,20 @@ function Description(props) {
                 <button type="click" onClick={fetchMorePointData} className="btn btn-dark btn-sm">Show reviews</button>
 
                 {reviews}
-                <form class="flexcontainer" onSubmit={submitReview}>
-                    <input placeholder="title" required name="review"></input>
-                    <input placeholder="review" name="description"></input>
-                    <input placeholder="1-10" required min="1" max="10" name="rating" type="number"></input>
-                    <button type="submit" className="btn btn-dark btn-sm">Review</button>
+                <form className="flexcontainer" onSubmit={submitReview}>
+                    <div className="flexcontainercolumn">
+                        <label for="title">Title:</label>
+                        <input className="form-control input-sm" required name="title" id="title"></input>
+                    </div>
+                    <div className="flexcontainercolumn">
+                        <label for="description">Description:</label>
+                        <input className="form-control input-sm" placeholder="review" name="description" id="description"></input>
+                    </div>
+                    <div className="flexcontainercolumn">
+                        <label for="rating">Rating:</label>
+                        <input className="form-control input-sm" required min="1" max="10" name="rating" id="rating" type="number"></input>
+                    </div>
+                    <button type="submit" className="btn btn-dark btn-bg">Review</button>
                 </form>
 
             </div>

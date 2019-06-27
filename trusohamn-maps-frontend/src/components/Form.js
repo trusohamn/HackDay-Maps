@@ -29,19 +29,32 @@ function Form(props) {
     return (
         props.mode === 'explore' ? '' :
             <div>
-                <form onSubmit={postPoint} class="flexcontainer" action="http://localhost:8000/api/points" method="post" >
-                <h3>Add new location  </h3>
+                <form onSubmit={postPoint} className="flexcontainer" action="http://localhost:8000/api/points" method="post" >
+                    <h3>Add new location  </h3>
                     <input className="d-none" readOnly type="number" step="any" name="lon" id="lon" value={props.lon}></input>
                     <input className="d-none" readOnly type="number" step="any" name="lat" id="lat" value={props.lat}></input>
-                    <input placeholder="place name" type="text" name="name" id="name"></input>
-                    <input placeholder="place decription" type="text" name="description" id="description"></input>
-                    <button type="submit" className="btn btn-dark btn-sm">Go</button>
+                    <div className="flexcontainercolumn">
+                        <label for="name">Name:</label>
+                        <input className="form-control input-sm" placeholder="place name" type="text" name="name" id="name"></input>
+                    </div>
+                    <div className="flexcontainercolumn">
+                        <label for="description">Description:</label>
+                        <input className="form-control input-sm" placeholder="place decription" type="text" name="description" id="description"></input>
+                    </div>
+                    <div className="flexcontainercolumn">
+                        <label for="type">Select type:</label>
+                        <select className="form-control input-sm" id="type" name="type">
+                            <option>camping</option>
+                            <option>fireplace</option>
+                        </select>
+                    </div>
+                    <button type="submit" className="btn btn-dark btn-bg">Go</button>
                 </form>
             </div>
 
 
     )
 }
-// class="d-none"
+// className="d-none"
 // action="http://localhost:8000/api/points" method="post"
 export default Form;

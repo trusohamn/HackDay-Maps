@@ -16,8 +16,8 @@ function App() {
 
   return (
     <div className="App">
-      <nav class="navbar navbar-dark bg-dark">
-        <h1 class="text-light">
+      <nav className="navbar navbar-dark bg-dark">
+        <h1 className="text-light">
           Your Map Space
     </h1>
         <button id="switch modes" onClick={switchMode}>{switchText}</button>
