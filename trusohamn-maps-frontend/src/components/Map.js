@@ -79,7 +79,8 @@ class Map extends React.Component {
                             id: e.id,
                             geometry: new ol.geom.Point(coords),
                             name: e.name,
-                            description: e.description
+                            description: e.description,
+                            rating: e.rating
                         });
                         iconFeature.setStyle(iconStyle);
                         features.push(iconFeature);
@@ -103,7 +104,9 @@ class Map extends React.Component {
                 this.props.setPointDescription({
                     id: feature.get('id'),
                     name: feature.get('name'),
-                    description: feature.get('description')
+                    description: feature.get('description'),
+                    rating: feature.get('rating')
+
                 });
             });
 
