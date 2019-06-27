@@ -76,6 +76,7 @@ class Map extends React.Component {
                     data.points.forEach((e) => {
                         const coords = ol.proj.fromLonLat(e.localisation);
                         const iconFeature = new ol.Feature({
+                            id: e.id,
                             geometry: new ol.geom.Point(coords),
                             name: e.name,
                             description: e.description
@@ -98,8 +99,9 @@ class Map extends React.Component {
         ///popout ///
         this.state.map.forEachFeatureAtPixel(event.pixel,
             feature => {
-                console.log(feature.get('name'));
+                console.log(feature.get('id'));
                 this.props.setPointDescription({
+                    id: feature.get('id'),
                     name: feature.get('name'),
                     description: feature.get('description')
                 });
