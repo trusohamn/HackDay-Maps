@@ -45,7 +45,8 @@ function Form(props) {
                         <label for="type">Select type:</label>
                         <select className="form-control input-sm" id="type" name="type">
                             <option>camping</option>
-                            <option>fireplace</option>
+                            <option>bonfire</option>
+                            <option>view</option>
                         </select>
                     </div>
                     <button type="submit" className="btn btn-dark btn-bg">Go</button>
