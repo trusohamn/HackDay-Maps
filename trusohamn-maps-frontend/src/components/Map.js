@@ -98,19 +98,19 @@ class Map extends React.Component {
 
     handleMapClick(event) {
         ///popout ///
+        let pointDescription = {};
         this.state.map.forEachFeatureAtPixel(event.pixel,
             feature => {
                 console.log(feature.get('id'));
-                this.props.setPointDescription({
+                pointDescription = {
                     id: feature.get('id'),
                     name: feature.get('name'),
                     description: feature.get('description'),
                     rating: feature.get('rating')
-
-                });
+                }
             });
 
-
+        this.props.setPointDescription(pointDescription);
         ///////adding data/////////
         const coord = ol.proj.toLonLat(event.coordinate);
         console.log(coord);
