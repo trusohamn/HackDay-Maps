@@ -1,10 +1,18 @@
 import React from 'react';
 import Form from './Form';
-import logo from '../icons/039-tent.svg';
+import camping from '../icons/039-tent.svg';
+import bonfire from '../icons/010-bonfire.svg';
+import viewPoint from '../icons/009-binoculars.svg';
 
 
 const ol = require('openlayers');
 require('openlayers/css/ol.css');
+
+const iconMapping = {
+    camping: camping,
+    bonfire: bonfire,
+    view: viewPoint
+}
 
 class Map extends React.Component {
     constructor(props) {
@@ -58,17 +66,17 @@ class Map extends React.Component {
                 .then(data => {
                     const features = [];
 
-                    const icon = new ol.style.Icon({
-                        opacity: 1,
-                        scale: 0.05,
-                        src: logo
-                    });
-
-                    const iconStyle = new ol.style.Style({
-                        image: icon
-                    });
-
                     data.points.forEach((e) => {
+                        const icon = new ol.style.Icon({
+                            opacity: 1,
+                            scale: 0.05,
+                            src: iconMapping[e.type]
+                        });
+    
+                        const iconStyle = new ol.style.Style({
+                            image: icon
+                        });
+
                         const coords = ol.proj.fromLonLat(e.localisation);
                         const iconFeature = new ol.Feature({
                             id: e.id,
