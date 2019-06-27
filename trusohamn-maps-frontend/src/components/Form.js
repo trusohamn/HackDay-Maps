@@ -24,14 +24,12 @@ function Form(props) {
                 props.removeData();
             }
         )
-
-
 }
 
 return (<form onSubmit={postPoint} action="http://localhost:8000/api/points" method="post" >
     <input readOnly type="number" step="any" name="lon" id="lon" value={props.lon}></input>
     <input readOnly type="number" step="any" name="lat" id="lat" value={props.lat}></input>
-    <input type="text" name="description" id="description"></input>
+    <input type="text" name="name" id="name"></input>
     <button type="submit" className="btn btn-dark btn-sm">Go</button>
 </form>)
 }

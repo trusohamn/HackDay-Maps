@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Map from './components/Map';
+import Description from './components/Description';
 function App() {
+  const [pointDescription, setPointDescription] = useState({})
+
   return (
     <div className="App">
-     <Map></Map>
+     <Map setPointDescription={setPointDescription}></Map>
+     <Description pointDescription={pointDescription}></Description>
     </div>
   );
 }

@@ -21,7 +21,7 @@ app.post('/api/points', (req, res) => {
     const points = require('./points.json');
     const point = {
         localisation: [parseFloat(req.body.lon), parseFloat(req.body.lat)],
-        description: req.body.description
+        name: req.body.name
     }
     console.log(point);
     points.points.push(point);
