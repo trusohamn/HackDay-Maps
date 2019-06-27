@@ -1,0 +1,27 @@
+{
+  "name": "trusohamn-maps-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trusohamn/HackDay-Maps.git"
+  },
+  "author": "trusohamn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trusohamn/HackDay-Maps/issues"
+  },
+  "homepage": "https://github.com/trusohamn/HackDay-Maps#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "mocha": "^6.1.4",
+    "nodemon": "^1.19.0"
+  },
+  "dependencies": {
+    "express": "^4.17.0"
+  }
+}
