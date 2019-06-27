@@ -23,8 +23,8 @@ function App() {
         <button id="switch modes" onClick={switchMode}>{switchText}</button>
       </nav>
 
-      <Map setPointDescription={setPointDescription} mode={mode} data={data} setData={setData}></Map>
-      <Description pointDescription={pointDescription} mode={mode} data={data} setData={setData}></Description>
+      <Map pointDescription={pointDescription} setPointDescription={setPointDescription} mode={mode} data={data} setData={setData}></Map>
+      <Description pointDescription={pointDescription} setPointDescription={setPointDescription} mode={mode} data={data} setData={setData}></Description>
     </div>
   );
 }

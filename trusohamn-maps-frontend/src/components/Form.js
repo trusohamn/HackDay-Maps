@@ -22,8 +22,7 @@ function Form(props) {
             .then((res) => {
                 console.log('success');
                 props.removeData();
-            }
-            )
+            })
     }
 
     return (
@@ -35,7 +34,7 @@ function Form(props) {
                     <input className="d-none" readOnly type="number" step="any" name="lat" id="lat" value={props.lat}></input>
                     <div className="flexcontainercolumn">
                         <label for="name">Name:</label>
-                        <input className="form-control input-sm" placeholder="place name" type="text" name="name" id="name"></input>
+                        <input required className="form-control input-sm" placeholder="place name" type="text" name="name" id="name"></input>
                     </div>
                     <div className="flexcontainercolumn">
                         <label for="description">Description:</label>

@@ -4,8 +4,20 @@ html, body, .pageContainer  {
     padding: 0px;
 }
 
+body {
+    min-height: 100vh;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between
+}
+
+
 #mapContainer {
     height: 60vh;
+}
+
+.html {
+    background-color: black;
 }
 
 .flexcontainer {
@@ -23,6 +35,11 @@ html, body, .pageContainer  {
     margin: 1em;
 }
 
+.footer {
+    bottom: 0;
+    right: 0;
+    
+}
   
 
 
