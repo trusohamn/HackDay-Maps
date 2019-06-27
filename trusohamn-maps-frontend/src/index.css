@@ -1,3 +1,30 @@
-#mapContainer  {
+html, body, .pageContainer  {
+
+    margin: 0px;
+    padding: 0px;
+}
+
+#mapContainer {
     height: 60vh;
 }
+
+.flexcontainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+}
+
+.flexcontainercolumn {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+}
+
+  
+
+
+
+

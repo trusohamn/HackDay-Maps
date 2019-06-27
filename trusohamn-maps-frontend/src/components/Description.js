@@ -5,6 +5,7 @@ function Description(props) {
     useEffect(() => {
         setReviews('');
     }, [props.pointDescription.id]);
+
     const fetchMorePointData = () => {
         console.log('click');
         //get request to api/points/:id
@@ -14,7 +15,8 @@ function Description(props) {
                 console.log(res.rev)
                 const rev = res.rev.map(e => {
                     return (
-                        <div>
+                        <div className="flexcontainercolumn">
+                            <br></br>
                             <h3>{e.review}</h3>
                             <p> {e.description} </p>
                             <h5>{e.rating}</h5>
@@ -27,9 +29,9 @@ function Description(props) {
 
     const submitReview = (e) => {
         e.preventDefault();
-        const data = new URLSearchParams();
+        const dataForm = new URLSearchParams();
         for (const pair of new FormData(e.target)) {
-            data.append(pair[0], pair[1]);
+            dataForm.append(pair[0], pair[1]);
         }
 
         fetch("http://localhost:8000/api/points/" + props.pointDescription.id, {
@@ -37,19 +39,17 @@ function Description(props) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: data
+            body: dataForm
         })
-            .then((res) => {
-                console.log('success');
-            }
-            )
-        console.log('submitting revieww');
+            .then(() => {
+               props.setData(null);
+            });
     }
-    console.log(props.pointDescription);
+
     return (
         (!props.pointDescription.id || props.mode === 'edit') ?
             '' :
-            <div>
+            <div class="flexcontainercolumn">
                 <h1>
                     {props.pointDescription.name}
                 </h1>
@@ -61,10 +61,10 @@ function Description(props) {
                 <button type="click" onClick={fetchMorePointData} className="btn btn-dark btn-sm">Show reviews</button>
 
                 {reviews}
-                <form onSubmit={submitReview}>
-                    <input required name="review"></input>
-                    <input name="description"></input>
-                    <input required min="1" max="10" name="rating" type="number"></input>
+                <form class="flexcontainer" onSubmit={submitReview}>
+                    <input placeholder="title" required name="review"></input>
+                    <input placeholder="review" name="description"></input>
+                    <input placeholder="1-10" required min="1" max="10" name="rating" type="number"></input>
                     <button type="submit" className="btn btn-dark btn-sm">Review</button>
                 </form>
 

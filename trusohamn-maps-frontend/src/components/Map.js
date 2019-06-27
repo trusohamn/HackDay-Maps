@@ -12,7 +12,6 @@ class Map extends React.Component {
         this.state = ({
             lon: 18,
             lat: 60,
-            data: null
         });
     }
 
@@ -52,15 +51,11 @@ class Map extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.data === null) {
+        if (this.props.data === null) {
             console.log('updating data');
             fetch('http://localhost:8000/api/points')
                 .then(res => res.json())
                 .then(data => {
-                    this.setState({
-                        data: data
-                    });
-
                     const features = [];
 
                     const icon = new ol.style.Icon({
@@ -91,6 +86,7 @@ class Map extends React.Component {
                             features: features
                         })
                     );
+                    this.props.setData(data);
                 })
                 .catch(error => console.log(error));
         }
@@ -139,7 +135,7 @@ class Map extends React.Component {
         return (
             <div>
                 <div ref="mapContainer" id="mapContainer"></div>
-                <Form mode={this.props.mode} lon={this.state.lon} lat={this.state.lat} removeData={() => this.setState({ data: null })}></Form>
+                <Form mode={this.props.mode} lon={this.state.lon} lat={this.state.lat} removeData={() => this.props.setData(null)}></Form>
             </div>
         );
     }
