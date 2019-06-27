@@ -47,6 +47,16 @@ app.post('/api/points', (req, res) => {
 app.get('/api/points', (req, res) => {
     console.log('get request');
     const points = require('./points.json');
+    const reviews = require('./reviews.json');
+    points.points = points.points.map(point => {
+        const pointReviews = reviews[point.id].rev;
+        const sum = pointReviews.reduce((acc, el) => {
+            return acc + parseInt(el.rating)
+        }, 0);
+        point.rating = sum / pointReviews.length;
+        return point;
+
+    })
     res.send(JSON.stringify(points));
 });
 
@@ -56,7 +66,7 @@ app.get('/api/points/:id', (req, res) => {
     console.log(req.params.id);
 
     const reviews = require('./reviews.json');
-    console.log();
+
     res.send(reviews[req.params.id]);
 });
 
@@ -71,7 +81,7 @@ app.post('/api/points/:id', (req, res) => {
     reviews[req.params.id].rev.push({
         review: req.body.review,
         description: req.body.description,
-        rating: req.body.rating
+        rating: parseInt(req.body.rating)
     }) 
 
     fs.writeFile('./reviews.json', JSON.stringify(reviews), () => {

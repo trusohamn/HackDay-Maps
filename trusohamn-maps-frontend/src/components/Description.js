@@ -39,15 +39,15 @@ function Description(props) {
             </h1>
             <p>
                 {props.pointDescription.description},
-                {props.pointDescription.id}
+                {props.pointDescription.rating}
             </p>
             <button type="click" onClick={fetchMorePointData} className="btn btn-dark btn-sm">More info</button>
             {pointData.id}
 
             <form onSubmit={submitReview}>
-                <input name="review"></input>
+                <input required name="review"></input>
                 <input name="description"></input>
-                <input name="rating" type="number"></input>
+                <input required min="1" max="10" name="rating" type="number"></input>
                 <button type="submit" className="btn btn-dark btn-sm">Review</button>
             </form>
         </div>
