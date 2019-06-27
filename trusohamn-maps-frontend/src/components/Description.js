@@ -1,10 +1,15 @@
 import React from 'react';
 
-function Description(props){
+function Description(props) {
 
-    return(
+    return (
         <div>
-            {props.pointDescription.name}
+            <h1>
+                {props.pointDescription.name}
+            </h1>
+            <p>
+                {props.pointDescription.description}
+            </p>
         </div>
     )
 }
