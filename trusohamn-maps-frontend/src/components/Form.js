@@ -6,12 +6,12 @@ function Form(props) {
 
     const postPoint = (e) => {
         e.preventDefault();
-        
+
         const data = new URLSearchParams();
         for (const pair of new FormData(e.target)) {
             data.append(pair[0], pair[1]);
         }
-        
+
         fetch("http://localhost:8000/api/points", {
             method: 'POST',
             headers: {
@@ -23,16 +23,18 @@ function Form(props) {
                 console.log('success');
                 props.removeData();
             }
-        )
-}
+            )
+    }
 
-return (<form onSubmit={postPoint} action="http://localhost:8000/api/points" method="post" >
-    <input className="d-none" readOnly type="number" step="any" name="lon" id="lon" value={props.lon}></input>
-    <input className="d-none" readOnly type="number" step="any" name="lat" id="lat" value={props.lat}></input>
-    <input type="text" name="name" id="name"></input>
-    <input type="text" name="description" id="description"></input>
-    <button type="submit" className="btn btn-dark btn-sm">Go</button>
-</form>)
+    return (
+        props.mode === 'explore' ? '' :
+            <form onSubmit={postPoint} action="http://localhost:8000/api/points" method="post" >
+                <input className="d-none" readOnly type="number" step="any" name="lon" id="lon" value={props.lon}></input>
+                <input className="d-none" readOnly type="number" step="any" name="lat" id="lat" value={props.lat}></input>
+                <input placeholder="place name" type="text" name="name" id="name"></input>
+                <input placeholder="place decription" type="text" name="description" id="description"></input>
+                <button type="submit" className="btn btn-dark btn-sm">Go</button>
+            </form>)
 }
 // class="d-none"
 // action="http://localhost:8000/api/points" method="post"

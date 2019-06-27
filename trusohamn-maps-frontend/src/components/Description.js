@@ -47,7 +47,7 @@ function Description(props) {
     }
     console.log(props.pointDescription);
     return (
-        (!props.pointDescription.id) ?
+        (!props.pointDescription.id || props.mode === 'edit') ?
             '' :
             <div>
                 <h1>
