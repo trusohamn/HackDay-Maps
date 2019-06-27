@@ -55,8 +55,29 @@ app.get('/api/points/:id', (req, res) => {
     console.log('get request');
     console.log(req.params.id);
 
-    // send out the reviews
-    res.send({reviews: 'here come your reviews'});
+    const reviews = require('./reviews.json');
+    console.log();
+    res.send(reviews[req.params.id]);
+});
+
+app.post('/api/points/:id', (req, res) => {
+
+    console.log('post request');
+    console.log(req.params.id);
+    console.log(req.body);
+    //save the reference
+    const reviews = require('./reviews.json');
+    console.log(reviews[req.params.id].rev);
+    reviews[req.params.id].rev.push({
+        review: req.body.review,
+        description: req.body.description,
+        rating: req.body.rating
+    }) 
+
+    fs.writeFile('./reviews.json', JSON.stringify(reviews), () => {
+        res.status(201).end();
+    });
+    res.end();
 });
 
 app.use((req, res, next) => {
