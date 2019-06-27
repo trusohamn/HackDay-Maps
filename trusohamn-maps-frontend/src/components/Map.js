@@ -52,7 +52,7 @@ class Map extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(this.state.data === null){
+        if (this.state.data === null) {
             console.log('updating data');
             fetch('http://localhost:8000/api/points')
                 .then(res => res.json())
@@ -60,29 +60,29 @@ class Map extends React.Component {
                     this.setState({
                         data: data
                     });
-    
+
                     const features = [];
-    
+
                     const icon = new ol.style.Icon({
                         opacity: 1,
                         scale: 0.03,
                         src: logo
                     });
-    
+
                     const iconStyle = new ol.style.Style({
                         image: icon
                     });
-    
+
                     data.points.forEach((e) => {
                         const coords = ol.proj.fromLonLat(e.localisation);
                         const iconFeature = new ol.Feature({
                             geometry: new ol.geom.Point(coords),
-                            name: e.description
+                            name: e.name
                         });
                         iconFeature.setStyle(iconStyle);
                         features.push(iconFeature);
                     })
-    
+
                     this.state.featuresLayer.setSource(
                         new ol.source.Vector({
                             features: features
@@ -94,12 +94,15 @@ class Map extends React.Component {
     }
 
     handleMapClick(event) {
-
+        ///popout ///
         this.state.map.forEachFeatureAtPixel(event.pixel,
             feature => {
                 console.log(feature.get('name'));
+                this.props.setPointDescription({name: feature.get('name')});
             });
-        ////////////////
+
+
+        ///////adding data/////////
         const coord = ol.proj.toLonLat(event.coordinate);
         console.log(coord);
         this.setState({
@@ -126,7 +129,7 @@ class Map extends React.Component {
     render() {
         return (
             <div ref="mapContainer">
-                <Form lon={this.state.lon} lat={this.state.lat} removeData={() => this.setState({ data: null })}></Form>
+                <Form lon={this.state.lon} lat={this.state.lat} removeData={() => this.setState({ data: null })}></Form> 
             </div>
         );
     }
