@@ -40,8 +40,6 @@ app.post('/api/points', (req, res) => {
     fs.writeFile('./reviews.json', JSON.stringify(reviews), () => {
         res.status(201).end();
     });
-
-
 });
 
 app.get('/api/points', (req, res) => {
