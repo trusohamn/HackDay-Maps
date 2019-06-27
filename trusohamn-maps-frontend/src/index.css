@@ -8,16 +8,19 @@ body {
     min-height: 100vh;
     display:flex;
     flex-direction: column;
-    justify-content: space-between
+    justify-content: space-between;
+    background-color: lightgray !important;
 }
 
 
 #mapContainer {
     height: 60vh;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.23);
 }
 
 .html {
     background-color: black;
+    
 }
 
 .flexcontainer {

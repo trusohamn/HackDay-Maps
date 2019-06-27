@@ -100,8 +100,8 @@ class Map extends React.Component {
                 })
                 .catch(error => console.log(error));
         }
-        if (this.props.pointDescription === {}) {
-            const pointData = this.state.data.points.find(e =>
+        else if (this.state.pointId) {
+            const pointData = this.props.data.points.find(e =>
                 e.id === this.state.pointId);
             // console.log(pointData);
             console.log('setting point description');
