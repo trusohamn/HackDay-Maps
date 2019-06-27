@@ -32,12 +32,31 @@ app.post('/api/points', (req, res) => {
     fs.writeFile('./points.json', JSON.stringify(points), () => {
         res.status(201).end();
     });
+
+    const reviews = require('./reviews.json');
+    reviews[point.id] = {
+        rev: []
+    }
+    fs.writeFile('./reviews.json', JSON.stringify(reviews), () => {
+        res.status(201).end();
+    });
+
+
 });
 
 app.get('/api/points', (req, res) => {
     console.log('get request');
     const points = require('./points.json');
     res.send(JSON.stringify(points));
+});
+
+app.get('/api/points/:id', (req, res) => {
+
+    console.log('get request');
+    console.log(req.params.id);
+
+    // send out the reviews
+    res.send({reviews: 'here come your reviews'});
 });
 
 app.use((req, res, next) => {
