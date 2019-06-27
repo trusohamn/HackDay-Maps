@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const {generateUniqueId} = require('./dataHandling');
 
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -78,7 +78,7 @@ app.post('/api/points/:id', (req, res) => {
     const reviews = require('./reviews.json');
     console.log(reviews[req.params.id].rev);
     reviews[req.params.id].rev.push({
-        review: req.body.review,
+        title: req.body.title,
         description: req.body.description,
         rating: parseInt(req.body.rating)
     }) 

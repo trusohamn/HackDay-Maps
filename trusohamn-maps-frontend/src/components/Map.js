@@ -5,6 +5,7 @@ import bonfire from '../icons/010-bonfire.svg';
 import viewPoint from '../icons/009-binoculars.svg';
 
 
+
 const ol = require('openlayers');
 require('openlayers/css/ol.css');
 
@@ -20,6 +21,7 @@ class Map extends React.Component {
         this.state = ({
             lon: 18,
             lat: 60,
+            pointId: null
         });
     }
 
@@ -72,7 +74,7 @@ class Map extends React.Component {
                             scale: 0.05,
                             src: iconMapping[e.type]
                         });
-    
+
                         const iconStyle = new ol.style.Style({
                             image: icon
                         });
@@ -98,11 +100,21 @@ class Map extends React.Component {
                 })
                 .catch(error => console.log(error));
         }
+        if (this.props.pointDescription === {}) {
+            const pointData = this.state.data.points.find(e =>
+                e.id === this.state.pointId);
+            // console.log(pointData);
+            console.log('setting point description');
+            this.props.setPointDescription(pointData);
+        }
+
     }
 
     handleMapClick(event) {
         ///popout ///
+
         let pointDescription = {};
+        let pointId = null;
         this.state.map.forEachFeatureAtPixel(event.pixel,
             feature => {
                 console.log(feature.get('id'));
@@ -112,9 +124,11 @@ class Map extends React.Component {
                     description: feature.get('description'),
                     rating: feature.get('rating')
                 }
+                pointId = feature.get('id');
             });
-
+        this.setState({ pointId: pointId });
         this.props.setPointDescription(pointDescription);
+
         ///////adding data/////////
         const coord = ol.proj.toLonLat(event.coordinate);
         console.log(coord);

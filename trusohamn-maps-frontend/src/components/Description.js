@@ -17,9 +17,9 @@ function Description(props) {
                     return (
                         <div className="flexcontainercolumn">
                             <br></br>
-                            <h3>{e.review}</h3>
+                            <h5>{e.title}</h5>
                             <p> {e.description} </p>
-                            <h5>{e.rating}</h5>
+                            <h5>rated: {e.rating}</h5>
                         </div>
                     )
                 })
@@ -43,6 +43,7 @@ function Description(props) {
         })
             .then(() => {
                 props.setData(null);
+                props.setPointDescription({});
             });
     }
 
@@ -64,11 +65,11 @@ function Description(props) {
                 <form className="flexcontainer" onSubmit={submitReview}>
                     <div className="flexcontainercolumn">
                         <label for="title">Title:</label>
-                        <input className="form-control input-sm" required name="title" id="title"></input>
+                        <input className="form-control input-sm" placeholder="title" required name="title" id="title"></input>
                     </div>
                     <div className="flexcontainercolumn">
                         <label for="description">Description:</label>
-                        <input className="form-control input-sm" placeholder="review" name="description" id="description"></input>
+                        <input className="form-control input-sm" placeholder="description" name="description" id="description"></input>
                     </div>
                     <div className="flexcontainercolumn">
                         <label for="rating">Rating:</label>
