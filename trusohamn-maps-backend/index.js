@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/points', (req, res) => {
+    console.log('post request');
     const points = require('./points.json');
     const point = {
         localisation: [parseFloat(req.body.lon), parseFloat(req.body.lat)],
@@ -25,11 +26,12 @@ app.post('/api/points', (req, res) => {
     console.log(point);
     points.points.push(point);
     fs.writeFile('./points.json', JSON.stringify(points), () => {
-        res.status(200).end();
+        res.status(201).end();
     });
 });
 
 app.get('/api/points', (req, res) => {
+    console.log('get request');
     const points = require('./points.json');
     res.send(JSON.stringify(points));
 });
