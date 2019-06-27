@@ -37,8 +37,8 @@ class Map extends React.Component {
                 extraLayer,
                 featuresLayer
             ], view: new ol.View({
-                center: ol.proj.fromLonLat([17.762083241832443, 59.401848231069636]),
-                zoom: 13,
+                center: ol.proj.fromLonLat([17.862083241832443, 59.301848231069636]),
+                zoom: 11,
             })
         });
 
@@ -137,8 +137,9 @@ class Map extends React.Component {
 
     render() {
         return (
-            <div ref="mapContainer">
-                <Form lon={this.state.lon} lat={this.state.lat} removeData={() => this.setState({ data: null })}></Form>
+            <div>
+                <div ref="mapContainer" id="mapContainer"></div>
+                <Form mode={this.props.mode} lon={this.state.lon} lat={this.state.lat} removeData={() => this.setState({ data: null })}></Form>
             </div>
         );
     }
