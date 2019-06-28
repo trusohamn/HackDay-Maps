@@ -1,1 +1,86 @@
-{"points":[{"id":"Kärsön-1561660025512","localisation":[17.907994464039803,59.31862173808557],"name":"Kärsön","description":"nice island for small hike","type":"view","rating":6},{"id":"Gåseborg-1561660238632","localisation":[17.76191096752882,59.40123382771634],"name":"Gåseborg","description":"iron age ruins","type":"camping","rating":10},{"id":"Flaten-1561665192990","localisation":[18.14871371654954,59.249265793743746],"name":"Flaten","description":"lake","type":"bonfire"},{"id":"-1561665399262","localisation":[18.033340015300446,59.33220696140668],"name":"","description":"","type":"camping"},{"id":"tasmanian-1561665426204","localisation":[18.148551401269224,59.248267315889194],"name":"tasmanian","description":"","type":"view"},{"id":"camp-1561665452688","localisation":[17.8535346392401,59.356328626058826],"name":"camp","description":"gooo","type":"bonfire"},{"id":"Visby-1561668591668","localisation":[18.303981947126566,57.643710147787175],"name":"Visby","description":"","type":"view"},{"id":"gdansk-1561668694175","localisation":[18.34811210632324,54.65715189302068],"name":"gdansk","description":"","type":"camping"}]}
+{
+    "points": [
+        {
+            "id": "Kärsön-1561660025512",
+            "localisation": [
+                17.907994464039803,
+                59.31862173808557
+            ],
+            "name": "Kärsön",
+            "description": "nice island for small hike",
+            "type": "view",
+            "rating": 6
+        },
+        {
+            "id": "Gåseborg-1561660238632",
+            "localisation": [
+                17.76191096752882,
+                59.40123382771634
+            ],
+            "name": "Gåseborg",
+            "description": "iron age ruins",
+            "type": "camping",
+            "rating": 10
+        },
+        {
+            "id": "Flaten-1561665192990",
+            "localisation": [
+                18.14871371654954,
+                59.249265793743746
+            ],
+            "name": "Flaten",
+            "description": "lake",
+            "type": "bonfire"
+        },
+        {
+            "id": "tasmanian-1561665426204",
+            "localisation": [
+                18.148551401269224,
+                59.248267315889194
+            ],
+            "name": "tasmanian",
+            "description": "",
+            "type": "view"
+        },
+        {
+            "id": "camp-1561665452688",
+            "localisation": [
+                17.8535346392401,
+                59.356328626058826
+            ],
+            "name": "camp",
+            "description": "gooo",
+            "type": "bonfire"
+        },
+        {
+            "id": "Visby-1561668591668",
+            "localisation": [
+                18.303981947126566,
+                57.643710147787175
+            ],
+            "name": "Visby",
+            "description": "",
+            "type": "view"
+        },
+        {
+            "id": "gdansk-1561668694175",
+            "localisation": [
+                18.34811210632324,
+                54.65715189302068
+            ],
+            "name": "gdansk",
+            "description": "",
+            "type": "camping"
+        },
+        {
+            "id": "lindigo-1561703893553",
+            "localisation": [
+                18.10856938362122,
+                59.39516006207242
+            ],
+            "name": "lindigo",
+            "description": "island",
+            "type": "camping"
+        }
+    ]
+}

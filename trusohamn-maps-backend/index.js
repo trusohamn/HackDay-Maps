@@ -52,7 +52,7 @@ app.get('/api/points', (req, res) => {
         const sum = pointReviews.reduce((acc, el) => {
             return acc + parseInt(el.rating)
         }, 0);
-        point.rating = sum / pointReviews.length;
+        point.rating = ( sum / pointReviews.length ).toFixed(1);
         return point;
 
     })
