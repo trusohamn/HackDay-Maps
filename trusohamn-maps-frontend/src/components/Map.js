@@ -4,7 +4,8 @@ import camping from '../icons/039-tent.svg';
 import bonfire from '../icons/010-bonfire.svg';
 import viewPoint from '../icons/009-binoculars.svg';
 
-
+import { config } from '../url_config'
+const url = config.url.API_URL
 
 const ol = require('openlayers');
 require('openlayers/css/ol.css');
@@ -63,7 +64,7 @@ class Map extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (this.props.data === null) {
             console.log('updating data');
-            fetch('http://localhost:8000/api/points')
+            fetch(url + '/api/points')
                 .then(res => res.json())
                 .then(data => {
                     const features = [];

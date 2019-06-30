@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { config } from '../url_config'
+const url = config.url.API_URL
 
 function Description(props) {
     const [reviews, setReviews] = useState('');
-    useEffect(() => {
-        setReviews('');
-    }, [props.pointDescription.id]);
+    // useEffect(() => {
+    //     setReviews('');
+    // }, [props.pointDescription.id]);
 
     const fetchMorePointData = () => {
         console.log('click');
         //get request to api/points/:id
-        fetch("http://localhost:8000/api/points/" + props.pointDescription.id)
+        fetch(url + "/api/points/" + props.pointDescription.id)
             .then(res => res.json())
             .then(res => {
                 console.log(res.rev)
@@ -34,7 +36,7 @@ function Description(props) {
             dataForm.append(pair[0], pair[1]);
         }
 
-        fetch("http://localhost:8000/api/points/" + props.pointDescription.id, {
+        fetch(url + "/api/points/" + props.pointDescription.id, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'

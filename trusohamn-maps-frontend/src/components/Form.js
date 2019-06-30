@@ -1,5 +1,6 @@
 import React from 'react';
-
+import { config } from '../url_config'
+const url = config.url.API_URL
 
 function Form(props) {
 
@@ -12,7 +13,7 @@ function Form(props) {
             data.append(pair[0], pair[1]);
         }
 
-        fetch("http://localhost:8000/api/points", {
+        fetch(url + "/api/points", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -28,29 +29,37 @@ function Form(props) {
     return (
         props.mode === 'explore' ? '' :
             <div>
-                <form onSubmit={postPoint} className="flexcontainer" action="http://localhost:8000/api/points" method="post" >
-                    <h3>Add new location  </h3>
-                    <input className="d-none" readOnly type="number" step="any" name="lon" id="lon" value={props.lon}></input>
-                    <input className="d-none" readOnly type="number" step="any" name="lat" id="lat" value={props.lat}></input>
-                    <div className="flexcontainercolumn">
-                        <label for="name">Name:</label>
-                        <input required className="form-control input-sm" placeholder="place name" type="text" name="name" id="name"></input>
+                <form className="container" onSubmit={postPoint} action="http://localhost:8000/api/points" method="post" >
+
+                    <div className="row">
+                        <h3 className="col-sm">Add new location  </h3>
+                        <input className="d-none" readOnly type="number" step="any" name="lon" id="lon" value={props.lon}></input>
+                        <input className="d-none" readOnly type="number" step="any" name="lat" id="lat" value={props.lat}></input>
                     </div>
-                    <div className="flexcontainercolumn">
-                        <label for="description">Description:</label>
-                        <input className="form-control input-sm" placeholder="place decription" type="text" name="description" id="description"></input>
+                    <div className="row">
+
+                        <div className="col-sm">
+                            <label for="name">Name:</label>
+                            <input required className="form-control input-sm" placeholder="place name" type="text" name="name" id="name"></input>
+                        </div>
+                        <div className="col-sm">
+                            <label for="description">Description:</label>
+                            <input className="form-control input-sm" placeholder="place decription" type="text" name="description" id="description"></input>
+                        </div>
+                        <div className="col-sm">
+                            <label for="type">Select type:</label>
+                            <select className="form-control input-sm" id="type" name="type">
+                                <option>camping</option>
+                                <option>bonfire</option>
+                                <option>view</option>
+                            </select>
+                        </div>
+                        <div className="col-sm">
+                            <button type="submit" className="btn btn-dark btn-bg">Go</button>
+                        </div>
                     </div>
-                    <div className="flexcontainercolumn">
-                        <label for="type">Select type:</label>
-                        <select className="form-control input-sm" id="type" name="type">
-                            <option>camping</option>
-                            <option>bonfire</option>
-                            <option>view</option>
-                        </select>
-                    </div>
-                    <button type="submit" className="btn btn-dark btn-bg">Go</button>
                 </form>
-            </div>
+            </div >
 
 
     )
