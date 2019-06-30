@@ -1,21 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 export const MyContext = React.createContext()
-// export const MyContext = AccountContext.Consumer
-class MyContextProvider extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            pointId: '12345vrdg67',
-            setPointId: newPointId => this.setState({ pointId: newPointId })
-        }
+
+function MyContextProvider(props) {
+    const [pointId, setPointId] = useState('new Point id')
+
+    const state = {
+        pointId,
+        setPointId
     }
 
-    render() {
-        return (
-            <MyContext.Provider value={this.state}>
-                {this.props.children}
-            </MyContext.Provider>
-        )
-    }
+    return (
+        <MyContext.Provider value={state}>
+            {props.children}
+        </MyContext.Provider>
+    )
+
 }
 export default MyContextProvider
