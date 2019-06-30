@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Map from './Map';
 import Description from './Description';
+import {MyContext} from '../contexts/MyContextProvider';
 
 function Location(props) {
     const [pointDescription, setPointDescription] = useState({});
@@ -14,19 +15,19 @@ function Location(props) {
         setMode(newMode);
         setSwitchText(switchText);
     };
-
-    let pointId = this.context.pointId;
+    const context = useContext(MyContext); 
+    console.log(context);
 
     return (
         <div>
-            {pointId}
+            pointId: {context.pointId} <br></br>
             {props.location.pathname}
             <Map pointDescription={pointDescription} setPointDescription={setPointDescription} mode={mode} data={data} setData={setData}></Map>
 
-            <Description pointDescription={pointDescription} setPointDescription={setPointDescription} mode={mode} data={data} setData={setData}></Description> */}
+            <Description pointDescription={pointDescription} setPointDescription={setPointDescription} mode={mode} data={data} setData={setData}></Description> 
 
         </div>
-    )
+    );
 }
 
 export default Location;

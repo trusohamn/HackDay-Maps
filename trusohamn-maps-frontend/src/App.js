@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 
 import Location from './components/Location';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
-const MyContext = React.createContext(false);
-
+import MyContextProvider from './contexts/MyContextProvider';
 
 
 function App() {
@@ -20,7 +19,7 @@ function App() {
   };
 
   return (
-    <MyContext.Provider value={{pointId: '1235t5'}}>
+    <MyContextProvider>
       <Router>
         <div className="App">
           <nav className="navbar navbar-dark bg-dark">
@@ -36,7 +35,7 @@ function App() {
         <Description pointDescription={pointDescription} setPointDescription={setPointDescription} mode={mode} data={data} setData={setData}></Description> */}
         </div>
       </Router>
-    </MyContext.Provider>
+    </MyContextProvider>
 
   );
 }
