@@ -5,8 +5,6 @@ import { MyContext } from '../contexts/MyContextProvider';
 
 function Location(props) {
     const [pointDescription, setPointDescription] = useState({});
-    const [mode, setMode] = useState('explore');
-    const [switchText, setSwitchText] = useState('Edit map');
     const [data, setData] = useState(null);
 
 
@@ -21,9 +19,9 @@ function Location(props) {
         <div>
             pointId: {context.pointId} <br></br>
             {props.location.pathname}
-            <Map pointDescription={pointDescription} setPointDescription={setPointDescription} mode={mode} data={data} setData={setData}></Map>
+            <Map pointDescription={pointDescription} setPointDescription={setPointDescription} data={data} setData={setData}></Map>
 
-            <Description pointDescription={pointDescription} setPointDescription={setPointDescription} mode={mode} data={data} setData={setData}></Description>
+            <Description pointDescription={pointDescription} setPointDescription={setPointDescription} data={data} setData={setData}></Description>
 
         </div>
     );
