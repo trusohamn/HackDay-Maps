@@ -4,6 +4,7 @@ export const MyContext = React.createContext({})
 function MyContextProvider(props) {
     const [pointId, setPointId] = useState('new Point id');
     const [mode, setMode] = useState('explore');
+    const [data, setData] = useState(null);
 
     const switchMode = () => {
         const newMode = (mode === 'explore') ? 'edit' : 'explore';
@@ -14,7 +15,9 @@ function MyContextProvider(props) {
         pointId,
         setPointId,
         mode,
-        switchMode
+        switchMode,
+        data,
+        setData
     }
     return (
         <MyContext.Provider value={state}>

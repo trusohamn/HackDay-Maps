@@ -1,17 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { config } from '../url_config'
+import { MyContext } from '../contexts/MyContextProvider';
 const url = config.url.API_URL
 
-function Description(props) {
-    const [reviews, setReviews] = useState('');
-    // useEffect(() => {
-    //     setReviews('');
-    // }, [props.pointDescription.id]);
 
-    const fetchMorePointData = () => {
-        console.log('click');
+
+function Description(props) {
+    const context = useContext(MyContext);
+
+    const [reviews, setReviews] = useState('');
+    const [pointData, setPointData] = useState({});
+    useEffect(() => {
+        setReviews('');
+        if (context.data) {
+            const pointData = context.data.points.find(e =>
+                e.id === context.pointId);
+            setPointData(pointData);
+        }
+    }, [context.pointId]);
+
+
+
+
+
+    const fetchReviews = () => {
+        console.log('fetch reviews');
         //get request to api/points/:id
-        fetch(url + "/api/points/" + props.pointDescription.id)
+        fetch(url + "/api/points/" + context.pointId)
             .then(res => res.json())
             .then(res => {
                 console.log(res.rev)
@@ -50,18 +65,18 @@ function Description(props) {
     }
 
     return (
-        (!props.pointDescription.id || props.mode === 'edit') ?
+        (!pointData || context.mode === 'edit') ?
             '' :
             <div className="flexcontainercolumn">
                 <h1>
-                    {props.pointDescription.name}
+                    {pointData.name}
                 </h1>
                 <p>
-                    {props.pointDescription.description}
+                    {pointData.description}
                     <br />
-                    rating: {props.pointDescription.rating}
+                    rating: {pointData.rating}
                 </p>
-                <button type="click" onClick={fetchMorePointData} className="btn btn-dark btn-sm">Show reviews</button>
+                <button type="click" onClick={fetchReviews} className="btn btn-dark btn-sm">Show reviews</button>
 
                 {reviews}
                 <form className="flexcontainer" onSubmit={submitReview}>

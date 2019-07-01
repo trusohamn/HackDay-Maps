@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { config } from '../url_config'
+import { MyContext } from '../contexts/MyContextProvider';
 const url = config.url.API_URL
+
 
 function Form(props) {
 
-
+    const context = useContext(MyContext);
     const postPoint = (e) => {
         e.preventDefault();
 
@@ -21,13 +23,13 @@ function Form(props) {
             body: data
         })
             .then((res) => {
-                console.log('success');
-                props.removeData();
+                console.log('new point posted');
+                context.setData(null);
             })
     }
 
     return (
-        props.mode === 'explore' ? '' :
+        context.mode === 'explore' ? '' :
             <div>
                 <form className="container" onSubmit={postPoint} action="http://localhost:8000/api/points" method="post" >
 

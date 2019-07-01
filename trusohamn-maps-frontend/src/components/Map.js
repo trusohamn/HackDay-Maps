@@ -1,14 +1,18 @@
 import React from 'react';
 import Form from './Form';
+
 import camping from '../icons/039-tent.svg';
 import bonfire from '../icons/010-bonfire.svg';
 import viewPoint from '../icons/009-binoculars.svg';
+
+import { MyContext } from '../contexts/MyContextProvider';
 
 import { config } from '../url_config'
 const url = config.url.API_URL
 
 const ol = require('openlayers');
 require('openlayers/css/ol.css');
+
 
 const iconMapping = {
     camping: camping,
@@ -21,8 +25,7 @@ class Map extends React.Component {
         super(props);
         this.state = ({
             lon: 18,
-            lat: 60,
-            pointId: null
+            lat: 60
         });
     }
 
@@ -47,6 +50,7 @@ class Map extends React.Component {
                 extraLayer,
                 featuresLayer
             ], view: new ol.View({
+                //later check for route and get the id from the localisation
                 center: ol.proj.fromLonLat([17.862083241832443, 59.301848231069636]),
                 zoom: 11,
             })
@@ -62,13 +66,12 @@ class Map extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.props.data === null) {
+        if (this.context.data === null) {
             console.log('updating data');
             fetch(url + '/api/points')
                 .then(res => res.json())
                 .then(data => {
                     const features = [];
-
                     data.points.forEach((e) => {
                         const icon = new ol.style.Icon({
                             opacity: 1,
@@ -97,40 +100,26 @@ class Map extends React.Component {
                             features: features
                         })
                     );
-                    this.props.setData(data);
+                    this.context.setData(data);
                 })
                 .catch(error => console.log(error));
         }
-        else if (this.state.pointId) {
-            const pointData = this.props.data.points.find(e =>
-                e.id === this.state.pointId);
-            // console.log(pointData);
-            console.log('setting point description');
-            this.props.setPointDescription(pointData);
-        }
 
+       
     }
 
     handleMapClick(event) {
-        ///popout ///
+        ///getting pointid of the clicked feature ///
 
-        let pointDescription = {};
         let pointId = null;
         this.state.map.forEachFeatureAtPixel(event.pixel,
             feature => {
                 console.log(feature.get('id'));
-                pointDescription = {
-                    id: feature.get('id'),
-                    name: feature.get('name'),
-                    description: feature.get('description'),
-                    rating: feature.get('rating')
-                }
                 pointId = feature.get('id');
             });
-        this.setState({ pointId: pointId });
-        this.props.setPointDescription(pointDescription);
+        this.context.setPointId(pointId);
 
-        ///////adding data/////////
+        ///////drawint a point/////////
         const coord = ol.proj.toLonLat(event.coordinate);
         console.log(coord);
         this.setState({
@@ -158,10 +147,12 @@ class Map extends React.Component {
         return (
             <div>
                 <div ref="mapContainer" id="mapContainer"></div>
-                <Form mode={this.props.mode} lon={this.state.lon} lat={this.state.lat} removeData={() => this.props.setData(null)}></Form>
+                <Form lon={this.state.lon} lat={this.state.lat}></Form>
             </div>
         );
     }
 
 }
+
+Map.contextType = MyContext;
 export default Map;

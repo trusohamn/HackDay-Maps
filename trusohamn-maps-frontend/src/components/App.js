@@ -6,8 +6,6 @@ import { MyContext } from '../contexts/MyContextProvider';
 
 
 function App() {
-  // const [pointDescription, setPointDescription] = useState({});
-  // const [data, setData] = useState(null);
   const context = useContext(MyContext);
   const switchText = (context.mode === 'explore') ? 'Edit map' : 'Explore';
   return (
@@ -19,11 +17,8 @@ function App() {
           </h1>
             <button id="switch modes" onClick={context.switchMode}>{switchText}</button>
           </nav>
-          <Route path="/location/:id" component={Location} />
-
-          {/* <Map pointDescription={pointDescription} setPointDescription={setPointDescription} mode={mode} data={data} setData={setData}></Map>
-        
-        <Description pointDescription={pointDescription} setPointDescription={setPointDescription} mode={mode} data={data} setData={setData}></Description> */}
+          <Route exact path="/" component={Location} />
+          <Route path="/:id" component={Location} />
         </div>
       </Router>
 
