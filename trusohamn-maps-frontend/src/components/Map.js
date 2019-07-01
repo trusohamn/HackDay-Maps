@@ -24,8 +24,8 @@ class Map extends React.Component {
     constructor(props) {
         super(props);
         this.state = ({
-            lon: 18,
-            lat: 60
+            lon: 17.862083241832443,
+            lat: 59.30184823106963
         });
     }
 
@@ -51,12 +51,46 @@ class Map extends React.Component {
                 featuresLayer
             ], view: new ol.View({
                 //later check for route and get the id from the localisation
-                center: ol.proj.fromLonLat([17.862083241832443, 59.301848231069636]),
+                center: ol.proj.fromLonLat([this.state.lon, this.state.lat]),
                 zoom: 11,
             })
         });
-
-        map.on('click', this.handleMapClick.bind(this));
+        const handleMapClick = (event) => {
+            ///getting pointid of the clicked feature ///
+    
+            let pointId = null;
+            this.state.map.forEachFeatureAtPixel(event.pixel,
+                feature => {
+                    console.log(feature.get('id'));
+                    pointId = feature.get('id');
+                });
+            this.context.setPointId(pointId);
+            // window.location.pathname = "/" + pointId;
+    
+            ///////drawint a point/////////
+            const coord = ol.proj.toLonLat(event.coordinate);
+            console.log(coord);
+            this.setState({
+                lon: coord[0],
+                lat: coord[1]
+            });
+    
+            const features = [];
+    
+            const coords = event.coordinate;
+            const newFeature = new ol.Feature({
+                geometry: new ol.geom.Point(coords)
+            })
+    
+            features.push(newFeature);
+    
+            this.state.extraLayer.setSource(
+                new ol.source.Vector({
+                    features: features
+                })
+            );
+        }
+        map.on('click', handleMapClick);
 
         this.setState({
             map: map,
@@ -105,43 +139,10 @@ class Map extends React.Component {
                 .catch(error => console.log(error));
         }
 
-       
+
     }
 
-    handleMapClick(event) {
-        ///getting pointid of the clicked feature ///
-
-        let pointId = null;
-        this.state.map.forEachFeatureAtPixel(event.pixel,
-            feature => {
-                console.log(feature.get('id'));
-                pointId = feature.get('id');
-            });
-        this.context.setPointId(pointId);
-
-        ///////drawint a point/////////
-        const coord = ol.proj.toLonLat(event.coordinate);
-        console.log(coord);
-        this.setState({
-            lon: coord[0],
-            lat: coord[1]
-        });
-
-        const features = [];
-
-        const coords = event.coordinate;
-        const newFeature = new ol.Feature({
-            geometry: new ol.geom.Point(coords)
-        })
-
-        features.push(newFeature);
-
-        this.state.extraLayer.setSource(
-            new ol.source.Vector({
-                features: features
-            })
-        );
-    }
+ 
 
     render() {
         return (
