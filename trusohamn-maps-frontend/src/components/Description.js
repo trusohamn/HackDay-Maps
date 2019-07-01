@@ -3,25 +3,20 @@ import { config } from '../url_config'
 import { MyContext } from '../contexts/MyContextProvider';
 const url = config.url.API_URL
 
-
-
 function Description(props) {
     const context = useContext(MyContext);
 
     const [reviews, setReviews] = useState('');
-    const [pointData, setPointData] = useState({});
+    const [pointData, setPointData] = useState(null);
     useEffect(() => {
         setReviews('');
         if (context.data) {
+            console.log('use effetct, generating pointData');
             const pointData = context.data.points.find(e =>
                 e.id === context.pointId);
             setPointData(pointData);
         }
-    }, [context.pointId]);
-
-
-
-
+    }, [context.data, context.pointId]);
 
     const fetchReviews = () => {
         console.log('fetch reviews');
@@ -79,20 +74,25 @@ function Description(props) {
                 <button type="click" onClick={fetchReviews} className="btn btn-dark btn-sm">Show reviews</button>
 
                 {reviews}
-                <form className="flexcontainer" onSubmit={submitReview}>
-                    <div className="flexcontainercolumn">
-                        <label for="title">Title:</label>
-                        <input className="form-control input-sm" placeholder="title" required name="title" id="title"></input>
+
+                <form className="container" onSubmit={submitReview}>
+                    <div className="row">
+                        <div className="col-sm">
+                            <label for="title">Title:</label>
+                            <input className="form-control input-sm" placeholder="title" required name="title" id="title"></input>
+                        </div>
+                        <div className="col-sm">
+                            <label for="description">Description:</label>
+                            <input className="form-control input-sm" placeholder="description" name="description" id="description"></input>
+                        </div>
+                        <div className="col-sm">
+                            <label for="rating">Rating:</label>
+                            <input className="form-control input-sm" placeholder="1-10" required min="1" max="10" name="rating" id="rating" type="number"></input>
+                        </div>
                     </div>
-                    <div className="flexcontainercolumn">
-                        <label for="description">Description:</label>
-                        <input className="form-control input-sm" placeholder="description" name="description" id="description"></input>
+                    <div className="flexcontainer">
+                        <button type="submit" className=" btn btn-dark btn-bg">Review</button>
                     </div>
-                    <div className="flexcontainercolumn">
-                        <label for="rating">Rating:</label>
-                        <input className="form-control input-sm" required min="1" max="10" name="rating" id="rating" type="number"></input>
-                    </div>
-                    <button type="submit" className="btn btn-dark btn-bg">Review</button>
                 </form>
 
             </div>

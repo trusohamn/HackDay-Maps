@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 export const MyContext = React.createContext({})
 
 function MyContextProvider(props) {
-    const [pointId, setPointId] = useState('new Point id');
+    const [pointId, setPointId] = useState(null);
     const [mode, setMode] = useState('explore');
     const [data, setData] = useState(null);
 

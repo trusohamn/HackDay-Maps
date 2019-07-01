@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { config } from '../url_config'
 import { MyContext } from '../contexts/MyContextProvider';
 const url = config.url.API_URL
@@ -33,13 +33,12 @@ function Form(props) {
             <div>
                 <form className="container" onSubmit={postPoint} action="http://localhost:8000/api/points" method="post" >
 
-                    <div className="row">
-                        <h3 className="col-sm">Add new location  </h3>
+                    <div className="flexcontainer">
+                        <h3>Add new location  </h3>
                         <input className="d-none" readOnly type="number" step="any" name="lon" id="lon" value={props.lon}></input>
                         <input className="d-none" readOnly type="number" step="any" name="lat" id="lat" value={props.lat}></input>
                     </div>
                     <div className="row">
-
                         <div className="col-sm">
                             <label for="name">Name:</label>
                             <input required className="form-control input-sm" placeholder="place name" type="text" name="name" id="name"></input>
@@ -56,9 +55,9 @@ function Form(props) {
                                 <option>view</option>
                             </select>
                         </div>
-                        <div className="col-sm">
-                            <button type="submit" className="btn btn-dark btn-bg">Go</button>
-                        </div>
+                    </div>
+                    <div className="flexcontainer">
+                        <button type="submit" className="btn btn-dark btn-bg">Add to the map</button>
                     </div>
                 </form>
             </div >

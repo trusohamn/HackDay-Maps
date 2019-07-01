@@ -1,4 +1,6 @@
 import React from 'react';
+// import { Link } from 'react-router-dom';
+
 import Form from './Form';
 
 import camping from '../icons/039-tent.svg';
@@ -66,6 +68,7 @@ class Map extends React.Component {
                 });
             this.context.setPointId(pointId);
             // window.location.pathname = "/" + pointId;
+            // change to url withour refreshing!!!
     
             ///////drawint a point/////////
             const coord = ol.proj.toLonLat(event.coordinate);
@@ -138,11 +141,7 @@ class Map extends React.Component {
                 })
                 .catch(error => console.log(error));
         }
-
-
     }
-
- 
 
     render() {
         return (
@@ -152,7 +151,6 @@ class Map extends React.Component {
             </div>
         );
     }
-
 }
 
 Map.contextType = MyContext;
