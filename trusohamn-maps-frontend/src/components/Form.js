@@ -40,15 +40,15 @@ function Form(props) {
                     </div>
                     <div className="row">
                         <div className="col-sm">
-                            <label for="name">Name:</label>
+                            <label htmlFor="name">Name:</label>
                             <input required className="form-control input-sm" placeholder="place name" type="text" name="name" id="name"></input>
                         </div>
                         <div className="col-sm">
-                            <label for="description">Description:</label>
+                            <label htmlFor="description">Description:</label>
                             <input className="form-control input-sm" placeholder="place decription" type="text" name="description" id="description"></input>
                         </div>
                         <div className="col-sm">
-                            <label for="type">Select type:</label>
+                            <label htmlFor="type">Select type:</label>
                             <select className="form-control input-sm" id="type" name="type">
                                 <option>camping</option>
                                 <option>bonfire</option>

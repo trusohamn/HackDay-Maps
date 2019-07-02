@@ -8,10 +8,12 @@ function Description(props) {
 
     const [reviews, setReviews] = useState('');
     const [pointData, setPointData] = useState(null);
+
     useEffect(() => {
         setReviews('');
         if (context.data) {
-            console.log('use effetct, generating pointData');
+            console.log('Description use effetct, generating pointData, pointId', context.pointId);
+            console.log('pathname', window.location.pathname);
             const pointData = context.data.points.find(e =>
                 e.id === context.pointId);
             setPointData(pointData);
@@ -19,7 +21,7 @@ function Description(props) {
     }, [context.data, context.pointId]);
 
     const fetchReviews = () => {
-        console.log('fetch reviews');
+        console.log('Description fetch reviews');
         //get request to api/points/:id
         fetch(url + "/api/points/" + context.pointId)
             .then(res => res.json())
@@ -46,7 +48,7 @@ function Description(props) {
             dataForm.append(pair[0], pair[1]);
         }
 
-        fetch(url + "/api/points/" + props.pointDescription.id, {
+        fetch(url + "/api/points/" + context.pointId, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -54,8 +56,7 @@ function Description(props) {
             body: dataForm
         })
             .then(() => {
-                props.setData(null);
-                props.setPointDescription({});
+                context.setData(null);
             });
     }
 
@@ -78,15 +79,15 @@ function Description(props) {
                 <form className="container" onSubmit={submitReview}>
                     <div className="row">
                         <div className="col-sm">
-                            <label for="title">Title:</label>
+                            <label htmlFor="title">Title:</label>
                             <input className="form-control input-sm" placeholder="title" required name="title" id="title"></input>
                         </div>
                         <div className="col-sm">
-                            <label for="description">Description:</label>
+                            <label htmlFor="description">Description:</label>
                             <input className="form-control input-sm" placeholder="description" name="description" id="description"></input>
                         </div>
                         <div className="col-sm">
-                            <label for="rating">Rating:</label>
+                            <label htmlFor="rating">Rating:</label>
                             <input className="form-control input-sm" placeholder="1-10" required min="1" max="10" name="rating" id="rating" type="number"></input>
                         </div>
                     </div>

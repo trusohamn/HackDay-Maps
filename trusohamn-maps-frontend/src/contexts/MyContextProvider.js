@@ -3,6 +3,7 @@ export const MyContext = React.createContext({})
 
 function MyContextProvider(props) {
     const [pointId, setPointId] = useState(null);
+    const [redirect, setRedirect] = useState(null)
     const [mode, setMode] = useState('explore');
     const [data, setData] = useState(null);
 
@@ -14,6 +15,8 @@ function MyContextProvider(props) {
     const state = {
         pointId,
         setPointId,
+        redirect,
+        setRedirect,
         mode,
         switchMode,
         data,
