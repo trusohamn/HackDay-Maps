@@ -8,7 +8,9 @@ function Location(props) {
 
     useEffect(() => {
         // console.log('Location useEffect pathname was changed to', props.location.pathname);
-        const pathPointId = props.location.pathname.split('/')[1] || null;  //change to regex
+        const pathPointId = props.location.pathname.match(/[^/]+$/) ? 
+        props.location.pathname.match(/[^/]+$/)[0] : null; 
+        console.log('pathpointid', pathPointId);
         if(context.saveInHistory){
             console.log('saving in the history');
             props.history.push(props.location.pathname);
@@ -23,7 +25,7 @@ function Location(props) {
 
     return (
         <div>
-            <Map></Map>
+            <Map location={props.location} match={props.match}></Map>
             <Description></Description>
         </div>
     );

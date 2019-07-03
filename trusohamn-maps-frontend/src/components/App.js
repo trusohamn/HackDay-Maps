@@ -11,7 +11,7 @@ function App() {
   const switchText = (context.mode === 'explore') ? 'Edit map' : 'Explore';
 
   return (
-    <Router>
+    
       <div className="App">
         <nav className="navbar navbar-dark bg-dark">
           <h1 className="text-light">
@@ -22,7 +22,6 @@ function App() {
         {context.redirect}
         <Route path="/" component={Location} />
       </div>
-    </Router>
   );
 }
 

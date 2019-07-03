@@ -85,7 +85,11 @@ class Map extends React.Component {
                         pointId = feature.get('id') || null;
                     });
 
-                const newPath = pointId === null ? "/" : "/" + pointId;
+                    console.log(this.props.location);
+                    console.log(this.props.match);
+                const newPath = pointId === null ? 
+                '/location/' : 
+                '/location/' + pointId;
                 // console.log('Map handleMapClick setNewPath', newPath)
                 this.context.setSaveInHistory(true);
                 this.context.setRedirect(<Redirect to={newPath}></Redirect>)
