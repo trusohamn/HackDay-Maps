@@ -1,15 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { config } from '../url_config'
+import { MyContext } from '../contexts/MyContextProvider';
+const url = config.url.API_URL
 
 function Description(props) {
+    const context = useContext(MyContext);
+
     const [reviews, setReviews] = useState('');
+    const [pointData, setPointData] = useState(null);
+
     useEffect(() => {
         setReviews('');
-    }, [props.pointDescription.id]);
+        if (context.data) {
+            // console.log('Description use effetct, generating pointData, pointId', context.pointId);
+            // console.log('pathname', window.location.pathname);
+            const pointData = context.data.points.find(e =>
+                e.id === context.pointId);
+            setPointData(pointData);
+        }
+    }, [context.data, context.pointId]);
 
-    const fetchMorePointData = () => {
-        console.log('click');
+    const fetchReviews = () => {
+        console.log('Description fetch reviews');
         //get request to api/points/:id
-        fetch("http://localhost:8000/api/points/" + props.pointDescription.id)
+        fetch(url + "/api/points/" + context.pointId)
             .then(res => res.json())
             .then(res => {
                 console.log(res.rev)
@@ -34,7 +48,7 @@ function Description(props) {
             dataForm.append(pair[0], pair[1]);
         }
 
-        fetch("http://localhost:8000/api/points/" + props.pointDescription.id, {
+        fetch(url + "/api/points/" + context.pointId, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -42,40 +56,44 @@ function Description(props) {
             body: dataForm
         })
             .then(() => {
-                props.setData(null);
-                props.setPointDescription({});
+                context.setData(null);
             });
     }
 
     return (
-        (!props.pointDescription.id || props.mode === 'edit') ?
+        (!pointData || context.mode === 'edit') ?
             '' :
             <div className="flexcontainercolumn">
                 <h1>
-                    {props.pointDescription.name}
+                    {pointData.name}
                 </h1>
                 <p>
-                    {props.pointDescription.description}
+                    {pointData.description}
                     <br />
-                    rating: {props.pointDescription.rating}
+                    rating: {pointData.rating}
                 </p>
-                <button type="click" onClick={fetchMorePointData} className="btn btn-dark btn-sm">Show reviews</button>
+                <button type="click" onClick={fetchReviews} className="btn btn-dark btn-sm">Show reviews</button>
 
                 {reviews}
-                <form className="flexcontainer" onSubmit={submitReview}>
-                    <div className="flexcontainercolumn">
-                        <label for="title">Title:</label>
-                        <input className="form-control input-sm" placeholder="title" required name="title" id="title"></input>
+
+                <form className="container" onSubmit={submitReview}>
+                    <div className="row">
+                        <div className="col-sm">
+                            <label htmlFor="title">Title:</label>
+                            <input className="form-control input-sm" placeholder="title" required name="title" id="title"></input>
+                        </div>
+                        <div className="col-sm">
+                            <label htmlFor="description">Description:</label>
+                            <input className="form-control input-sm" placeholder="description" name="description" id="description"></input>
+                        </div>
+                        <div className="col-sm">
+                            <label htmlFor="rating">Rating:</label>
+                            <input className="form-control input-sm" placeholder="1-10" required min="1" max="10" name="rating" id="rating" type="number"></input>
+                        </div>
                     </div>
-                    <div className="flexcontainercolumn">
-                        <label for="description">Description:</label>
-                        <input className="form-control input-sm" placeholder="description" name="description" id="description"></input>
+                    <div className="flexcontainer">
+                        <button type="submit" className=" btn btn-dark btn-bg">Review</button>
                     </div>
-                    <div className="flexcontainercolumn">
-                        <label for="rating">Rating:</label>
-                        <input className="form-control input-sm" required min="1" max="10" name="rating" id="rating" type="number"></input>
-                    </div>
-                    <button type="submit" className="btn btn-dark btn-bg">Review</button>
                 </form>
 
             </div>
