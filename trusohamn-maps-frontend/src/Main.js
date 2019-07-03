@@ -8,7 +8,7 @@ function Main() {
 
     return (
         <MyContextProvider>
-            <Router>
+            <Router basename='/'>
                 <Route path="/">
                     <Redirect to="/location"></Redirect>
                 </Route>
