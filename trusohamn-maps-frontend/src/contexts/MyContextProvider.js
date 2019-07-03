@@ -3,7 +3,8 @@ export const MyContext = React.createContext({})
 
 function MyContextProvider(props) {
     const [pointId, setPointId] = useState(null);
-    const [redirect, setRedirect] = useState(null)
+    const [redirect, setRedirect] = useState(null);
+    const [saveInHistory, setSaveInHistory] = useState(false);
     const [mode, setMode] = useState('explore');
     const [data, setData] = useState(null);
 
@@ -20,7 +21,9 @@ function MyContextProvider(props) {
         mode,
         switchMode,
         data,
-        setData
+        setData,
+        saveInHistory,
+        setSaveInHistory
     }
     return (
         <MyContext.Provider value={state}>

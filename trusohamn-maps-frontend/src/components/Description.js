@@ -12,8 +12,8 @@ function Description(props) {
     useEffect(() => {
         setReviews('');
         if (context.data) {
-            console.log('Description use effetct, generating pointData, pointId', context.pointId);
-            console.log('pathname', window.location.pathname);
+            // console.log('Description use effetct, generating pointData, pointId', context.pointId);
+            // console.log('pathname', window.location.pathname);
             const pointData = context.data.points.find(e =>
                 e.id === context.pointId);
             setPointData(pointData);
