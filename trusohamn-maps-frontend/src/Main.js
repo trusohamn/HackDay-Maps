@@ -1,7 +1,7 @@
 import React from 'react';
 import MyContextProvider from './contexts/MyContextProvider';
 import App from './components/App';
-import { Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
+import { Route, HashRouter as Router, Redirect } from 'react-router-dom';
 
 
 function Main() {
