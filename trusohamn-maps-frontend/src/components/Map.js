@@ -13,10 +13,20 @@ import { MyContext } from '../contexts/MyContextProvider';
 
 import { config } from '../url_config'
 
+import { fromLonLat, toLonLat } from 'ol/proj';
+import 'ol/ol.css';
+import { Map as OlMap, View } from 'ol';
+import TileLayer from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
+import { Vector as VectorLayer } from 'ol/layer';
+import { Vector as VectorSource } from 'ol/source';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+import { Icon, Style } from 'ol/style.js';
+
 const url = config.url.API_URL
 
-const ol = require('openlayers');
-require('openlayers/css/ol.css');
+
 
 const iconMapping = {
     camping: camping,
@@ -39,28 +49,28 @@ class Map extends React.Component {
 
     componentDidMount() {
         // console.log('map did mount');
-        const extraLayer = new ol.layer.Vector({
-            source: new ol.source.Vector({
+        const extraLayer = new VectorLayer({
+            source: new VectorSource({
                 features: []
             })
         });
-        const featuresLayer = new ol.layer.Vector({
-            source: new ol.source.Vector({
+        const featuresLayer = new VectorLayer({
+            source: new VectorSource({
                 features: []
             })
         });
 
-        const map = new ol.Map({
+        const map = new OlMap({
             target: this.refs.mapContainer, //change to createRef API!!
             layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM()
+                new TileLayer({
+                    source: new OSM()
                 }),
                 extraLayer,
                 featuresLayer
-            ], view: new ol.View({
+            ], view: new View({
                 //later check for route and get the id from the localisation
-                center: ol.proj.fromLonLat([this.state.lon, this.state.lat]),
+                center: fromLonLat([this.state.lon, this.state.lat]),
                 zoom: 11,
             })
         });
@@ -81,7 +91,7 @@ class Map extends React.Component {
                 this.context.setRedirect(<Redirect to={newPath}></Redirect>)
             } else if (this.context.mode === 'edit') {
                 ///////drawing a point/////////
-                const coord = ol.proj.toLonLat(event.coordinate);
+                const coord = toLonLat(event.coordinate);
                 console.log(coord);
                 this.setState({
                     lon: coord[0],
@@ -91,14 +101,14 @@ class Map extends React.Component {
                 const features = [];
 
                 const coords = event.coordinate;
-                const newFeature = new ol.Feature({
-                    geometry: new ol.geom.Point(coords)
+                const newFeature = new Feature({
+                    geometry: new Point(coords)
                 })
 
                 features.push(newFeature);
 
                 this.state.extraLayer.setSource(
-                    new ol.source.Vector({
+                    new VectorSource({
                         features: features
                     })
                 );
@@ -125,20 +135,20 @@ class Map extends React.Component {
                 .then(data => {
                     const features = [];
                     data.points.forEach((e) => {
-                        const icon = new ol.style.Icon({
+                        const icon = new Icon({
                             opacity: 1,
                             scale: 0.05,
                             src: iconMapping[e.type]
                         });
 
-                        const iconStyle = new ol.style.Style({
+                        const iconStyle = new Style({
                             image: icon
                         });
 
-                        const coords = ol.proj.fromLonLat(e.localisation);
-                        const iconFeature = new ol.Feature({
+                        const coords = fromLonLat(e.localisation);
+                        const iconFeature = new Feature({
                             id: e.id,
-                            geometry: new ol.geom.Point(coords),
+                            geometry: new Point(coords),
                             name: e.name,
                             description: e.description,
                             rating: e.rating
@@ -148,7 +158,7 @@ class Map extends React.Component {
                     })
 
                     this.state.featuresLayer.setSource(
-                        new ol.source.Vector({
+                        new VectorSource({
                             features: features
                         })
                     );
