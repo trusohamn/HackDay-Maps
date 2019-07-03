@@ -9,9 +9,9 @@ function Main() {
     return (
         <MyContextProvider>
             <Router basename='/'>
-                <Route path="/">
+                {/* <Route exact path="/">
                     <Redirect to="/location"></Redirect>
-                </Route>
+                </Route> */}
             <Route path="/location" component={App} />
             </Router>
         </MyContextProvider>
