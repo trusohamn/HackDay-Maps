@@ -9,6 +9,7 @@ function Location(props) {
     useEffect(() => {
         console.log('Location useEffect pathname was changed to', props.location.pathname);
         const pathPointId = props.location.pathname.split('/')[1] || null;  //change to regex
+        props.history.push(props.location.pathname);
         if (context.pointId !== pathPointId) {
             console.log('Location, set Point Id', pathPointId);
             context.setPointId(pathPointId);

@@ -12,6 +12,7 @@ import { Redirect } from 'react-router-dom';
 import { MyContext } from '../contexts/MyContextProvider';
 
 import { config } from '../url_config'
+import { isFulfilled } from 'q';
 const url = config.url.API_URL
 
 const ol = require('openlayers');
@@ -32,7 +33,7 @@ class Map extends React.Component {
         });
         console.log('map constructor');
     }
-    componentWillUnmount(){
+    componentWillUnmount() {
         console.log('map is going to unmount!');
     }
 
@@ -65,40 +66,42 @@ class Map extends React.Component {
         });
         const handleMapClick = (event) => {
             ///getting pointid of the clicked feature ///
-            console.log('click!');
-            let pointId = null;
-            this.state.map.forEachFeatureAtPixel(event.pixel,
-                feature => {
-                    console.log(feature.get('id'));
-                    pointId = feature.get('id') || null;
+            if (this.context.mode === 'explore') {
+                console.log('click!');
+                let pointId = null;
+                this.state.map.forEachFeatureAtPixel(event.pixel,
+                    feature => {
+                        console.log(feature.get('id'));
+                        pointId = feature.get('id') || null;
+                    });
+
+                const newPath = pointId === null ? "/" : "/" + pointId;
+                console.log('Map handleMapClick setNewPath', newPath)
+                this.context.setRedirect(<Redirect to={newPath}></Redirect>)
+            } else if (this.context.mode === 'edit') {
+                ///////drawint a point/////////
+                const coord = ol.proj.toLonLat(event.coordinate);
+                console.log(coord);
+                this.setState({
+                    lon: coord[0],
+                    lat: coord[1]
                 });
 
-            const newPath = pointId === null ? "/" : "/" + pointId;
-            console.log('Map handleMapClick setNewPath', newPath)
-            this.context.setRedirect(<Redirect to={newPath}></Redirect>)
+                const features = [];
 
-            ///////drawint a point/////////
-            const coord = ol.proj.toLonLat(event.coordinate);
-            console.log(coord);
-            this.setState({
-                lon: coord[0],
-                lat: coord[1]
-            });
-
-            const features = [];
-
-            const coords = event.coordinate;
-            const newFeature = new ol.Feature({
-                geometry: new ol.geom.Point(coords)
-            })
-
-            features.push(newFeature);
-
-            this.state.extraLayer.setSource(
-                new ol.source.Vector({
-                    features: features
+                const coords = event.coordinate;
+                const newFeature = new ol.Feature({
+                    geometry: new ol.geom.Point(coords)
                 })
-            );
+
+                features.push(newFeature);
+
+                this.state.extraLayer.setSource(
+                    new ol.source.Vector({
+                        features: features
+                    })
+                );
+            }
         }
         map.on('click', handleMapClick);
 
@@ -113,7 +116,7 @@ class Map extends React.Component {
         console.log('map componentdidupdate');
         console.log(prevState);
         console.log(this.context);
-    
+
         if (this.context.data === null) {
             console.log('updating data');
             fetch(url + '/api/points')
