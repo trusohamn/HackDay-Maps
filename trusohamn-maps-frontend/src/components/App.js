@@ -13,12 +13,8 @@ function App() {
   return (
     
       <div className="App">
-        <nav className="navbar navbar-dark bg-dark">
-          <h1 className="text-light">
-            Your Map Space
-          </h1>
+        
           <button id="switch modes" onClick={context.switchMode}>{switchText}</button>
-        </nav>
         {context.redirect}
         <Route path="/" component={Location} />
       </div>
