@@ -32,7 +32,11 @@ app.post('/api/points', (req, res) => {
     console.log(point);
 
     addLocation(point)
-        .then(res => console.log(res));
+        .then(data => {
+            console.log(data);
+            res.status(201).end();
+        })
+        .catch(err => console.log(err));
 
 
     // const reviews = require('./reviews.json');
