@@ -7,6 +7,7 @@ const fs = require('fs');
 
 const { generateUniqueId } = require('./dataHandling');
 const { insert } = require('./db/addNewLocation');
+const { getAll } = require('./db/getAllLocations');
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -17,7 +18,7 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', (req, res) => {
-    res.send('Home page');
+    res.send('One day here will come the description of the api');
 });
 
 app.post('/api/points', (req, res) => {
@@ -32,7 +33,7 @@ app.post('/api/points', (req, res) => {
     console.log(point);
 
     insert(point)
-    .then(res => console.log(res));
+        .then(res => console.log(res));
 
 
     // const reviews = require('./reviews.json');
@@ -46,18 +47,23 @@ app.post('/api/points', (req, res) => {
 
 app.get('/api/points', (req, res) => {
     console.log('get request');
-    const points = require('./points.json');
-    const reviews = require('./reviews.json');
-    points.points = points.points.map(point => {
-        const pointReviews = reviews[point.id].rev;
-        const sum = pointReviews.reduce((acc, el) => {
-            return acc + parseInt(el.rating)
-        }, 0);
-        point.rating = (sum / pointReviews.length).toFixed(1);
-        return point;
+    // const points = require('./points.json');
+    // const reviews = require('./reviews.json');
+    // points.points = points.points.map(point => {
+    //     const pointReviews = reviews[point.id].rev;
+    //     const sum = pointReviews.reduce((acc, el) => {
+    //         return acc + parseInt(el.rating)
+    //     }, 0);
+    //     point.rating = (sum / pointReviews.length).toFixed(1);
+    //     return point;
 
-    })
-    res.send(JSON.stringify(points));
+    // })
+    getAll()
+        .then(data => {
+            console.log(data);
+            res.send(JSON.stringify(data));
+        })
+
 });
 
 app.get('/api/points/:id', (req, res) => {

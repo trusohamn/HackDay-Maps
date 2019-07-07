@@ -138,7 +138,7 @@ class Map extends React.Component {
                 .then(res => res.json())
                 .then(data => {
                     const features = [];
-                    data.points.forEach((e) => {
+                    data.forEach((e) => {
                         const icon = new Icon({
                             opacity: 1,
                             scale: 0.05,

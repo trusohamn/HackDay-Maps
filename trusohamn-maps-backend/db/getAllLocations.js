@@ -2,28 +2,28 @@ const config = require('../config');
 const MongoClient = require('mongodb').MongoClient;
 const url = config.db;
 
-function insert(entry) {
+function getAll() {
     return new Promise((resolve, reject) => {
         MongoClient.connect(url, (err, db) => {
             if (err) return reject(err);
             var dbo = db.db(config.dbName);
             dbo
             .collection('location')
-            .insertOne(entry, (err) => {
+            .find({})
+            .toArray((err, result) => {
                 db.close();
                 if (err) return reject(err);
-                console.log('1 location inserted');
-                return resolve(entry._id);
+                return resolve(result);
             });
         });
     });
 }
 
-function insertMock() {
+function getAllMock() {
     console.log('calling addNewLocation Mock');
     return new Promise((resolve) => {
         resolve('entry id');
     });
 }
 
-module.exports.insert = process.env.NODE_ENV === 'production' ? insert : insertMock;
+module.exports.getAll = process.env.NODE_ENV === 'production' ? getAll : getAllMock;

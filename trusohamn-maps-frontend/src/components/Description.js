@@ -14,7 +14,7 @@ function Description(props) {
         if (context.data) {
             // console.log('Description use effetct, generating pointData, pointId', context.pointId);
             // console.log('pathname', window.location.pathname);
-            const pointData = context.data.points.find(e =>
+            const pointData = context.data.find(e =>
                 e.id === context.pointId);
             setPointData(pointData);
         }
