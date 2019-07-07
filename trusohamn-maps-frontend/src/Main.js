@@ -1,7 +1,7 @@
 import React from 'react';
 import MyContextProvider from './contexts/MyContextProvider';
 import App from './components/App';
-import { Route, BrowserRouter as Router, Link, Redirect } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Link, Redirect, Switch } from 'react-router-dom';
 
 
 function Main() {
@@ -16,11 +16,12 @@ function Main() {
                     Go to map
           </h3></Link> */}
             </nav>
-            
+            <Switch>
+                <Route path="/location" component={App} />
                 <Route exact path="/">
                     <Redirect to="/location"></Redirect>
                 </Route>
-                <Route path="/location" component={App} />
+            </Switch>
             </Router>
         </MyContextProvider>
 

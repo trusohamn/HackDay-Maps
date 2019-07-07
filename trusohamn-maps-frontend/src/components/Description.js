@@ -15,7 +15,7 @@ function Description(props) {
             // console.log('Description use effetct, generating pointData, pointId', context.pointId);
             // console.log('pathname', window.location.pathname);
             const pointData = context.data.find(e =>
-                e.id === context.pointId);
+                e._id === context.pointId);
             setPointData(pointData);
         }
     }, [context.data, context.pointId]);
@@ -26,8 +26,8 @@ function Description(props) {
         fetch(url + "/api/points/" + context.pointId)
             .then(res => res.json())
             .then(res => {
-                console.log(res.rev)
-                const rev = res.rev.map(e => {
+                console.log(res)
+                const rev = res.map(e => {
                     return (
                         <div className="flexcontainercolumn">
                             <br></br>

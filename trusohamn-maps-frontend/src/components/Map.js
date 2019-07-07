@@ -41,14 +41,9 @@ class Map extends React.Component {
             lon: 17.862083241832443,
             lat: 59.30184823106963
         });
-        // console.log('map constructor');
-    }
-    componentWillUnmount() {
-        // console.log('map is going to unmount!');
     }
 
     componentDidMount() {
-        // console.log('map did mount');
         const extraLayer = new VectorLayer({
             source: new VectorSource({
                 features: []
@@ -85,12 +80,10 @@ class Map extends React.Component {
                         pointId = feature.get('id') || null;
                     });
 
-                    console.log(this.props.location);
-                    console.log(this.props.match);
                 const newPath = pointId === null ? 
                 '/location/' : 
                 '/location/' + pointId;
-                // console.log('Map handleMapClick setNewPath', newPath)
+                console.log('Map handleMapClick setNewPath', newPath)
                 this.context.setSaveInHistory(true);
                 this.context.setRedirect(<Redirect to={newPath}></Redirect>)
             } else if (this.context.mode === 'edit') {
@@ -128,10 +121,6 @@ class Map extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, prevContext) {
-        // console.log('map componentdidupdate');
-        // console.log(prevState);
-        // console.log(this.context);
-
         if (this.context.data === null) {
             // console.log('updating data');
             fetch(url + '/api/points')
@@ -151,7 +140,7 @@ class Map extends React.Component {
 
                         const coords = fromLonLat(e.localisation);
                         const iconFeature = new Feature({
-                            id: e.id,
+                            id: e._id,
                             geometry: new Point(coords),
                             name: e.name,
                             description: e.description,

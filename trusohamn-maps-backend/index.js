@@ -6,8 +6,7 @@ const app = express();
 const fs = require('fs');
 
 const { generateUniqueId } = require('./dataHandling');
-const { insert } = require('./db/addNewLocation');
-const { getAll } = require('./db/getAllLocations');
+const { addLocation, getAllLocations, getReviews, addReview } = require('./db');
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -32,7 +31,7 @@ app.post('/api/points', (req, res) => {
     }
     console.log(point);
 
-    insert(point)
+    addLocation(point)
         .then(res => console.log(res));
 
 
@@ -58,9 +57,8 @@ app.get('/api/points', (req, res) => {
     //     return point;
 
     // })
-    getAll()
+    getAllLocations()
         .then(data => {
-            console.log(data);
             res.send(JSON.stringify(data));
         })
 
@@ -68,32 +66,21 @@ app.get('/api/points', (req, res) => {
 
 app.get('/api/points/:id', (req, res) => {
 
-    console.log('get request');
-    console.log(req.params.id);
-
-    const reviews = require('./reviews.json');
-
-    res.send(reviews[req.params.id]);
+    getReviews(req.params.id)
+        .then(data => res.send(data));
 });
 
 app.post('/api/points/:id', (req, res) => {
 
-    console.log('post request');
-    console.log(req.params.id);
-    console.log(req.body);
     //save the reference
-    const reviews = require('./reviews.json');
-    console.log(reviews[req.params.id].rev);
-    reviews[req.params.id].rev.push({
+    const newReview = {
         title: req.body.title,
         description: req.body.description,
         rating: parseInt(req.body.rating)
-    })
-
-    fs.writeFile('./reviews.json', JSON.stringify(reviews), () => {
-        res.status(201).end();
-    });
-    res.end();
+    }
+    addReview(req.params.id, newReview)
+    .then(res.end());
+    ;
 });
 
 app.use((req, res, next) => {
