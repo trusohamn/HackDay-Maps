@@ -1,10 +1,12 @@
 const port = process.env.PORT || 8000;
+require('dotenv').config();
 
 const express = require('express');
 const app = express();
 const fs = require('fs');
 
-const {generateUniqueId} = require('./dataHandling');
+const { generateUniqueId } = require('./dataHandling');
+const { insert } = require('./db/addNewLocation');
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -20,27 +22,26 @@ app.get('/', (req, res) => {
 
 app.post('/api/points', (req, res) => {
     console.log('post request');
-    const points = require('./points.json');
     const point = {
-        id: generateUniqueId(req.body.name),
+        _id: generateUniqueId(req.body.name),
         localisation: [parseFloat(req.body.lon), parseFloat(req.body.lat)],
         name: req.body.name,
         description: req.body.description,
         type: req.body.type
     }
     console.log(point);
-    points.points.push(point);
-    fs.writeFile('./points.json', JSON.stringify(points), () => {
-        res.status(201).end();
-    });
 
-    const reviews = require('./reviews.json');
-    reviews[point.id] = {
-        rev: []
-    }
-    fs.writeFile('./reviews.json', JSON.stringify(reviews), () => {
-        res.status(201).end();
-    });
+    insert(point)
+    .then(res => console.log(res));
+
+
+    // const reviews = require('./reviews.json');
+    // reviews[point._id] = {
+    //     rev: []
+    // }
+    // fs.writeFile('./reviews.json', JSON.stringify(reviews), () => {
+    //     res.status(201).end();
+    // });
 });
 
 app.get('/api/points', (req, res) => {
@@ -52,7 +53,7 @@ app.get('/api/points', (req, res) => {
         const sum = pointReviews.reduce((acc, el) => {
             return acc + parseInt(el.rating)
         }, 0);
-        point.rating = ( sum / pointReviews.length ).toFixed(1);
+        point.rating = (sum / pointReviews.length).toFixed(1);
         return point;
 
     })
@@ -81,7 +82,7 @@ app.post('/api/points/:id', (req, res) => {
         title: req.body.title,
         description: req.body.description,
         rating: parseInt(req.body.rating)
-    }) 
+    })
 
     fs.writeFile('./reviews.json', JSON.stringify(reviews), () => {
         res.status(201).end();
