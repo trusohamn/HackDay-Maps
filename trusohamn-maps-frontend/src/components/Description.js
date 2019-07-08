@@ -55,8 +55,9 @@ function Description(props) {
             },
             body: dataForm
         })
-            .then(() => {
-                context.setData(null);
+            .then(res => res.json())
+            .then((res) => {
+                setPointData({ ...pointData, rating: res.newRating })
             });
     }
 
