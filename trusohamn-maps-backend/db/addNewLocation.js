@@ -4,7 +4,7 @@ const url = config.db;
 
 function insert(entry) {
     return new Promise((resolve, reject) => {
-        MongoClient.connect(url, (err, db) => {
+        MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
             if (err) return reject(err);
             var dbo = db.db(config.dbName);
             dbo

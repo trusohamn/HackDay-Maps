@@ -4,7 +4,7 @@ const url = config.db;
 
 function addReview(id, review) {
     return new Promise((resolve, reject) => {
-            MongoClient.connect(url, (err, db) => {
+            MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
                 if (err) return reject(err);
                 const dbo = db.db(config.dbName);
                 dbo

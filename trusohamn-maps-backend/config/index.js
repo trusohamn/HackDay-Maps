@@ -8,5 +8,7 @@ function getDbPath(){
   
   module.exports = {
     db : getDbPath(),
+    dbPath : getDbPath(),
     dbName : 'maps',
+    dbAUTH: 'auth'
   };

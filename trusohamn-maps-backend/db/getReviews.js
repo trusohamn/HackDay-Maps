@@ -4,7 +4,7 @@ const url = config.db;
 
 function get(id) {
     return new Promise((resolve, reject) => {
-        MongoClient.connect(url, (err, db) => {
+        MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
             if (err) return reject(err);
             var dbo = db.db(config.dbName);
             dbo
@@ -13,7 +13,7 @@ function get(id) {
             .toArray((err, result) => {
                 db.close();
                 if (err) return reject(err);
-                return resolve(result[0].rev);
+                return resolve(result[0] ? result[0].rev : []);
             });
         });
     });
