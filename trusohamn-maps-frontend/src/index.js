@@ -3,12 +3,11 @@ import ReactDOM from 'react-dom';
 import Main from './Main';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import AuthContextProvider from './contexts/AuthContextProvider';
 
-
-// FB.getLoginStatus(function(response) {
-//     statusChangeCallback(response);
-// });
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+ReactDOM.render(
+  <AuthContextProvider>
+    <Main />
+  </AuthContextProvider>, document.getElementById('root'));
 
 

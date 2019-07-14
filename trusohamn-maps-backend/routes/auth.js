@@ -10,17 +10,17 @@ require('../passport')();
 // })
 
 router.route(
-    '/auth/facebook')
-    .post(
-        passport.authenticate('facebook-token', { session: false }), 
-        (req, res, next) => {
-            console.log('facebook auth');
-            if (!req.user) {
-                return res.send(401).send('User Not Authenticated');
-            }
-            req.auth = {
-                    id: req.user.id
-                };
-            next();
-        }, generateToken, sendToken);
+  '/facebook')
+  .post(
+    passport.authenticate('facebook-token', { session: false }),
+    (req, res, next) => {
+      console.log('facebook auth');
+      if (!req.user) {
+        return res.send(401).send('User Not Authenticated');
+      }
+      req.auth = {
+        id: req.user.id
+      };
+      next();
+    }, generateToken, sendToken);
 module.exports = router;

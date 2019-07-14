@@ -1,86 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import MyContextProvider from './contexts/MyContextProvider';
 import App from './components/App';
+import Profile from './components/Profile';
+import LoggedComponent from './components/LoggedComponent';
 import { Route, BrowserRouter as Router, Link, Redirect, Switch } from 'react-router-dom';
 import FacebookLogin from 'react-facebook-login';
-
+import { AuthContext } from './contexts/AuthContextProvider';
 
 function Main() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState(null);
-    const [token, setToken] = useState('');
+  const authContext = useContext(AuthContext);
 
-    const logout = () => {
-        setIsAuthenticated(false);
-        setUser(null);
-        setToken('');
+  const logout = () => {
+    authContext.setIsAuthenticated(false);
+    authContext.setUser(null);
+    authContext.setJwToken(null);
+  };
+
+  const facebookResponse = (response) => {
+    console.log(response);
+    // store data in local storage
+
+    const options = {
+      method: 'POST',
+      body: `access_token=${response.accessToken}`,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      mode: 'cors',
+      cache: 'default'
     };
 
-    const facebookResponse = (response) => {
-        console.log(response);
-        // store data in local storage
+    fetch('http://localhost:8000/api/auth/facebook', options) // change in production !!!!
+      .then(r => {
+        const token = r.headers.get('x-auth-token');
+        console.log(token);
+        r.json().then(user => {
+          if (token) {
+            console.log(user);
+            authContext.setIsAuthenticated(true);
+            authContext.setUser(user._id);
+            authContext.setJwToken(token);
+          }
+        });
+      })
+  }
 
-        // const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)],
-        //     { type: 'application/json' });
+  return (
+    <MyContextProvider>
+      <Router basename={process.env.PUBLIC_URL}>
+        <nav className="navbar navbar-dark bg-dark">
+          <h1 className="text-light">
+            Your Map Space
+          </h1>
+          {authContext.isAuthenticated ?
+            <button onClick={logout} className="button">
+              Log out
+            </button>
+            :
+            <FacebookLogin
+              appId="383464965621720"
+              autoLoad={false}
+              fields="name,email,picture"
+              callback={facebookResponse} />
+          }
+          {authContext.isAuthenticated ?
+            <Link to='/profile'> Profile </Link>
+            : ''}
+        </nav>
 
-        const options = {
-            method: 'POST',
-            body: `access_token=${response.accessToken}`,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            mode: 'cors',
-            cache: 'default'
-        };
+        <Switch>
+          <Route path="/location" component={App} />
+          <Route exact path="/">
+            <Redirect to="/location"></Redirect>
+          </Route>
+          <Route component={LoggedComponent}>
+            <Route path="/profile" component={Profile} />
+          </Route>
+        </Switch>
+      </Router>
+    </MyContextProvider>
 
-        fetch('http://localhost:8000/api/v1/auth/facebook', options)
-            .then(r => {
-                const token = r.headers.get('x-auth-token');
-                console.log(token);
-                r.json().then(user => {
-                        if (token) {
-                            console.log(user);
-                            // setIsAuthenticated(true);
-                            // setUser(user);
-                            // setToken(token);
-                        }
-                    });
-            })
-    }
-
-    return (
-        <MyContextProvider>
-            <Router basename={process.env.PUBLIC_URL}>
-                <nav className="navbar navbar-dark bg-dark">
-                    <h1 className="text-light">
-                        Your Map Space
-                    </h1>
-                    {/* <div class="fb-login-button" data-width="" data-size="medium" data-button-type="continue_with" data-auto-logout-link="true" data-use-continue-as="false"></div> */}
-                    {isAuthenticated ?
-                        <button onClick={logout} className="button">
-                            Log out
-                    </button>
-                        :
-                        <FacebookLogin
-                            appId="383464965621720"
-                            autoLoad={false}
-                            fields="name,email,picture"
-                            callback={facebookResponse} />
-                    }
-                </nav>
-                token:{token} <br></br>
-                user:{user} <br></br>
-
-                <Switch>
-                    <Route path="/location" component={App} />
-                    <Route exact path="/">
-                        <Redirect to="/location"></Redirect>
-                    </Route>
-                </Switch>
-            </Router>
-        </MyContextProvider>
-
-    );
+  );
 }
 
 export default Main;
