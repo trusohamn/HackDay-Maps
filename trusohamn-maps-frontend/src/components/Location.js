@@ -25,7 +25,7 @@ function Location(props) {
 
     return (
         <div>
-            <Map location={props.location} match={props.match}></Map>
+            <Map location={props.location} match={props.match} history={props.history}></Map>
             <Description></Description>
         </div>
     );

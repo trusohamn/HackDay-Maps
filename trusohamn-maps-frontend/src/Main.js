@@ -1,11 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import MyContextProvider from './contexts/MyContextProvider';
 import App from './components/App';
 import Profile from './components/Profile';
 import { Route, BrowserRouter as Router, Link, Redirect, Switch } from 'react-router-dom';
 import FacebookLogin from 'react-facebook-login';
 import { AuthContext } from './contexts/AuthContextProvider';
-import {ProfileImage} from './styled-components/ProfileImage';
+import { ProfileImage } from './styled-components/ProfileImage';
 
 function Main() {
   const authContext = useContext(AuthContext);

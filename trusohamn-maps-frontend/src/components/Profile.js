@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { MyContext } from '../contexts/MyContextProvider';
 import { AuthContext } from '../contexts/AuthContextProvider';
 
 
@@ -24,18 +23,19 @@ function Profile(props) {
     })
       .then(res => res.json())
       .then(data => {
-        
+
         console.log(data);
-        setProfileData(data)}
-        );
+        setProfileData(data)
+      }
+      );
   }, [])
 
   return (
 
     <div className="Profile">
       Your Profile page <br></br>
-      {profileData ? 
-        'sucess': 
+      {profileData ?
+        'sucess' :
         'no data'}
 
 

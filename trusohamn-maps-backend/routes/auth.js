@@ -4,11 +4,6 @@ const { generateToken, sendToken } = require('../utils/token.utils');
 const passport = require('passport');
 require('../passport')();
 
-// router.post('/auth/facebook', (req, res, next) => {
-//     console.log('*************************');
-//     console.log(req.body);
-// })
-
 router.route(
   '/facebook')
   .post(
@@ -21,5 +16,7 @@ router.route(
         id: req.user.id
       };
       next();
-    }, generateToken, sendToken);
+    },
+    generateToken,
+    sendToken);
 module.exports = router;

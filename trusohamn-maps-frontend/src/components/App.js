@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import Location from './Location';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { MyContext } from '../contexts/MyContextProvider';
 
 
@@ -11,13 +11,12 @@ function App() {
   const switchText = (context.mode === 'explore') ? 'Edit map' : 'Explore';
 
   return (
-    
-      <div className="App">
-        
-          <button id="switch modes" onClick={context.switchMode}>{switchText}</button>
-        {context.redirect}
-        <Route path="/" component={Location} />
-      </div>
+
+    <div className="App">
+      <button id="switch modes" onClick={context.switchMode}>{switchText}</button>
+      {context.redirect}
+      <Route path="/" component={Location} />
+    </div>
   );
 }
 
