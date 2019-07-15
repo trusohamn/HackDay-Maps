@@ -41,7 +41,6 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/points', (req, res) => {
-  console.log('post request');
   const point = {
     _id: generateUniqueId(req.body.name),
     localisation: [parseFloat(req.body.lon), parseFloat(req.body.lat)],
@@ -49,11 +48,9 @@ app.post('/api/points', (req, res) => {
     description: req.body.description,
     type: req.body.type
   }
-  console.log(point);
 
   addLocation(point)
     .then(data => {
-      console.log(data);
       res.status(201).end();
     })
     .catch(err => console.log(err));

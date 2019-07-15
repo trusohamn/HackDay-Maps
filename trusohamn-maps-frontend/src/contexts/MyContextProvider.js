@@ -24,9 +24,7 @@ function MyContextProvider(props) {
         data,
         setData,
         saveInHistory,
-        setSaveInHistory,
-        // jwToken,
-        // setJwToken
+        setSaveInHistory
     }
     return (
         <MyContext.Provider value={state}>

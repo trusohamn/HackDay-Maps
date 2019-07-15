@@ -2,10 +2,10 @@ import React, { useState, useContext } from 'react';
 import MyContextProvider from './contexts/MyContextProvider';
 import App from './components/App';
 import Profile from './components/Profile';
-import LoggedComponent from './components/LoggedComponent';
 import { Route, BrowserRouter as Router, Link, Redirect, Switch } from 'react-router-dom';
 import FacebookLogin from 'react-facebook-login';
 import { AuthContext } from './contexts/AuthContextProvider';
+import {ProfileImage} from './styled-components/ProfileImage';
 
 function Main() {
   const authContext = useContext(AuthContext);
@@ -40,6 +40,7 @@ function Main() {
             authContext.setIsAuthenticated(true);
             authContext.setUser(user._id);
             authContext.setJwToken(token);
+            authContext.setPicture(user.photoUrl);
           }
         });
       })
@@ -64,7 +65,11 @@ function Main() {
               callback={facebookResponse} />
           }
           {authContext.isAuthenticated ?
-            <Link to='/profile'> Profile </Link>
+            <Link to='/profile'>
+              {authContext.picture ?
+                <ProfileImage src={authContext.picture} alt="profile" /> :
+                Profile}
+            </Link>
             : ''}
         </nav>
 
@@ -73,9 +78,7 @@ function Main() {
           <Route exact path="/">
             <Redirect to="/location"></Redirect>
           </Route>
-          <Route component={LoggedComponent}>
-            <Route path="/profile" component={Profile} />
-          </Route>
+          <Route path="/profile" component={Profile} />
         </Switch>
       </Router>
     </MyContextProvider>

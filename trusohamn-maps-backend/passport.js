@@ -9,7 +9,6 @@ module.exports = function () {
         clientSecret: config.facebookAuth.clientSecret
     },
         (accessToken, refreshToken, profile, done) => {
-            console.log(accessToken, profile);
             User.upsertFbUser(accessToken, refreshToken, profile,
                 function (err, user) {
                     return done(err, user);

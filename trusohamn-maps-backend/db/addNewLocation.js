@@ -12,7 +12,6 @@ function insert(entry) {
             .insertOne(entry, (err) => {
                 db.close();
                 if (err) return reject(err);
-                console.log('1 location inserted');
                 return resolve(entry._id);
             });
         });
@@ -20,7 +19,6 @@ function insert(entry) {
 }
 
 function insertMock() {
-    console.log('calling addNewLocation Mock');
     return new Promise((resolve) => {
         resolve('entry id');
     });

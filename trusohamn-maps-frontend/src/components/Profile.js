@@ -4,8 +4,14 @@ import { AuthContext } from '../contexts/AuthContextProvider';
 
 
 function Profile(props) {
-  const context = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
   const [profileData, setProfileData] = useState(null);
+
+  if (!authContext.isAuthenticated) {
+    console.log('now should redirect to root');
+    props.history.push('/')
+  };
+
   useEffect(() => {
     console.log('Profile initial useeffect');
     fetch('http://localhost:8000/api/profiles', { // change in production !!!!
@@ -13,18 +19,24 @@ function Profile(props) {
       withCredentials: true,
       credentials: 'include',
       headers: {
-        'Authorization': 'Bearer ' + context.jwToken
+        'Authorization': 'Bearer ' + authContext.jwToken
       }
     })
       .then(res => res.json())
-      .then(data => setProfileData(data));
+      .then(data => {
+        
+        console.log(data);
+        setProfileData(data)}
+        );
   }, [])
 
   return (
 
     <div className="Profile">
       Your Profile page <br></br>
-      {profileData ? profileData.message : 'no data'}
+      {profileData ? 
+        'sucess': 
+        'no data'}
 
 
     </div>
