@@ -11,7 +11,7 @@ const { getAllLocations, getReviews } = require('./db');
 
 // const cookieParser = require('cookie-parser');
 // const bodyParser = require('body-parser');
-const whitelist = ['http://localhost:3000', 'https://github.com/trusohamn/HackDay-Maps']
+const whitelist = ['http://localhost:3000', 'https://trusohamn.github.io']
 const cors = require('cors');
 const corsOption = {
   origin: function (origin, callback) {
@@ -21,6 +21,7 @@ const corsOption = {
       callback(new Error('Not allowed by CORS'))
     }
   },
+  // origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   exposedHeaders: ['x-auth-token']
