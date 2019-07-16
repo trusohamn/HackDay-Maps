@@ -5,13 +5,11 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
-const fs = require('fs');
 
-const { generateUniqueId, getAverageRating } = require('./dataHandling');
-const { addLocation, getAllLocations, getReviews, addReview, updateLocationWithRating } = require('./db');
+const { getAllLocations, getReviews } = require('./db');
 
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+// const cookieParser = require('cookie-parser');
+// const bodyParser = require('body-parser');
 
 const cors = require('cors');
 const corsOption = {
@@ -25,35 +23,11 @@ app.use(cors(corsOption));
 
 app.use(express.urlencoded({ extended: true }));
 
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
-
 const authRouter = require('./routes/auth');
 app.use('/api/auth/', authRouter);
 
-
-
 app.get('/', (req, res) => {
   res.send('One day here will come the description of the api');
-});
-
-app.post('/api/points', (req, res) => {
-  const point = {
-    _id: generateUniqueId(req.body.name),
-    localisation: [parseFloat(req.body.lon), parseFloat(req.body.lat)],
-    name: req.body.name,
-    description: req.body.description,
-    type: req.body.type
-  }
-
-  addLocation(point)
-    .then(data => {
-      res.status(201).end();
-    })
-    .catch(err => console.log(err));
 });
 
 app.get('/api/points', (req, res) => {
@@ -61,7 +35,7 @@ app.get('/api/points', (req, res) => {
     .then(data => {
       res.send(JSON.stringify(data));
     })
-
+    .catch(err => console.log(err))
 });
 
 app.get('/api/points/:id', (req, res) => {
@@ -69,29 +43,6 @@ app.get('/api/points/:id', (req, res) => {
     .then(data => res.send(data));
 });
 
-app.post('/api/points/:id', (req, res) => {
-  // get all reviews for this location
-  let newRating;
-  getReviews(req.params.id)
-    .then(data => {
-      newRating = getAverageRating(data, parseInt(req.body.rating));
-      // update main db for location with new rating
-      updateLocationWithRating(req.params.id, newRating);
-    })
-    .then(() => {
-      //save the reference
-      const newReview = {
-        title: req.body.title,
-        description: req.body.description,
-        rating: parseInt(req.body.rating)
-      }
-      addReview(req.params.id, newReview)
-        .then(res.json({ newRating }));
-    });
-
-
-
-});
 
 const protectedRouter = require('./routes/protected');
 app.use('/api/', protectedRouter);
@@ -102,7 +53,7 @@ app.use((req, res, next) => {
   next(err);
 });
 
-app.use(function (err, req, res) {
+app.use((err, req, res) => {
   console.error(err.stack);
   res.status(500).send('Something broke! ' + err.message);
 });

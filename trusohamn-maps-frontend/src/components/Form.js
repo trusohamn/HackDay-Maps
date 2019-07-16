@@ -23,7 +23,6 @@ function Form(props) {
             body: data
         })
             .then((res) => {
-                console.log('new point posted');
                 context.setData(null);
             })
     }

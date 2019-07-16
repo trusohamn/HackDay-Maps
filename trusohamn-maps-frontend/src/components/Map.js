@@ -79,7 +79,6 @@ class Map extends React.Component {
       } else if (this.context.mode === 'edit') {
         ///////drawing a point/////////
         const coord = toLonLat(event.coordinate);
-        console.log(coord);
         this.setState({
           lon: coord[0],
           lat: coord[1]

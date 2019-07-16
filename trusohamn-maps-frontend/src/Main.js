@@ -1,23 +1,25 @@
 import React, { useContext } from 'react';
 import MyContextProvider from './contexts/MyContextProvider';
-import App from './components/App';
-import Profile from './components/Profile';
+import App from './views/App';
+import Profile from './views/Profile';
 import { Route, BrowserRouter as Router, Link, Redirect, Switch } from 'react-router-dom';
 import FacebookLogin from 'react-facebook-login';
 import { AuthContext } from './contexts/AuthContextProvider';
+import { MyContext } from './contexts/MyContextProvider';
 import { ProfileImage } from './styled-components/ProfileImage';
 
 function Main() {
   const authContext = useContext(AuthContext);
+  const context = useContext(MyContext);
 
   const logout = () => {
     authContext.setIsAuthenticated(false);
     authContext.setUser(null);
     authContext.setJwToken(null);
+    context.setMode('explore');
   };
 
   const facebookResponse = (response) => {
-    console.log(response);
     // store data in local storage
 
     const options = {
@@ -33,10 +35,8 @@ function Main() {
     fetch('http://localhost:8000/api/auth/facebook', options) // change in production !!!!
       .then(r => {
         const token = r.headers.get('x-auth-token');
-        console.log(token);
         r.json().then(user => {
           if (token) {
-            console.log(user);
             authContext.setIsAuthenticated(true);
             authContext.setUser(user._id);
             authContext.setJwToken(token);
@@ -45,6 +45,8 @@ function Main() {
         });
       })
   }
+  const profileLink = authContext.picture ?
+  <ProfileImage src={authContext.picture} alt="Profile" /> : 'Profile';
 
   return (
     <MyContextProvider>
@@ -64,12 +66,7 @@ function Main() {
               fields="name,email,picture"
               callback={facebookResponse} />
           }
-          {authContext.isAuthenticated ?
-            <Link to='/profile'>
-              {authContext.picture ?
-                <ProfileImage src={authContext.picture} alt="profile" /> :
-                Profile}
-            </Link>
+          { authContext.isAuthenticated ? <Link to='/profile'>{profileLink}</Link>
             : ''}
         </nav>
 

@@ -15,6 +15,7 @@ function MyContextProvider(props) {
         pointId,
         setPointId,
         mode,
+        setMode,
         switchMode,
         data,
         setData
