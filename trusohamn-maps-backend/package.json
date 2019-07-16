@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/trusohamn/HackDay-Maps/issues"
   },
-  "homepage": "https://github.com/trusohamn/HackDay-Maps#readme",
+  "homepage": "https://github.com/trusohamn/HackDay-Maps",
   "devDependencies": {
     "eslint": "^5.16.0",
     "mocha": "^6.1.4",

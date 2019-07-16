@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import MyContextProvider from './contexts/MyContextProvider';
 import App from './views/App';
 import Profile from './views/Profile';
 import { Route, BrowserRouter as Router, Link, Redirect, Switch } from 'react-router-dom';
@@ -7,6 +6,9 @@ import FacebookLogin from 'react-facebook-login';
 import { AuthContext } from './contexts/AuthContextProvider';
 import { MyContext } from './contexts/MyContextProvider';
 import { ProfileImage } from './styled-components/ProfileImage';
+import { config } from './url_config'
+const url = config.url.API_URL
+
 
 function Main() {
   const authContext = useContext(AuthContext);
@@ -32,7 +34,7 @@ function Main() {
       cache: 'default'
     };
 
-    fetch('http://localhost:8000/api/auth/facebook', options) // change in production !!!!
+    fetch(url + '/api/auth/facebook', options) 
       .then(r => {
         const token = r.headers.get('x-auth-token');
         r.json().then(user => {
@@ -49,7 +51,7 @@ function Main() {
   <ProfileImage src={authContext.picture} alt="Profile" /> : 'Profile';
 
   return (
-    <MyContextProvider>
+    
       <Router basename={process.env.PUBLIC_URL}>
         <nav className="navbar navbar-dark bg-dark">
           <h1 className="text-light">
@@ -78,8 +80,6 @@ function Main() {
           <Route path="/profile" component={Profile} />
         </Switch>
       </Router>
-    </MyContextProvider>
-
   );
 }
 

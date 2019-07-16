@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContextProvider';
+import { config } from '../url_config'
+const url = config.url.API_URL
 
 
 function Profile(props) {
@@ -11,7 +13,7 @@ function Profile(props) {
   };
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/profiles', { // change in production !!!!
+    fetch(url + '/api/profiles', { 
       method: 'GET',
       withCredentials: true,
       credentials: 'include',

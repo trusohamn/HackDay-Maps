@@ -4,10 +4,14 @@ import Main from './Main';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import AuthContextProvider from './contexts/AuthContextProvider';
+import MyContextProvider from './contexts/MyContextProvider';
 
 ReactDOM.render(
-  <AuthContextProvider>
-    <Main />
-  </AuthContextProvider>, document.getElementById('root'));
+  <MyContextProvider>
+    <AuthContextProvider>
+      <Main />
+    </AuthContextProvider>
+  </MyContextProvider>
+  , document.getElementById('root'));
 
 

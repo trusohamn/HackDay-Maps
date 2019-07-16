@@ -8,12 +8,19 @@ const app = express();
 
 const { getAllLocations, getReviews } = require('./db');
 
+
 // const cookieParser = require('cookie-parser');
 // const bodyParser = require('body-parser');
-
+const whitelist = ['http://localhost:3000', 'https://github.com/trusohamn/HackDay-Maps']
 const cors = require('cors');
 const corsOption = {
-  origin: 'http://localhost:3000',  // switch in production !!!!
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   exposedHeaders: ['x-auth-token']
