@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/HackDay-Maps/precache-manifest.1abbd28f6bb218df9c2b937044140865.js"
+  "/HackDay-Maps/precache-manifest.3adffd62bbe008af67f4dd1dd1e90324.js"
 );
 
 self.addEventListener('message', (event) => {
