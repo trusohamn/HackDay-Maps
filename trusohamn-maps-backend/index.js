@@ -11,7 +11,7 @@ const { getAllLocations, getReviews } = require('./db');
 
 // const cookieParser = require('cookie-parser');
 // const bodyParser = require('body-parser');
-const whitelist = ['http://localhost:3000', 'https://trusohamn.github.io']
+const whitelist = ['https://localhost:3000', 'https://trusohamn.github.io']
 const cors = require('cors');
 const corsOption = {
   origin: function (origin, callback) {
@@ -39,8 +39,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/points', (req, res) => {
+  console.log('get api points');
   getAllLocations()
     .then(data => {
+      console.log(data);
       res.send(JSON.stringify(data));
     })
     .catch(err => console.log(err))

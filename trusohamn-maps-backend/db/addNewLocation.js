@@ -24,4 +24,4 @@ function insertMock() {
     });
 }
 
-module.exports.insert = process.env.NODE_ENV === 'production' ? insert : insertMock;
+module.exports.insert = insert; // process.env.NODE_ENV === 'production' ? insert : insertMock;

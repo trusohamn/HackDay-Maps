@@ -112,6 +112,7 @@ class Map extends React.Component {
   componentDidUpdate() {
 
     if (this.context.data === null) {
+      console.log(url + '/api/points');
       fetch(url + '/api/points')
         .then(res => res.json())
         .then(data => {

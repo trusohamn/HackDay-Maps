@@ -1,8 +1,8 @@
 require('./mongoose')();
-var passport = require('passport');
-var User = require('mongoose').model('User');
-var FacebookTokenStrategy = require('passport-facebook-token');
-var config = require('./config_auth');
+const passport = require('passport');
+const User = require('mongoose').model('User');
+const FacebookTokenStrategy = require('passport-facebook-token');
+const config = require('./config');
 module.exports = function () {
     passport.use(new FacebookTokenStrategy({
         clientID: config.facebookAuth.clientID,

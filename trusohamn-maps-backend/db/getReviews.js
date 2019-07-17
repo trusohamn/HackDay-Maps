@@ -25,4 +25,4 @@ function getMock() {
     });
 }
 
-module.exports.get = process.env.NODE_ENV === 'production' ? get : getMock;
+module.exports.get = get; // process.env.NODE_ENV === 'production' ? get : getMock;

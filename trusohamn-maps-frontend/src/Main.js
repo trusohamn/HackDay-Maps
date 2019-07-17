@@ -50,6 +50,7 @@ function Main() {
   const profileLink = authContext.picture ?
   <ProfileImage src={authContext.picture} alt="Profile" /> : 'Profile';
 
+  console.log(config.app_id.FACEBOOK_APPID);
   return (
     
       <Router basename={process.env.PUBLIC_URL}>
@@ -63,7 +64,7 @@ function Main() {
             </button>
             :
             <FacebookLogin
-              appId="383464965621720"
+              appId={config.app_id.FACEBOOK_APPID}
               autoLoad={false}
               fields="name,email,picture"
               callback={facebookResponse} />

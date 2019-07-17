@@ -26,4 +26,4 @@ function updateMock(id, rating) {
 
 
 
-module.exports.update = process.env.NODE_ENV === 'production' ? update : updateMock;
+module.exports.update = update; // process.env.NODE_ENV === 'production' ? update : updateMock;

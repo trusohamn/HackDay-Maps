@@ -3,6 +3,7 @@ const MongoClient = require('mongodb').MongoClient;
 const url = config.db;
 
 function getAll() {
+  console.log(url, '***********');
     return new Promise((resolve, reject) => {
         MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
             if (err) return reject(err);
@@ -25,4 +26,4 @@ function getAllMock() {
     });
 }
 
-module.exports.getAll = process.env.NODE_ENV === 'production' ? getAll : getAllMock;
+module.exports.getAll = getAll; //process.env.NODE_ENV === 'production' ? getAll : getAllMock;
