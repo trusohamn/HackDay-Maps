@@ -53,19 +53,27 @@ router.post('/points/:id', (req, res) => {
 });
 
 router.post('/points', (req, res) => {
-  const point = {
-    _id: generateUniqueId(req.body.name),
-    localisation: [parseFloat(req.body.lon), parseFloat(req.body.lat)],
-    name: req.body.name,
-    description: req.body.description,
-    type: req.body.type
-  }
+  const userId = req.jwToken.id;
+  User.findUserById(userId, (err, user) => {
+    if (err) return res.status(400).send({ error: 'problem with finding user' });
 
-  addLocation(point)
-    .then(() => {
-      res.status(201).end();
-    })
-    .catch(err => console.log(err));
+    const point = {
+      _id: generateUniqueId(req.body.name),
+      localisation: [parseFloat(req.body.lon), parseFloat(req.body.lat)],
+      name: req.body.name,
+      description: req.body.description,
+      type: req.body.type,
+      person_id: userId,
+      profilePicture: user.photoUrl
+    }
+
+    addLocation(point)
+      .then(() => {
+        res.status(201).end();
+      })
+      .catch(err => console.log(err));
+
+  });
 });
 
 module.exports = router;
