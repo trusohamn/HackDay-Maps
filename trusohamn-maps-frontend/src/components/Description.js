@@ -77,29 +77,27 @@ function Description(props) {
 
         {reviews}
 
-        { authContext.isAuthenticated ? 
+        {authContext.isAuthenticated ?
           <form className="container" onSubmit={submitReview}>
-          <div className="row">
-            <div className="col-sm">
-              <label htmlFor="title">Title:</label>
-              <input className="form-control input-sm" placeholder="title" required name="title" id="title"></input>
+            <div className="row">
+              <div className="col-sm">
+                <label htmlFor="title">Title:</label>
+                <input className="form-control input-sm" placeholder="title" required name="title" id="title"></input>
+              </div>
+              <div className="col-sm">
+                <label htmlFor="description">Description:</label>
+                <input className="form-control input-sm" placeholder="description" name="description" id="description"></input>
+              </div>
+              <div className="col-sm">
+                <label htmlFor="rating">Rating:</label>
+                <input className="form-control input-sm" placeholder="1-10" required min="1" max="10" name="rating" id="rating" type="number"></input>
+              </div>
             </div>
-            <div className="col-sm">
-              <label htmlFor="description">Description:</label>
-              <input className="form-control input-sm" placeholder="description" name="description" id="description"></input>
+            <div className="flexcontainer">
+              <button type="submit" className=" btn btn-dark btn-bg">Review</button>
             </div>
-            <div className="col-sm">
-              <label htmlFor="rating">Rating:</label>
-              <input className="form-control input-sm" placeholder="1-10" required min="1" max="10" name="rating" id="rating" type="number"></input>
-            </div>
-          </div>
-          <div className="flexcontainer">
-            <button type="submit" className=" btn btn-dark btn-bg">Review</button>
-          </div>
-        </form> : ''
+          </form> : ''
         }
-        
-
       </div>
 
   )

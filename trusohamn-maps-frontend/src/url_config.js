@@ -12,7 +12,7 @@ const dev = {
         API_URL: 'http://localhost:8000'
     },
     app_id: {
-      FACEBOOK_APPID: '547631249107961'
+      FACEBOOK_APPID: '2626879837323699'
     }
 };
 export const config = process.env.NODE_ENV === 'development' ? dev: prod;

@@ -23,6 +23,7 @@ function Main() {
 
   const facebookResponse = (response) => {
     // store data in local storage
+    console.log(response);
 
     const options = {
       method: 'POST',
@@ -33,6 +34,7 @@ function Main() {
       mode: 'cors',
       cache: 'default'
     };
+    console.log('post to', url , '/api/auth/facebook', options)
 
     fetch(url + '/api/auth/facebook', options) 
       .then(r => {
@@ -65,7 +67,7 @@ function Main() {
             :
             <FacebookLogin
               appId={config.app_id.FACEBOOK_APPID}
-              autoLoad={false}
+              autoLoad={true}
               fields="name,email,picture"
               callback={facebookResponse} />
           }

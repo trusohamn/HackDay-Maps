@@ -42,7 +42,6 @@ app.get('/api/points', (req, res) => {
   console.log('get api points');
   getAllLocations()
     .then(data => {
-      console.log(data);
       res.send(JSON.stringify(data));
     })
     .catch(err => console.log(err))
