@@ -25,29 +25,29 @@ function Main() {
     // store data in local storage
     console.log(response);
 
-    const options = {
-      method: 'POST',
-      body: `access_token=${response.accessToken}`,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      mode: 'cors',
-      cache: 'default'
-    };
-    console.log('post to', url , '/api/auth/facebook', options)
+    // const options = {
+    //   method: 'POST',
+    //   body: `access_token=${response.accessToken}`,
+    //   headers: {
+    //     'Content-Type': 'application/x-www-form-urlencoded'
+    //   },
+    //   mode: 'cors',
+    //   cache: 'default'
+    // };
+    // console.log('post to', url , '/api/auth/facebook', options)
 
-    fetch(url + '/api/auth/facebook', options) 
-      .then(r => {
-        const token = r.headers.get('x-auth-token');
-        r.json().then(user => {
-          if (token) {
-            authContext.setIsAuthenticated(true);
-            authContext.setUser(user._id);
-            authContext.setJwToken(token);
-            authContext.setPicture(user.photoUrl);
-          }
-        });
-      })
+    // fetch(url + '/api/auth/facebook', options) 
+    //   .then(r => {
+    //     const token = r.headers.get('x-auth-token');
+    //     r.json().then(user => {
+    //       if (token) {
+    //         authContext.setIsAuthenticated(true);
+    //         authContext.setUser(user._id);
+    //         authContext.setJwToken(token);
+    //         authContext.setPicture(user.photoUrl);
+    //       }
+    //     });
+    //   })
   }
   const profileLink = authContext.picture ?
   <ProfileImage src={authContext.picture} alt="Profile" /> : 'Profile';
