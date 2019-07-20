@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { config } from '../url_config'
 import { MyContext } from '../contexts/MyContextProvider';
 import { AuthContext } from '../contexts/AuthContextProvider';
+import { SmallProfileImage } from '../styled-components/ProfileImage';
+
 const url = config.url.API_URL
 
 function Description(props) {
@@ -31,6 +33,7 @@ function Description(props) {
               <h5>{e.title}</h5>
               <p> {e.description} </p>
               <h5>rated: {e.rating}</h5>
+              <SmallProfileImage src={e.profilePicture} alt="Profile" />
             </div>
           )
         })
@@ -73,6 +76,7 @@ function Description(props) {
           <br />
           rating: {pointData.rating}
         </p>
+        created by: <SmallProfileImage src={pointData.profilePicture} alt="Profile" />
         <button type="click" onClick={fetchReviews} className="btn btn-dark btn-sm">Show reviews</button>
 
         {reviews}
