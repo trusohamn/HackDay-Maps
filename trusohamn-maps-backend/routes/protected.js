@@ -9,10 +9,12 @@ router.use(function (req, res, next) {
   if (!req.headers.authorization) {
     return res.status(403).json({ error: 'No credentials sent!' });
   }
-  jwt.verify(req.headers.authorization.split(' ')[1], 'my-secret', function (err, decoded) {
-    req.jwToken = decoded;
-    next();
-  });
+  jwt.verify(req.headers.authorization.split(' ')[1], process.env.TOKEN_SECRET,
+    (err, decoded) => {
+      req.jwToken = decoded;
+      console.log(decoded);
+      next();
+    });
 
 });
 
