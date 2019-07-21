@@ -155,6 +155,7 @@ class Map extends React.Component {
     return (
       <div>
         <div ref="mapContainer" id="mapContainer"></div>
+        
         <Form lon={this.state.lon} lat={this.state.lat}></Form>
       </div>
     );

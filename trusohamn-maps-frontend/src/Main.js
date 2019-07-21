@@ -23,7 +23,6 @@ function Main() {
 
   const facebookResponse = (response) => {
     // store data in local storage
-    console.log(response);
 
     const options = {
       method: 'POST',
@@ -34,7 +33,6 @@ function Main() {
       mode: 'cors',
       cache: 'default'
     };
-    console.log('post to', url , '/api/auth/facebook', options)
 
     fetch(url + '/api/auth/facebook', options) 
       .then(r => {
@@ -52,7 +50,6 @@ function Main() {
   const profileLink = authContext.picture ?
   <ProfileImage src={authContext.picture} alt="Profile" /> : 'Profile';
 
-  console.log(config.app_id.FACEBOOK_APPID);
   return (
     
       <Router basename={process.env.PUBLIC_URL}>

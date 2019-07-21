@@ -7,7 +7,7 @@ function ReviewCard(props) {
   const authContext = useContext(AuthContext);
 
   return (
-    <div className="flexcontainercolumn">
+    <div className="ReviewCard flexcontainercolumn">
       <br></br>
       <h5>{props.e.title}</h5>
       <p> {props.e.description} </p>
