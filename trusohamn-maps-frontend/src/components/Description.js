@@ -3,6 +3,7 @@ import { config } from '../url_config'
 import { MyContext } from '../contexts/MyContextProvider';
 import { AuthContext } from '../contexts/AuthContextProvider';
 import { SmallProfileImage } from '../styled-components/ProfileImage';
+import  ReviewCard from './ReviewCard';
 
 const url = config.url.API_URL
 
@@ -28,13 +29,7 @@ function Description(props) {
       .then(res => {
         const rev = res.map(e => {
           return (
-            <div className="flexcontainercolumn">
-              <br></br>
-              <h5>{e.title}</h5>
-              <p> {e.description} </p>
-              <h5>rated: {e.rating}</h5>
-              <SmallProfileImage src={e.profilePicture} alt="Profile" />
-            </div>
+           <ReviewCard e={e} />
           )
         })
         setReviews(rev);
@@ -73,10 +68,16 @@ function Description(props) {
         </h1>
         <p>
           {pointData.description}
-          <br />
-          rating: {pointData.rating}
         </p>
-        created by: <SmallProfileImage src={pointData.profilePicture} alt="Profile" />
+        <h5>
+          rating: {pointData.rating}
+        </h5>
+        {authContext.isAuthenticated ?
+          <p>
+            created by: <SmallProfileImage src={pointData.profilePicture} alt="Profile" />
+          </p> : ''
+        }
+
         <button type="click" onClick={fetchReviews} className="btn btn-dark btn-sm">Show reviews</button>
 
         {reviews}
