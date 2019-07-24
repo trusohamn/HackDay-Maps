@@ -11,18 +11,12 @@ function Form(props) {
   const onSucessPost = () => context.setData(null);
   const apiPath = '/api/points'
   const formTitle = 'Add new location'
-  const hiddenInputs = [
-    {
-      name: 'lon',
-      type: 'number',
-      value: props.lon
-    },
-    {
-      name: 'lat',
-      type: 'number',
-      value: props.lat
-    },
-  ]
+  
+  const additionalInputs = {
+    lon: context.lon,
+    lat: context.lat
+  }
+  
   const inputs = [
     {
       name: 'name',
@@ -42,7 +36,8 @@ function Form(props) {
       name: 'type',
       label: 'Select type:',
       selectType: true,
-      options: ['camping', 'bonfire', 'view']
+      options: ['camping', 'bonfire', 'view'],
+      default: 'camping'
     }
   ]
   const buttonTitle = 'Add to the map';
@@ -50,8 +45,8 @@ function Form(props) {
   return (
     context.mode === 'explore' ? null :
     <PostForm onSucessPost={onSucessPost} apiPath={apiPath}
-    formTitle={formTitle} hiddenInputs={hiddenInputs}
-    inputs={inputs} buttonTitle= {buttonTitle} />
+    formTitle={formTitle} additionalInputs={additionalInputs}
+    inputs={inputs} buttonTitle={buttonTitle} />
   )
  
 }

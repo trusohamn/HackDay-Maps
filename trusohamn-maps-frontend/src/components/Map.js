@@ -30,14 +30,7 @@ const iconMapping = {
 };
 
 class Map extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = ({
-      lon: 17.862083241832443,
-      lat: 59.30184823106963
-    });
-  }
-
+  
   componentDidMount() {
     const extraLayer = new VectorLayer({
       source: new VectorSource({
@@ -59,7 +52,7 @@ class Map extends React.Component {
         extraLayer,
         featuresLayer
       ], view: new View({
-        center: fromLonLat([this.state.lon, this.state.lat]),
+        center: fromLonLat([this.context.lon, this.context.lat]),
         zoom: 11,
       })
     });
@@ -79,10 +72,8 @@ class Map extends React.Component {
       } else if (this.context.mode === 'edit') {
         ///////drawing a point/////////
         const coord = toLonLat(event.coordinate);
-        this.setState({
-          lon: coord[0],
-          lat: coord[1]
-        });
+        this.context.setLon(coord[0]);
+        this.context.setLat(coord[1]);
 
         const features = [];
 
@@ -112,7 +103,6 @@ class Map extends React.Component {
   componentDidUpdate() {
 
     if (this.context.data === null) {
-      console.log(url + '/api/points');
       fetch(url + '/api/points')
         .then(res => res.json())
         .then(data => {
@@ -156,7 +146,7 @@ class Map extends React.Component {
       <div>
         <div ref="mapContainer" id="mapContainer"></div>
         
-        <Form lon={this.state.lon} lat={this.state.lat}></Form>
+        <Form/>
       </div>
     );
   }
