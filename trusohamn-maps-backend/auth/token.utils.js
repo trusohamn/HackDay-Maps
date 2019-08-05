@@ -26,7 +26,6 @@ module.exports = {
       jwt.verify(req.headers.authorization.split(' ')[1], process.env.TOKEN_SECRET,
     (err, decoded) => {
       req.jwToken = decoded;
-      console.log(decoded);
       return next();
     });
 

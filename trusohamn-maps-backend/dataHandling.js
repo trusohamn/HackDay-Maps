@@ -6,7 +6,6 @@ function generateUniqueId(name) {
 }
 
 function getAverageRating(data, newRating) {
-    // console.log('calculating new rating from', data, newRating);
     const avSummary = data.reduce((accum, el) => {
         const numRating = parseInt(el.rating);
         if (numRating) {

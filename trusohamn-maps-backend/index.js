@@ -6,15 +6,15 @@ const app = express();
 
 const { getAllLocations, getReviews } = require('./db');
 
-const whitelist = ['https://127.0.0.1:3000','https://localhost:3000', 'https://trusohamn.github.io']
+const whitelist = ['https://localhost:3000', 'https://trusohamn.github.io', 'http://localhost:3000']
 const cors = require('cors');
 const corsOption = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
+   if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
+   } else {
+    callback(new Error('Not allowed by CORS'))
+   }
   },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
@@ -33,7 +33,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/points', (req, res) => {
-  console.log('get api points');
   getAllLocations()
     .then(data => {
       res.send(JSON.stringify(data));
@@ -57,7 +56,6 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res) => {
-  console.error(err.stack);
   res.status(500).send('Something broke! ' + err.message);
 });
 

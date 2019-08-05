@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import App from './views/App';
-import Loader from './components/Loader'
 import Profile from './views/Profile';
 import { Route, BrowserRouter as Router, Link, Redirect, Switch } from 'react-router-dom';
 import FacebookLogin from 'react-facebook-login';
@@ -14,8 +13,6 @@ const url = config.url.API_URL
 function Main() {
   const authContext = useContext(AuthContext);
   const context = useContext(MyContext);
-
-  console.log(config.app_id.FACEBOOK_APPID);
 
   const logout = () => {
     authContext.setIsAuthenticated(false);

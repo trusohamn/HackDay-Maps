@@ -23,11 +23,9 @@ function PostForm(props) {
 
     const data = new URLSearchParams();
     for (const key in state) {
-      console.log(key, state[key]);
       data.append(key, state[key]);
     }
     for (const key in props.additionalInputs) {
-      console.log(key, props.additionalInputs[key]);
       data.append(key, props.additionalInputs[key]);
     }
 

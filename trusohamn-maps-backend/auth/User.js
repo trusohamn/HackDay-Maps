@@ -20,7 +20,6 @@ module.exports = function () {
   UserSchema.set('toJSON', { getters: true, virtuals: true });
 
   UserSchema.statics.upsertFbUser = function (profile, cb) {
-    console.log(profile);
     return this.findOne({ 'facebookProvider.id': profile.id }, (err, user) => {
       if (!user) {
         const newUser = new this({
@@ -34,7 +33,6 @@ module.exports = function () {
         newUser.save(
           function (error, savedUser) {
             if (error) {
-              console.log(error);
             }
             return cb(error, savedUser);
           });

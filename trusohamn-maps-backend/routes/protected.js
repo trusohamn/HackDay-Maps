@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 const User = require('mongoose').model('User');
 const { generateUniqueId, getAverageRating } = require('../dataHandling');
-const { addLocation, getReviews, addReview, updateLocationWithRating } = require('../db');
+const { addLocation, getReviews, addReview, updateLocationWithRating, getAllLocations } = require('../db');
 const { verifyToken } = require('../auth/token.utils');
 
 
 router.use(function (req, res, next) {
+  console.log('protected');
   if (!req.headers.authorization) {
     return res.status(403).json({ error: 'No credentials sent!' });
   }
@@ -14,9 +15,16 @@ router.use(function (req, res, next) {
 });
 
 router.get('/profiles', (req, res) => {
+  console.log('profile get');
   const userId = req.jwToken.id;
+  const response = {}
   User.findUserById(userId, (err, user) => {
-    res.send({ jwToken: req.jwToken, user: user });
+    response.user = user;
+    getAllLocations({person_id:userId})
+    .then(locations => {
+      response.locations = locations;
+      res.send(response);
+    })
   })
 })
 

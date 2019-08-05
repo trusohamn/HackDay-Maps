@@ -3,7 +3,6 @@ import mockedLogin from '../mocked_login';
 export const AuthContext = React.createContext({})
 
 function AuthContextProvider(props) {
-  console.log('logedin', process.env.REACT_APP_LOGEDIN);
   const [isAuthenticated, setIsAuthenticated] = useState(process.env.REACT_APP_LOGEDIN ? 
     true: false);
   const [user, setUser] = useState(process.env.REACT_APP_LOGEDIN ? 
