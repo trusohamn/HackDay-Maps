@@ -14,6 +14,8 @@ function Main() {
   const authContext = useContext(AuthContext);
   const context = useContext(MyContext);
 
+  console.log(config.app_id.FACEBOOK_APPID);
+
   const logout = () => {
     authContext.setIsAuthenticated(false);
     authContext.setUser(null);
@@ -46,6 +48,7 @@ function Main() {
           }
         });
       })
+      
   }
   const profileLink = authContext.picture ?
   <ProfileImage src={authContext.picture} alt="Profile" /> : 'Profile';

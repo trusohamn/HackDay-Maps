@@ -5,7 +5,7 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import AuthContextProvider from './contexts/AuthContextProvider';
 import MyContextProvider from './contexts/MyContextProvider';
-require('dotenv').config();
+
 
 ReactDOM.render(
   <MyContextProvider>
