@@ -1,21 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-var User = require('mongoose').model('User');
+const User = require('mongoose').model('User');
 const { generateUniqueId, getAverageRating } = require('../dataHandling');
 const { addLocation, getReviews, addReview, updateLocationWithRating } = require('../db');
+const { verifyToken } = require('../auth/token.utils');
+
 
 router.use(function (req, res, next) {
   if (!req.headers.authorization) {
     return res.status(403).json({ error: 'No credentials sent!' });
   }
-  jwt.verify(req.headers.authorization.split(' ')[1], process.env.TOKEN_SECRET,
-    (err, decoded) => {
-      req.jwToken = decoded;
-      console.log(decoded);
-      next();
-    });
-
+  verifyToken(req, res, next);
 });
 
 router.get('/profiles', (req, res) => {

@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { generateToken, sendToken } = require('../utils/token.utils');
+const { generateToken, sendToken } = require('../auth/token.utils');
 const passport = require('passport');
-require('../passport')();
+require('../auth/passport')();
 
 router.route(
   '/facebook')

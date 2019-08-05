@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { dbPath } = require('./config/index.js')
+const { dbPath } = require('../config/index.js')
 module.exports = function () {
-  const db = mongoose.connect(dbPath);
+  const db = mongoose.connect(dbPath, { useNewUrlParser: true });
   const UserSchema = new Schema({
     name: { type: String, required: true, trim: true },
     photoUrl: { type: String},
@@ -12,15 +12,15 @@ module.exports = function () {
     },
     facebookProvider: {
       type: {
-        id: String,
-        token: String
+        id: String
       },
       select: false
     }
   });
   UserSchema.set('toJSON', { getters: true, virtuals: true });
 
-  UserSchema.statics.upsertFbUser = function (accessToken, refreshToken, profile, cb) {
+  UserSchema.statics.upsertFbUser = function (profile, cb) {
+    console.log(profile);
     return this.findOne({ 'facebookProvider.id': profile.id }, (err, user) => {
       if (!user) {
         const newUser = new this({
@@ -28,8 +28,7 @@ module.exports = function () {
           photoUrl: `https://graph.facebook.com/${profile.id}/picture?type=large`,
           email: profile.emails[0].value,
           facebookProvider: {
-            id: profile.id,
-            token: accessToken
+            id: profile.id
           }
         });
         newUser.save(

@@ -6,7 +6,7 @@ function get(id) {
     return new Promise((resolve, reject) => {
         MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
             if (err) return reject(err);
-            var dbo = db.db(config.dbName);
+            const dbo = db.db(config.dbName);
             dbo
             .collection('review')
             .find({ _id: id })

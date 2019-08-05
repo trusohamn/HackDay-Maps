@@ -1,5 +1,3 @@
-/* introducing facebook oauth based on https://medium.com/@alexanderleon/implement-social-authentication-with-react-restful-api-9b44f4714fa
-larged amounts of auth codes copied from the tutorial */
 const port = process.env.PORT || 8000;
 require('dotenv').config();
 
@@ -8,9 +6,6 @@ const app = express();
 
 const { getAllLocations, getReviews } = require('./db');
 
-
-// const cookieParser = require('cookie-parser');
-// const bodyParser = require('body-parser');
 const whitelist = ['https://127.0.0.1:3000','https://localhost:3000', 'https://trusohamn.github.io']
 const cors = require('cors');
 const corsOption = {
@@ -21,7 +16,6 @@ const corsOption = {
       callback(new Error('Not allowed by CORS'))
     }
   },
-  // origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   exposedHeaders: ['x-auth-token']

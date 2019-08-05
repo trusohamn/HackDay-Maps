@@ -11,14 +11,24 @@ const createToken = function (auth) {
 
 module.exports = {
   generateToken:
-    function (req, res, next) {
+    (req, res, next)=> {
       req.token = createToken(req.auth);
       return next();
     },
   sendToken:
-    function (req, res) {
+    (req, res) => {
       res.setHeader(
         'x-auth-token', req.token);
       return res.status(200).send(JSON.stringify(req.user));
+    },
+    verifyToken: 
+    (req, res, next) => {
+      jwt.verify(req.headers.authorization.split(' ')[1], process.env.TOKEN_SECRET,
+    (err, decoded) => {
+      req.jwToken = decoded;
+      console.log(decoded);
+      return next();
+    });
+
     }
 };
