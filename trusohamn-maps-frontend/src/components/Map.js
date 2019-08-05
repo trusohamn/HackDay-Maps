@@ -1,6 +1,8 @@
 import React from 'react';
 
 import Form from './Form';
+import Loader from './Loader'
+
 
 import camping from '../icons/039-tent.svg';
 import bonfire from '../icons/010-bonfire.svg';
@@ -144,6 +146,7 @@ class Map extends React.Component {
   render() {
     return (
       <div>
+        <Loader size='100' loading={!this.context.data}></Loader>
         <div ref="mapContainer" id="mapContainer"></div>
         
         <Form/>
