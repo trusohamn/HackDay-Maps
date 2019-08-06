@@ -23,26 +23,26 @@ function PostForm(props) {
 
     const data = new URLSearchParams();
     for (const key in state) {
+      console.log(key, state[key])
       data.append(key, state[key]);
     }
     for (const key in props.additionalInputs) {
+      console.log(key, props.additionalInputs[key])
       data.append(key, props.additionalInputs[key]);
     }
 
-    
-    // add additional inputs
-
-    // fetch(config.url.API_URL + props.apiPath, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Authorization': 'Bearer ' + authContext.jwToken,
-    //     'Content-Type': 'application/x-www-form-urlencoded'
-    //   },
-    //   body: data
-    // })
-    //   .then((res) => {
-    //     props.onSucessPost(res);
-    //   })
+    fetch(config.url.API_URL + props.apiPath, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Authorization': 'Bearer ' + authContext.jwToken,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: data
+    })
+      .then((res) => {
+       props.onSucessPost && props.onSucessPost(res);
+      })
   }
 
 

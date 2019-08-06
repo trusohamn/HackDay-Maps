@@ -1,12 +1,10 @@
 import React, { useContext } from 'react';
 import { MyContext } from '../contexts/MyContextProvider';
-import { AuthContext } from '../contexts/AuthContextProvider';
 import PostForm from './PostForm';
 
 function Form(props) {
 
   const context = useContext(MyContext);
-  const authContext = useContext(AuthContext);
 
   const onSucessPost = () => context.setData(null);
   const apiPath = '/api/points'
