@@ -56,8 +56,8 @@ function Main() {
       <Router basename={process.env.PUBLIC_URL}>
         <nav className="navbar navbar-dark bg-dark">
           
-           <Link to='/location'><h1 className="text-light">
-             Your Map Space
+           <Link to='/location'><h1 className="text-light title">
+             Tently
            </h1></Link> 
             
           

@@ -46,6 +46,11 @@ body {
   padding: 1em;
 }
 
+.title {
+  font-size: 3em;
+  margin: 0.25em
+}
+
 @media only screen and (max-width: 600px) {
   body {
     font-size: 0.8em !important;
