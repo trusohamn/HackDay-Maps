@@ -8,7 +8,7 @@ function Form(props) {
 
   const onSucessPost = () => context.setData(null);
   const apiPath = '/api/points'
-  const formTitle = 'Add new location'
+  const formTitle = 'Click on the map and add a new spot'
   
   const additionalInputs = {
     lon: context.lon,
@@ -34,7 +34,7 @@ function Form(props) {
       name: 'type',
       label: 'Select type:',
       selectType: true,
-      options: ['camping', 'bonfire', 'view'],
+      options: ['camping', 'bonfire', 'view', 'hut'],
       default: 'camping'
     }
   ]

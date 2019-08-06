@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import App from './views/App';
 import Profile from './views/Profile';
+
 import { Route, BrowserRouter as Router, Link, Redirect, Switch } from 'react-router-dom';
 import FacebookLogin from 'react-facebook-login';
 import { AuthContext } from './contexts/AuthContextProvider';
@@ -77,6 +78,7 @@ function Main() {
           }
        
         </nav>
+        {/* <Geo></Geo> */}
 
         <Switch>
           <Route path="/location" component={App} />

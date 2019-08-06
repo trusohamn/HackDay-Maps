@@ -4,9 +4,11 @@ import Form from './Form';
 import Loader from './Loader'
 
 
-import camping from '../icons/039-tent.svg';
+import camping from '../icons/012-camp.svg';
 import bonfire from '../icons/010-bonfire.svg';
 import viewPoint from '../icons/009-binoculars.svg';
+import hut from '../icons/032-hut.svg';
+
 
 import { MyContext } from '../contexts/MyContextProvider';
 
@@ -21,14 +23,16 @@ import { Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import { Icon, Style } from 'ol/style.js';
+import Geolocation from 'ol/Geolocation';
+import {Fill, RegularShape, Stroke, Style, Icon} from 'ol/style.js';
 
 const url = config.url.API_URL
 
 const iconMapping = {
-  camping: camping,
-  bonfire: bonfire,
-  view: viewPoint
+  camping,
+  bonfire,
+  view: viewPoint,
+  hut
 };
 
 
@@ -43,6 +47,8 @@ class Map extends React.Component {
       this.map.getView().setZoom(13);
     }
   }
+
+  
   
   componentDidMount() {
     const extraLayer = new VectorLayer({
@@ -56,6 +62,16 @@ class Map extends React.Component {
       })
     });
 
+    const geoIcon = new Feature({
+      geometry: new Point([])
+    });
+  
+    const geolocationLayer = new VectorLayer({
+      source: new VectorSource({
+        features: [geoIcon]
+      })
+    });
+
     this.map = new OlMap({
       target: this.refs.mapContainer, //change to createRef API!!
       layers: [
@@ -63,12 +79,24 @@ class Map extends React.Component {
           source: new OSM()
         }),
         extraLayer,
-        featuresLayer
+        featuresLayer,
+        geolocationLayer
       ], view: new View({
         center: fromLonLat([this.context.lon, this.context.lat]),
         zoom: 6,
       })
     });
+
+    const geolocation = new Geolocation({
+      tracking: true,
+      projection: this.map.getView().getProjection()
+    });
+    
+    geolocation.on('change', function(evt) {
+      const coord = geolocation.getPosition();
+      geoIcon.getGeometry().setCoordinates(coord);
+    });
+
     const handleMapClick = (event) => {
       if (this.context.mode === 'explore') {
         let pointId = null;
@@ -88,12 +116,25 @@ class Map extends React.Component {
         this.context.setLon(coord[0]);
         this.context.setLat(coord[1]);
 
+        const star = new Style({
+          image: new RegularShape({
+            fill: new Fill({color: 'blue'}),
+            stroke: new Stroke({color: '#2F4F4F', width: 2}),
+            points: 11,
+            radius: 10,
+            radius2: 3,
+            angle: 0
+          })
+        })
+
         const features = [];
 
         const coords = event.coordinate;
         const newFeature = new Feature({
           geometry: new Point(coords)
         })
+
+        newFeature.setStyle(star);
 
         features.push(newFeature);
 
@@ -108,8 +149,9 @@ class Map extends React.Component {
 
     this.setState({
       // map: map,
-      extraLayer: extraLayer,
-      featuresLayer: featuresLayer
+      extraLayer,
+      featuresLayer,
+      geoIcon
     });
   }
 
