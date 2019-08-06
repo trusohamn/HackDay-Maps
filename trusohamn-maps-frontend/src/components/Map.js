@@ -160,9 +160,11 @@ class Map extends React.Component {
     return (
       <div>
         <Loader size='100' loading={!this.context.data}></Loader>
-        <button onClick={this.center}>center on location</button>
         <div ref="mapContainer" id="mapContainer"></div>
-        
+        {(!this.context.pointId || this.context.mode === 'edit') ?
+      '' :
+        <button onClick={this.center}>center on location</button>
+        }
         <Form/>
       </div>
     );
