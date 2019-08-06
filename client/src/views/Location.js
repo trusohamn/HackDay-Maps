@@ -39,7 +39,7 @@ function Location(props) {
   return (
     <div>
       <Map history={props.history}></Map>
-      {(!context.pointId || context.mode === 'edit') ?
+      { !authContext.isAuthenticated || !context.pointId || context.mode === 'edit' ?
       '' :
       <button onClick={addToFavourites}>add to favourites</button>
         }
