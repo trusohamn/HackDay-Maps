@@ -31,7 +31,18 @@ const iconMapping = {
   view: viewPoint
 };
 
+
 class Map extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.map = null;
+    
+    this.center = () => {
+      this.map.getView().setCenter(fromLonLat(this.context.getPointIdData().localisation));
+      this.map.getView().setZoom(13);
+    }
+  }
   
   componentDidMount() {
     const extraLayer = new VectorLayer({
@@ -45,7 +56,7 @@ class Map extends React.Component {
       })
     });
 
-    const map = new OlMap({
+    this.map = new OlMap({
       target: this.refs.mapContainer, //change to createRef API!!
       layers: [
         new TileLayer({
@@ -55,13 +66,13 @@ class Map extends React.Component {
         featuresLayer
       ], view: new View({
         center: fromLonLat([this.context.lon, this.context.lat]),
-        zoom: 11,
+        zoom: 6,
       })
     });
     const handleMapClick = (event) => {
       if (this.context.mode === 'explore') {
         let pointId = null;
-        this.state.map.forEachFeatureAtPixel(event.pixel,
+        this.map.forEachFeatureAtPixel(event.pixel,
           feature => {
             pointId = feature.get('id') || null;
           });
@@ -93,10 +104,10 @@ class Map extends React.Component {
         );
       }
     }
-    map.on('click', handleMapClick);
+    this.map.on('click', handleMapClick);
 
     this.setState({
-      map: map,
+      // map: map,
       extraLayer: extraLayer,
       featuresLayer: featuresLayer
     });
@@ -143,10 +154,13 @@ class Map extends React.Component {
     }
   }
 
+
+
   render() {
     return (
       <div>
         <Loader size='100' loading={!this.context.data}></Loader>
+        <button onClick={this.center}>center on location</button>
         <div ref="mapContainer" id="mapContainer"></div>
         
         <Form/>

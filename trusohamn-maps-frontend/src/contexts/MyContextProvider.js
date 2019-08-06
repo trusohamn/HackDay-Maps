@@ -12,17 +12,24 @@ function MyContextProvider(props) {
         const newMode = (mode === 'explore') ? 'edit' : 'explore';
         setMode(newMode);
     };
+    
+    const getPointIdData = () => {
+        const pointData =  data.find( d => d._id == pointId);
+        return pointData;
+    }
+
 
     const state = {
         pointId,
         setPointId,
+        getPointIdData,
         mode,
         setMode,
         switchMode,
         data,
         setData,
         lon, setLon,
-        lat, setLat
+        lat, setLat,
     }
     return (
         <MyContext.Provider value={state}>
