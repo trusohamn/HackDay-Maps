@@ -55,7 +55,8 @@ function Description(props) {
     })
       .then(res => res.json())
       .then((res) => {
-        setPointData({ ...pointData, rating: res.newRating })
+        setPointData({ ...pointData, rating: res.newRating });
+        fetchReviews();
       });
   }
 
