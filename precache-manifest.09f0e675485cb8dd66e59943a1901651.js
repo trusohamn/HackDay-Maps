@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3772c06bbd3ec654bc97cb5e06672a44",
+    "revision": "ec55f0f04a2f9061e8dadbdad93b0b12",
     "url": "/HackDay-Maps/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/HackDay-Maps/static/css/2.03649bd7.chunk.css"
   },
   {
-    "revision": "99fb5767fea12a07fac3",
+    "revision": "8fb90f831e93e22bc0e2",
     "url": "/HackDay-Maps/static/css/main.697c965d.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/HackDay-Maps/static/js/2.8395ae50.chunk.js"
   },
   {
-    "revision": "99fb5767fea12a07fac3",
-    "url": "/HackDay-Maps/static/js/main.93eacd2b.chunk.js"
+    "revision": "8fb90f831e93e22bc0e2",
+    "url": "/HackDay-Maps/static/js/main.c50e71c4.chunk.js"
   },
   {
     "revision": "25f26b99ea116aa3b299",
@@ -32,7 +32,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/HackDay-Maps/static/media/010-bonfire.21b76057.svg"
   },
   {
-    "revision": "ebd03a546f91a0000481027ab8794350",
-    "url": "/HackDay-Maps/static/media/039-tent.ebd03a54.svg"
+    "revision": "8f0eb9f0a0ebbcc921a301e6e9a8b0bf",
+    "url": "/HackDay-Maps/static/media/012-camp.8f0eb9f0.svg"
   }
 ]);
