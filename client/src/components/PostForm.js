@@ -7,12 +7,14 @@ function PostForm(props) {
   const context = useContext(MyContext);
   const authContext = useContext(AuthContext);
 
-  const stateObj = props.inputs.reduce((acc, input) => {
-    acc[input.name] = input.default ||  '' ;
-    return acc;
-  }, {});
+  const resetForm = ()=> {
+    return props.inputs.reduce((acc, input) => {
+      acc[input.name] = input.default ||  '' ;
+      return acc;
+    }, {});
+  }
 
-  const [state, setState] = useState(stateObj);
+  const [state, setState] = useState(resetForm());
 
   const handleChange = (e) => {
     setState({ ...state, [e.target.id]: e.target.value });
@@ -40,7 +42,8 @@ function PostForm(props) {
       },
       body: data
     })
-      .then((res) => {
+      .then(res => {
+        setState(resetForm());
        props.onSucessPost && props.onSucessPost(res);
       })
   }

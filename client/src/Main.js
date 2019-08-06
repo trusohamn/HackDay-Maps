@@ -55,13 +55,19 @@ function Main() {
     
       <Router basename={process.env.PUBLIC_URL}>
         <nav className="navbar navbar-dark bg-dark">
-          <h1 className="text-light">
-            Your Map Space
-          </h1>
+          
+           <Link to='/location'><h1 className="text-light">
+             Your Map Space
+           </h1></Link> 
+            
+          
           {authContext.isAuthenticated ?
+          <div>
             <button onClick={logout} className="button">
               Log out
             </button>
+             <Link to='/profile'>{profileLink}</Link>
+          </div>
             :
             <FacebookLogin
               appId={config.app_id.FACEBOOK_APPID}
@@ -69,8 +75,7 @@ function Main() {
               fields="name,email,picture"
               callback={facebookResponse} />
           }
-          { authContext.isAuthenticated ? <Link to='/profile'>{profileLink}</Link>
-            : ''}
+       
         </nav>
 
         <Switch>
