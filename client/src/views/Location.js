@@ -15,7 +15,7 @@ function Location(props) {
   useEffect(() => {
     const pathPointId = props.location.pathname.match(/[^/]+$/) ?
       props.location.pathname.match(/[^/]+$/)[0] : null;
-    if (context.pointId !== pathPointId) {
+    if (context.pointId !== pathPointId && pathPointId !== 'location') {
       context.setPointId(pathPointId);
     }
   }, [props.location.pathname])
@@ -39,7 +39,11 @@ function Location(props) {
   return (
     <div>
       <Map history={props.history}></Map>
+      {(!context.pointId || context.mode === 'edit') ?
+      '' :
       <button onClick={addToFavourites}>add to favourites</button>
+        }
+      
       <Description></Description>
     </div>
   );
