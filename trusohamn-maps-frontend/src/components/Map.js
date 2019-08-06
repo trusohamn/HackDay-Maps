@@ -155,11 +155,10 @@ class Map extends React.Component {
   }
 
 
-
   render() {
     return (
       <div>
-        <Loader size='100' loading={!this.context.data}></Loader>
+        <Loader size={100} loading={!this.context.data}></Loader>
         <div ref="mapContainer" id="mapContainer"></div>
         {(!this.context.pointId || this.context.mode === 'edit') ?
       '' :

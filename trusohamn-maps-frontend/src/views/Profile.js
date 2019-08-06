@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContextProvider';
+import { MyContext } from '../contexts/MyContextProvider';
 import { Link } from 'react-router-dom';
 import { config } from '../url_config'
 import Loader from '../components/Loader'
@@ -9,6 +10,8 @@ const url = config.url.API_URL
 
 function Profile(props) {
   const authContext = useContext(AuthContext);
+  const context = useContext(MyContext);
+
   const [profileData, setProfileData] = useState(null);
 
   if (!authContext.isAuthenticated) {
@@ -25,7 +28,7 @@ function Profile(props) {
     })
       .then(res => res.json())
       .then(data => {
-        console.log('============',data);
+        console.log(data);
         setProfileData(data)
       }
       );
@@ -41,6 +44,11 @@ function Profile(props) {
         </h4>
         {profileData.locations.map(location => {
           return   <Link to={"/location/"+location._id}>{location.name}</Link>
+        })}
+          <h4>Your favourites:
+        </h4>
+        {profileData.user.favourites.map(location => {
+          return   <Link to={"/location/"+location}>{context.getPointIdData(location).name}</Link>
         })}
          </div>
         :

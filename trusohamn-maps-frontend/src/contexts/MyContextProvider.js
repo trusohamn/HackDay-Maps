@@ -13,8 +13,8 @@ function MyContextProvider(props) {
         setMode(newMode);
     };
     
-    const getPointIdData = () => {
-        const pointData =  data.find( d => d._id == pointId);
+    const getPointIdData = (id=pointId) => {
+        const pointData =  data.find( d => d._id == id);
         return pointData;
     }
 

@@ -38,8 +38,8 @@ function Location(props) {
 
   return (
     <div>
-      <button onClick={addToFavourites}>add to favourites</button>
       <Map history={props.history}></Map>
+      <button onClick={addToFavourites}>add to favourites</button>
       <Description></Description>
     </div>
   );
