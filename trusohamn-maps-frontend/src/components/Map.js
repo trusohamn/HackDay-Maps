@@ -114,8 +114,7 @@ class Map extends React.Component {
   }
 
   componentDidUpdate() {
-
-    if (this.context.data === null) {
+    if (this.context.data === null ||this.state.featuresLayer.values_.source.isEmpty()) {
       fetch(url + '/api/points')
         .then(res => res.json())
         .then(data => {

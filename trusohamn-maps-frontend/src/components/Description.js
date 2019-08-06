@@ -27,9 +27,9 @@ function Description(props) {
     fetch(url + "/api/points/" + context.pointId)
       .then(res => res.json())
       .then(res => {
-        const rev = res.map(e => {
+        const rev = res.map((e, index) => {
           return (
-           <ReviewCard e={e} />
+           <ReviewCard e={e} key={index}/>
           )
         })
         setReviews(rev);
