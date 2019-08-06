@@ -28,6 +28,15 @@ router.get('/profiles', (req, res) => {
   })
 })
 
+router.post('/profiles/favourites', (req, res, next) => {
+  const userId = req.jwToken.id;
+  const locationId = req.body.locationId;
+  User.pushFavourite (userId, locationId, (err, data) => {
+    if (err) return next(error.message);
+    res.send(data);
+  })
+})
+
 router.post('/points/:id', (req, res) => {
   // get all reviews for this location
   const userId = req.jwToken.id;

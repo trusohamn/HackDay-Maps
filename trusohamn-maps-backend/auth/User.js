@@ -15,7 +15,8 @@ module.exports = function () {
         id: String
       },
       select: false
-    }
+    },
+    favourites: []
   });
   UserSchema.set('toJSON', { getters: true, virtuals: true });
 
@@ -42,6 +43,14 @@ module.exports = function () {
       }
     });
   };
+
+  UserSchema.statics.pushFavourite = function (id, location_id, cb) {
+    return this.update(
+      { _id: id }, 
+      { $addToSet: { favourites: location_id } },
+      cb
+  );
+  }
 
   UserSchema.statics.findUserById = function (id, cb) {
     return this.findOne({
