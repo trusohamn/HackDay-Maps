@@ -88,13 +88,15 @@ class Map extends React.Component {
 
     this.hikebikeLayer = new TileLayer({
       source: new XYZ({
-        url: 'http://{a,b,c}.tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png'
+        url: 'http://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png'
       })
     });
 
-    
-
-
+    this.hillshadingLayer = new TileLayer({
+      source: new XYZ({
+        url: 'http://tiles.wmflabs.org/hillshading/{z}/{x}/{y}.png'
+      })
+    });
 
     this.map = new OlMap({
       target: this.refs.mapContainer, //change to createRef API!!
@@ -102,9 +104,10 @@ class Map extends React.Component {
         new TileLayer({
           source: new OSM()
         }),
+        this.hikebikeLayer,
         this.hikingLayer,
         this.cyclingLayer,
-        //this.hikebikeLayer,
+        this.hillshadingLayer,
         extraLayer,
         featuresLayer,
         geolocationLayer
@@ -175,7 +178,6 @@ class Map extends React.Component {
     this.map.on('click', handleMapClick);
 
     this.setState({
-      // map: map,
       extraLayer,
       featuresLayer,
       geoIcon
@@ -185,6 +187,8 @@ class Map extends React.Component {
   componentDidUpdate() {
     this.cyclingLayer.setVisible(this.context.cyclingOn);
     this.hikingLayer.setVisible(this.context.hikingOn);
+    this.hikebikeLayer.setVisible(this.context.hikebikeOn);
+    this.hillshadingLayer.setVisible(this.context.hillshadingOn);
 
     if (this.context.data === null ||this.state.featuresLayer.values_.source.isEmpty()) {
       fetch(url + '/api/points')

@@ -21,6 +21,8 @@ function App() {
     switch(name){
       case 'cyclingOn' : return context.setCyclingOn(value);
       case 'hikingOn' : return context.setHikingOn(value);
+      case 'hikebikeOn' : return context.setHikebikeOn(value);
+      case 'hillshadingOn' : return context.setHillshadingOn(value);
       default : return
     }
   }
@@ -33,22 +35,37 @@ function App() {
       null
     }
 
-    <form>
+    <form id="layers">
         <label>
-          Hiking map:
+        <a href="https://cycling.waymarkedtrails.org/">waymarkedtrails cycling  </a>
           <input
             name="cyclingOn"
             type="checkbox"
             checked={context.cyclingOn}
             onChange={handleInputChange} />
         </label>
-        <br />
         <label>
-          Cycling map:
+        <a href="https://hiking.waymarkedtrails.org/">waymarkedtrails hiking  </a>
           <input
             name="hikingOn"
             type="checkbox"
             value={context.hikingOn}
+            onChange={handleInputChange} />
+        </label>
+        <label>
+        <a href="http://hikebikemap.org">wmflabs Hike Bike  </a>
+          <input
+            name="hikebikeOn"
+            type="checkbox"
+            value={context.hikebikeOn}
+            onChange={handleInputChange} />
+        </label>
+        <label>
+        <a href="http://hikebikemap.org">wmflabs Hillshading  </a>
+          <input
+            name="hillshadingOn"
+            type="checkbox"
+            value={context.hillshadingOn}
             onChange={handleInputChange} />
         </label>
       </form>

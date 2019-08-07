@@ -10,7 +10,7 @@ function MyContextProvider(props) {
     const [cyclingOn, setCyclingOn] = useState(false);
     const [hikingOn, setHikingOn] = useState(false);
     const [ hikebikeOn, setHikebikeOn] = useState(false)
-
+    const [hillshadingOn, setHillshadingOn] = useState(false);
 
     const switchMode = () => {
         const newMode = (mode === 'explore') ? 'edit' : 'explore';
@@ -36,7 +36,8 @@ function MyContextProvider(props) {
         lat, setLat,
         cyclingOn, setCyclingOn,
         hikingOn, setHikingOn,
-        hikebikeOn, setHikebikeOn
+        hikebikeOn, setHikebikeOn,
+        hillshadingOn, setHillshadingOn
     }
     return (
         <MyContext.Provider value={state}>
