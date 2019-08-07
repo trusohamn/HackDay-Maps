@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/HackDay-Maps/static/css/main.99854afc.chunk.css",
-    "main.js": "/HackDay-Maps/static/js/main.d476ea1e.chunk.js",
-    "main.js.map": "/HackDay-Maps/static/js/main.d476ea1e.chunk.js.map",
-    "runtime~main.js": "/HackDay-Maps/static/js/runtime~main.1c9e6921.js",
-    "runtime~main.js.map": "/HackDay-Maps/static/js/runtime~main.1c9e6921.js.map",
-    "static/css/2.03649bd7.chunk.css": "/HackDay-Maps/static/css/2.03649bd7.chunk.css",
-    "static/js/2.7c11cf3a.chunk.js": "/HackDay-Maps/static/js/2.7c11cf3a.chunk.js",
-    "static/js/2.7c11cf3a.chunk.js.map": "/HackDay-Maps/static/js/2.7c11cf3a.chunk.js.map",
-    "index.html": "/HackDay-Maps/index.html",
-    "precache-manifest.613c07df91b97f31190dee5f343991b7.js": "/HackDay-Maps/precache-manifest.613c07df91b97f31190dee5f343991b7.js",
-    "service-worker.js": "/HackDay-Maps/service-worker.js",
-    "static/css/2.03649bd7.chunk.css.map": "/HackDay-Maps/static/css/2.03649bd7.chunk.css.map",
-    "static/css/main.99854afc.chunk.css.map": "/HackDay-Maps/static/css/main.99854afc.chunk.css.map",
-    "static/media/009-binoculars.svg": "/HackDay-Maps/static/media/009-binoculars.6b6a714c.svg",
-    "static/media/010-bonfire.svg": "/HackDay-Maps/static/media/010-bonfire.21b76057.svg",
-    "static/media/012-camp.svg": "/HackDay-Maps/static/media/012-camp.8f0eb9f0.svg",
-    "static/media/032-hut.svg": "/HackDay-Maps/static/media/032-hut.f466d3ec.svg"
+    "main.css": "/Tently/static/css/main.24e518f0.chunk.css",
+    "main.js": "/Tently/static/js/main.60dc983f.chunk.js",
+    "main.js.map": "/Tently/static/js/main.60dc983f.chunk.js.map",
+    "runtime~main.js": "/Tently/static/js/runtime~main.ee27bf39.js",
+    "runtime~main.js.map": "/Tently/static/js/runtime~main.ee27bf39.js.map",
+    "static/css/2.03649bd7.chunk.css": "/Tently/static/css/2.03649bd7.chunk.css",
+    "static/js/2.f735f485.chunk.js": "/Tently/static/js/2.f735f485.chunk.js",
+    "static/js/2.f735f485.chunk.js.map": "/Tently/static/js/2.f735f485.chunk.js.map",
+    "index.html": "/Tently/index.html",
+    "precache-manifest.c64acdf2e8fa15b87502aa004cd27466.js": "/Tently/precache-manifest.c64acdf2e8fa15b87502aa004cd27466.js",
+    "service-worker.js": "/Tently/service-worker.js",
+    "static/css/2.03649bd7.chunk.css.map": "/Tently/static/css/2.03649bd7.chunk.css.map",
+    "static/css/main.24e518f0.chunk.css.map": "/Tently/static/css/main.24e518f0.chunk.css.map",
+    "static/media/009-binoculars.svg": "/Tently/static/media/009-binoculars.6b6a714c.svg",
+    "static/media/010-bonfire.svg": "/Tently/static/media/010-bonfire.21b76057.svg",
+    "static/media/012-camp.svg": "/Tently/static/media/012-camp.8f0eb9f0.svg",
+    "static/media/032-hut.svg": "/Tently/static/media/032-hut.f466d3ec.svg"
   }
 }
