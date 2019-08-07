@@ -19,6 +19,7 @@ import 'ol/ol.css';
 import { Map as OlMap, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
+import XYZ from 'ol/source/XYZ';
 import { Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source';
 import Feature from 'ol/Feature';
@@ -41,6 +42,9 @@ class Map extends React.Component {
   constructor(props){
     super(props);
     this.map = null;
+    this.cyclingLayer = null;
+    this.hikingLayer = null;
+    this.hikebikeLayer = null;
     
     this.center = () => {
       this.map.getView().setCenter(fromLonLat(this.context.getPointIdData().localisation));
@@ -48,8 +52,6 @@ class Map extends React.Component {
     }
   }
 
-  
-  
   componentDidMount() {
     const extraLayer = new VectorLayer({
       source: new VectorSource({
@@ -72,12 +74,37 @@ class Map extends React.Component {
       })
     });
 
+    this.cyclingLayer = new TileLayer({
+      source: new XYZ({
+        url: 'http://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png'
+      })
+    });
+
+    this.hikingLayer = new TileLayer({
+      source: new XYZ({
+        url: 'http://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png'
+      })
+    });
+
+    this.hikebikeLayer = new TileLayer({
+      source: new XYZ({
+        url: 'http://{a,b,c}.tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png'
+      })
+    });
+
+    
+
+
+
     this.map = new OlMap({
       target: this.refs.mapContainer, //change to createRef API!!
       layers: [
         new TileLayer({
           source: new OSM()
         }),
+        this.hikingLayer,
+        this.cyclingLayer,
+        //this.hikebikeLayer,
         extraLayer,
         featuresLayer,
         geolocationLayer
@@ -156,6 +183,9 @@ class Map extends React.Component {
   }
 
   componentDidUpdate() {
+    this.cyclingLayer.setVisible(this.context.cyclingOn);
+    this.hikingLayer.setVisible(this.context.hikingOn);
+
     if (this.context.data === null ||this.state.featuresLayer.values_.source.isEmpty()) {
       fetch(url + '/api/points')
         .then(res => res.json())
