@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f049a2a4ace1a2e3ffa529adec19a6f4",
+    "revision": "7770a4239c84ee6887740d042cbd7eff",
     "url": "/Tently/index.html"
   },
   {
-    "revision": "f7fc38a87f2da09c0bf6",
+    "revision": "1b65161733c04bb8ac33",
     "url": "/Tently/static/css/2.03649bd7.chunk.css"
   },
   {
-    "revision": "02a180a7921b2c1da794",
+    "revision": "d7021badea94fd610577",
     "url": "/Tently/static/css/main.24e518f0.chunk.css"
   },
   {
-    "revision": "f7fc38a87f2da09c0bf6",
-    "url": "/Tently/static/js/2.f735f485.chunk.js"
+    "revision": "1b65161733c04bb8ac33",
+    "url": "/Tently/static/js/2.20c9ef1b.chunk.js"
   },
   {
-    "revision": "02a180a7921b2c1da794",
-    "url": "/Tently/static/js/main.60dc983f.chunk.js"
+    "revision": "d7021badea94fd610577",
+    "url": "/Tently/static/js/main.33745e21.chunk.js"
   },
   {
     "revision": "0122d286d8b5d07e5991",
