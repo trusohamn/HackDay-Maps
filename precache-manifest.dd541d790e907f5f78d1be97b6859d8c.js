@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9276f30661d0408fd7eb5602f17929ca",
+    "revision": "7e3cbdd61b004d48b47db15b2b7fd4ca",
     "url": "/Tently/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Tently/static/css/2.03649bd7.chunk.css"
   },
   {
-    "revision": "39b7e4f626b9912682de",
+    "revision": "c40a2055c3f2f48df1ab",
     "url": "/Tently/static/css/main.24e518f0.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Tently/static/js/2.e9e37569.chunk.js"
   },
   {
-    "revision": "39b7e4f626b9912682de",
-    "url": "/Tently/static/js/main.5755b0de.chunk.js"
+    "revision": "c40a2055c3f2f48df1ab",
+    "url": "/Tently/static/js/main.44179e68.chunk.js"
   },
   {
     "revision": "0122d286d8b5d07e5991",

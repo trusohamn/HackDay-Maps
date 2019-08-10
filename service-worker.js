@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Tently/precache-manifest.ce549448bf4222c07fa119450e39975b.js"
+  "/Tently/precache-manifest.dd541d790e907f5f78d1be97b6859d8c.js"
 );
 
 self.addEventListener('message', (event) => {
