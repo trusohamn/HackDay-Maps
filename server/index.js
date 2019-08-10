@@ -27,7 +27,8 @@ const corsOption = {
 
 app.use(cors(corsOption));
 
-app.use(express.urlencoded({ extended: true }));
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const authRouter = require("./routes/auth");
 app.use("/api/auth/", authRouter);
