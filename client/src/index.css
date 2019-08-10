@@ -48,9 +48,13 @@ body {
   padding: 1em;
 }
 
+.ReviewCard img {
+  margin-bottom: 0.5em;
+}
+
 .title {
   font-size: 3em;
-  margin: 0.25em
+  margin: 0.25em;
 }
 
 #layers label {

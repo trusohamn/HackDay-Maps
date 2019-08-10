@@ -24,10 +24,7 @@ function PostForm(props) {
   const SubmitHandler = e => {
     e.preventDefault();
 
-    const data =
-      props.contentType === "multipart/form-data"
-        ? new FormData()
-        : new URLSearchParams();
+    const data = new FormData();
     for (const key in state) {
       console.log(key, state[key]);
       data.append(key, state[key]);
@@ -49,7 +46,6 @@ function PostForm(props) {
       credentials: "include",
       headers: {
         Authorization: "Bearer " + authContext.jwToken
-        // "Content-Type": props.contentType
       },
       body: data
     }).then(res => {
@@ -93,6 +89,8 @@ function PostForm(props) {
                     type={input.type}
                     name={input.name}
                     id={input.name}
+                    min={input.min}
+                    max={input.max}
                     value={state[input.name]}
                     onChange={handleChange}
                   />

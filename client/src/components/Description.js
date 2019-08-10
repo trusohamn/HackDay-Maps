@@ -4,6 +4,7 @@ import { MyContext } from "../contexts/MyContextProvider";
 import { AuthContext } from "../contexts/AuthContextProvider";
 import { SmallProfileImage } from "../styled-components/ProfileImage";
 import ReviewCard from "./ReviewCard";
+import PostForm from "./PostForm";
 
 const url = config.url.API_URL;
 
@@ -33,29 +34,46 @@ function Description(props) {
       });
   };
 
-  const submitReview = e => {
-    e.preventDefault();
-    const dataForm = new URLSearchParams();
-    for (const pair of new FormData(e.target)) {
-      dataForm.append(pair[0], pair[1]);
-    }
-
-    fetch(url + "/api/points/" + context.pointId, {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + authContext.jwToken,
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: dataForm,
-      withCredentials: true,
-      credentials: "include"
-    })
-      .then(res => res.json())
-      .then(res => {
-        setPointData({ ...pointData, rating: res.newRating });
-        fetchReviews();
-      });
+  const onSucessPost = async data => {
+    const res = await data.json();
+    setPointData({ ...pointData, rating: res.newRating });
+    fetchReviews();
   };
+  const apiPath = "/api/points/" + context.pointId;
+  const formTitle = "Add a review";
+
+  const inputs = [
+    {
+      name: "title",
+      label: "Title:",
+      required: true,
+      placeholder: "Title",
+      type: "text"
+    },
+    {
+      name: "description",
+      label: "Description:",
+      required: false,
+      placeholder: "place decription",
+      type: "text"
+    },
+    {
+      name: "rating",
+      label: "Rating:",
+      required: true,
+      min: "1",
+      max: "10",
+      type: "number",
+      placeholder: "1-10"
+    },
+    {
+      name: "image",
+      label: "Image:",
+      required: false,
+      type: "file"
+    }
+  ];
+  const buttonTitle = "Send";
 
   return !pointData || context.mode === "edit" ? (
     ""
@@ -63,17 +81,14 @@ function Description(props) {
     <div className="flexcontainercolumn">
       <h1>{pointData.name}</h1>
       <p>{pointData.description}</p>
-      {pointData.images.map(image => (
-        <img src={image} alt="img" />
-      ))}
+      {pointData.images &&
+        pointData.images.map(image => <img src={image} alt="img" />)}
       <h5>rating: {pointData.rating}</h5>
-      {authContext.isAuthenticated ? (
+      {authContext.isAuthenticated && (
         <p>
           created by:{" "}
           <SmallProfileImage src={pointData.profilePicture} alt="Profile" />
         </p>
-      ) : (
-        ""
       )}
 
       <button
@@ -87,47 +102,13 @@ function Description(props) {
       {reviews}
 
       {authContext.isAuthenticated ? (
-        <form className="container" onSubmit={submitReview}>
-          <div className="row">
-            <div className="col-sm">
-              <label htmlFor="title">Title:</label>
-              <input
-                className="form-control input-sm"
-                placeholder="title"
-                required
-                name="title"
-                id="title"
-              />
-            </div>
-            <div className="col-sm">
-              <label htmlFor="description">Description:</label>
-              <input
-                className="form-control input-sm"
-                placeholder="description"
-                name="description"
-                id="description"
-              />
-            </div>
-            <div className="col-sm">
-              <label htmlFor="rating">Rating:</label>
-              <input
-                className="form-control input-sm"
-                placeholder="1-10"
-                required
-                min="1"
-                max="10"
-                name="rating"
-                id="rating"
-                type="number"
-              />
-            </div>
-          </div>
-          <div className="flexcontainer">
-            <button type="submit" className=" btn btn-dark btn-bg">
-              Review
-            </button>
-          </div>
-        </form>
+        <PostForm
+          onSucessPost={onSucessPost}
+          apiPath={apiPath}
+          formTitle={formTitle}
+          inputs={inputs}
+          buttonTitle={buttonTitle}
+        />
       ) : (
         ""
       )}

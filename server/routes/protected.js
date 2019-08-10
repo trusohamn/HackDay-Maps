@@ -58,13 +58,14 @@ router.post("/profiles/favourites", (req, res, next) => {
   });
 });
 
-router.post("/points/:id", (req, res) => {
-  // get all reviews for this location
+// add a new review
+router.post("/points/:id", parser.single("image_0"), (req, res) => {
   const userId = req.jwToken.id;
   User.findUserById(userId, (err, user) => {
     if (err)
       return res.status(400).send({ error: "problem with finding user" });
 
+    // get all reviews for this location
     let newRating;
     getReviews(req.params.id)
       .then(data => {
@@ -78,8 +79,10 @@ router.post("/points/:id", (req, res) => {
           description: req.body.description,
           person_id: userId,
           profilePicture: user.photoUrl,
-          rating: parseInt(req.body.rating)
+          rating: parseInt(req.body.rating),
+          images: []
         };
+        req.file && newReview.images.push(req.file.url);
         addReview(req.params.id, newReview).then(res.json({ newRating }));
       });
   });

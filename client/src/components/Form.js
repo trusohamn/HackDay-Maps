@@ -30,24 +30,23 @@ function Form(props) {
       type: "text"
     },
     {
-      name: "image",
-      label: "Image:",
-      required: false,
-      type: "file"
-    },
-    {
       name: "type",
       label: "Select type:",
       selectType: true,
       options: ["camping", "bonfire", "view", "hut"],
       default: "camping"
+    },
+    {
+      name: "image",
+      label: "Image:",
+      required: false,
+      type: "file"
     }
   ];
   const buttonTitle = "Add to the map";
 
   return context.mode === "explore" ? null : (
     <PostForm
-      contentType="multipart/form-data"
       onSucessPost={onSucessPost}
       apiPath={apiPath}
       formTitle={formTitle}
