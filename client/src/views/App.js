@@ -61,8 +61,7 @@ function App() {
         </label>
         <label>
           {/* <a href="http://hikebikemap.org"> */}
-          wmflabs Hike Bike
-          {/* </a> */}
+          wmflabs Hike Bike {/* </a> */}
           <input
             name="hikebikeOn"
             type="checkbox"
@@ -72,8 +71,7 @@ function App() {
         </label>
         <label>
           {/* <a href="http://hikebikemap.org"> */}
-          wmflabs Hillshading
-          {/* </a> */}
+          wmflabs Hillshading {/* </a> */}
           <input
             name="hillshadingOn"
             type="checkbox"
