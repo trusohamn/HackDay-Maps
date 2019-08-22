@@ -50,8 +50,10 @@ class Map extends React.Component {
     };
 
     this.centerOnGeo = () => {
-      this.map.getView().setCenter(this.context.geoCords);
-      this.map.getView().setZoom(13);
+      if (this.context.geoCords.length > 1) {
+        this.map.getView().setCenter(this.context.geoCords);
+        this.map.getView().setZoom(13);
+      }
     };
   }
 
@@ -237,7 +239,9 @@ class Map extends React.Component {
     return (
       <div>
         <Loader size={100} loading={!this.context.data} />
-        <button onClick={this.centerOnGeo}>go to my location</button>
+        {this.context.geoCords && (
+          <button onClick={this.centerOnGeo}>go to my location</button>
+        )}
         <div ref="mapContainer" id="mapContainer" />
         {!this.context.pointId || this.context.mode === "edit" ? (
           ""
