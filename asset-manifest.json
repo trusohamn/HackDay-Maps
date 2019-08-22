@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Tently/static/css/main.85eee024.chunk.css",
-    "main.js": "/Tently/static/js/main.b925eafa.chunk.js",
-    "main.js.map": "/Tently/static/js/main.b925eafa.chunk.js.map",
+    "main.js": "/Tently/static/js/main.aa3056d9.chunk.js",
+    "main.js.map": "/Tently/static/js/main.aa3056d9.chunk.js.map",
     "runtime~main.js": "/Tently/static/js/runtime~main.ee27bf39.js",
     "runtime~main.js.map": "/Tently/static/js/runtime~main.ee27bf39.js.map",
     "static/css/2.19d64df3.chunk.css": "/Tently/static/css/2.19d64df3.chunk.css",
     "static/js/2.c03fe7b5.chunk.js": "/Tently/static/js/2.c03fe7b5.chunk.js",
     "static/js/2.c03fe7b5.chunk.js.map": "/Tently/static/js/2.c03fe7b5.chunk.js.map",
     "index.html": "/Tently/index.html",
-    "precache-manifest.d2b8810498c278ff22da5f4416bd75aa.js": "/Tently/precache-manifest.d2b8810498c278ff22da5f4416bd75aa.js",
+    "precache-manifest.9596a7d913f30c4c5bf6ae1337f452fe.js": "/Tently/precache-manifest.9596a7d913f30c4c5bf6ae1337f452fe.js",
     "service-worker.js": "/Tently/service-worker.js",
     "static/css/2.19d64df3.chunk.css.map": "/Tently/static/css/2.19d64df3.chunk.css.map",
     "static/css/main.85eee024.chunk.css.map": "/Tently/static/css/main.85eee024.chunk.css.map",
